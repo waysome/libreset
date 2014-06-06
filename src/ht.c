@@ -27,7 +27,7 @@ rs_ht_init(struct rs_ht *ht, rs_ht_bucket_id size)
     ht->buckets = calloc(ht->length, sizeof(*ht->buckets));
 }
 
-struct rs_ht *
+void
 rs_ht_destroy(struct rs_ht *ht)
 {
     free(ht->buckets);

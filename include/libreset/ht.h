@@ -26,7 +26,7 @@ typedef rs_ht_bucket_id (*rs_ht_hashfunc)(void *, size_t);
 struct rs_ht *      rs_ht_new        (void);
 void                rs_ht_init       (struct rs_ht *ht,
                                      rs_ht_bucket_id size);
-struct rs_ht *      rs_ht_destroy    (struct rs_ht *ht);
+void                rs_ht_destroy    (struct rs_ht *ht);
 
 /*
  * configuration
