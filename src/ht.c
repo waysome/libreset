@@ -2,11 +2,16 @@
 
 #include <stdlib.h>
 
+struct ll_element {
+    struct ll_element   *next;
+    void                *value;
+};
+
 struct rs_ht
 {
     rs_ht_hashfunc hashfunc;
     rs_ht_bucket_id length;
-    void **buckets;
+    struct ll_element **buckets;
 };
 
 /*
