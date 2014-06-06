@@ -103,8 +103,30 @@ rs_ht_get(struct rs_ht *ht, rs_ht_bucket_id hash)
 void *
 rs_ht_del(struct rs_ht *ht, rs_ht_bucket_id hash)
 {
-    void *d = ht->buckets[hash % ht->length];
-    ht->buckets[hash % ht->length] = NULL;
+    rs_ht_bucket_id pos = hash % ht->length;
+    struct ll_element *prev = NULL;
+    struct ll_element *el_iter = ht->buckets[pos];
+    void *d = NULL;
+
+    for(; !d && el_iter; el_iter = el_iter->next) {
+        if (hash == ht->hashfunc(el_iter->value, el_iter->vsize)) {
+            if (el_iter->next) {
+                if (prev) {
+                    prev->next = el_iter->next;
+                }
+                else {
+                    ht->buckets[pos] = el_iter->next;
+                }
+            }
+
+            d = el_iter->value;
+            free(el_iter);
+            break;
+        }
+
+        prev = el_iter;
+    }
+
     return d;
 }
 
