@@ -52,16 +52,19 @@ rs_ht_set_hasherfunc(struct rs_ht *ht, rs_ht_hashfunc f)
 rs_ht_bucket_id
 rs_ht_put(struct rs_ht *ht, void *d, size_t ds)
 {
+    // TODO
 }
 
 void *
 rs_ht_get(struct rs_ht *ht, rs_ht_bucket_id)
 {
+    // TODO
 }
 
 void *
 rs_ht_del(struct rs_ht *ht, rs_ht_bucket_id)
 {
+    // TODO
 }
 
 
@@ -87,6 +90,7 @@ rs_ht_size(struct rs_ht *ht)
 float
 rs_ht_load(struct rs_ht *ht)
 {
+    // TODO
 }
 
 int
