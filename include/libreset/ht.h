@@ -1,5 +1,5 @@
-#ifndef __rs_HASHTABLE__
-#define __rs_HASHTABLE__
+#ifndef __RS_HASHTABLE__
+#define __RS_HASHTABLE__
 
 #include <stdlib.h>
 
@@ -50,5 +50,5 @@ rs_ht_bucket_id     rs_ht_size       (struct rs_ht *ht);
 float               rs_ht_load       (struct rs_ht *ht);
 int                 rs_ht_is_empty   (struct rs_ht *ht);
 
-#endif //__rs_HASHTABLE__
+#endif //__RS_HASHTABLE__
 
