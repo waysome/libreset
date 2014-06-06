@@ -52,7 +52,13 @@ rs_ht_set_hasherfunc(struct rs_ht *ht, rs_ht_hashfunc f)
 rs_ht_bucket_id
 rs_ht_put(struct rs_ht *ht, void *d, size_t ds)
 {
-    // TODO
+    rs_ht_bucket_id dest = ht->hashfunc(d, ds);
+
+    dest %= ht->length;
+
+    buckets[dest] = d;
+
+    return dest;
 }
 
 void *
