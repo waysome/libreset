@@ -72,6 +72,16 @@ rs_ht_del(struct rs_ht *ht, rs_ht_bucket_id)
 rs_ht_bucket_id
 rs_ht_size(struct rs_ht *ht)
 {
+    rs_ht_bucket_id s = 0;
+    rs_ht_bucket_id i;
+
+    for(i = 0; i < ht->length; i++) {
+        if (ht->buckets[i]) {
+            s++;
+        }
+    }
+
+    return s;
 }
 
 float
