@@ -11,7 +11,7 @@ struct ll_element {
 struct rs_ht
 {
     rs_ht_hashfunc hashfunc;
-    rs_ht_bucket_id length;
+    rs_ht_hash length;
     struct ll_element **buckets;
 };
 
@@ -26,7 +26,7 @@ rs_ht_new()
 }
 
 void
-rs_ht_init(struct rs_ht *ht, rs_ht_bucket_id size)
+rs_ht_init(struct rs_ht *ht, rs_ht_hash size)
 {
     ht->hashfunc = NULL;
     ht->length = size;
@@ -55,11 +55,11 @@ rs_ht_set_hasherfunc(struct rs_ht *ht, rs_ht_hashfunc f)
  * usage
  */
 
-rs_ht_bucket_id
+rs_ht_hash
 rs_ht_put(struct rs_ht *ht, void *d, size_t ds)
 {
-    rs_ht_bucket_id hash = 0;
-    rs_ht_bucket_id dest = 0;
+    rs_ht_hash hash = 0;
+    rs_ht_hash dest = 0;
     struct ll_element *el = malloc(sizeof(*el));
     struct ll_element **iter;
 
@@ -85,7 +85,7 @@ rs_ht_put(struct rs_ht *ht, void *d, size_t ds)
 }
 
 void *
-rs_ht_get(struct rs_ht *ht, rs_ht_bucket_id hash)
+rs_ht_get(struct rs_ht *ht, rs_ht_hash hash)
 {
     struct ll_element *bucket = ht->buckets[hash % ht->length];
     void *v = NULL;
@@ -101,9 +101,9 @@ rs_ht_get(struct rs_ht *ht, rs_ht_bucket_id hash)
 }
 
 void *
-rs_ht_del(struct rs_ht *ht, rs_ht_bucket_id hash)
+rs_ht_del(struct rs_ht *ht, rs_ht_hash hash)
 {
-    rs_ht_bucket_id pos = hash % ht->length;
+    rs_ht_hash pos = hash % ht->length;
     struct ll_element *prev = NULL;
     struct ll_element *el_iter = ht->buckets[pos];
     void *d = NULL;
@@ -135,11 +135,11 @@ rs_ht_del(struct rs_ht *ht, rs_ht_bucket_id hash)
  * metainformations
  */
 
-rs_ht_bucket_id
+rs_ht_hash
 rs_ht_size(struct rs_ht *ht)
 {
-    rs_ht_bucket_id s = 0;
-    rs_ht_bucket_id i;
+    rs_ht_hash s = 0;
+    rs_ht_hash i;
 
     for(i = 0; i < ht->length; i++) {
         if (ht->buckets[i]) {
