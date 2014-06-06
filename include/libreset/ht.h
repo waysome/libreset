@@ -8,8 +8,6 @@
  */
 struct rs_ht;
 
-typedef uint64_t (*rs_ht_hashfunc)(void *, size_t);
-
 // if on 64bit
 typedef uint64_t rs_ht_bucket_id;
 // else
@@ -18,6 +16,8 @@ typedef uint64_t rs_ht_bucket_id;
 // typedef uint16_t rs_ht_bucket_id;
 // else
 // typedef uint8_t rs_ht_bucket_id;
+//
+typedef rs_ht_bucket_id (*rs_ht_hashfunc)(void *, size_t);
 
 /*
  * creation and destroying
