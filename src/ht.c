@@ -142,9 +142,14 @@ rs_ht_size(struct rs_ht *ht)
     rs_ht_hash i;
 
     for(i = 0; i < ht->length; i++) {
-        if (ht->buckets[i]) {
+        struct ll_element *el = ht->buckets[i];
+
+        for(; el; el = el->next) {
+            /* if (el->value) { */
             s++;
+            /* } */
         }
+
     }
 
     return s;
