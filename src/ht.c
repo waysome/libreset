@@ -87,7 +87,17 @@ rs_ht_put(struct rs_ht *ht, void *d, size_t ds)
 void *
 rs_ht_get(struct rs_ht *ht, rs_ht_bucket_id hash)
 {
-    return ht->buckets[hash % ht->length];
+    struct ll_element *bucket = ht->buckets[hash % ht->length];
+    void *v = NULL;
+
+    for (; !v && bucket; bucket = bucket->next) {
+        if (hash == ht->hashfunc(bucket->value, bucket->vsize)) {
+            v = bucket->value;
+            break;
+        }
+    }
+
+    return v;
 }
 
 void *
