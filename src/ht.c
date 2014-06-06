@@ -5,6 +5,7 @@
 struct ll_element {
     struct ll_element   *next;
     void                *value;
+    size_t              vsize;
 };
 
 struct rs_ht
@@ -57,26 +58,43 @@ rs_ht_set_hasherfunc(struct rs_ht *ht, rs_ht_hashfunc f)
 rs_ht_bucket_id
 rs_ht_put(struct rs_ht *ht, void *d, size_t ds)
 {
-    rs_ht_bucket_id dest = ht->hashfunc(d, ds);
+    rs_ht_bucket_id hash = 0;
+    rs_ht_bucket_id dest = 0;
+    struct ll_element *el = malloc(sizeof(*el));
+    struct ll_element **iter;
 
-    dest %= ht->length;
+    if (el) {
+        el->value = d;
+        el->vsize = ds;
+        el->next = NULL;
 
-    buckets[dest] = d;
+        hash = ht->hashfunc(d, ds);
+        dest = hash % ht->length;
 
-    return dest;
+        iter = &ht->buckets[dest];
+
+        for(; *iter; iter = &(*iter)->next);
+
+        *iter = el;
+    }
+    else {
+        // TODO: ERROR
+    }
+
+    return hash;
 }
 
 void *
-rs_ht_get(struct rs_ht *ht, rs_ht_bucket_id id)
+rs_ht_get(struct rs_ht *ht, rs_ht_bucket_id hash)
 {
-    return ht->buckets[id];
+    return ht->buckets[hash % ht->length];
 }
 
 void *
-rs_ht_del(struct rs_ht *ht, rs_ht_bucket_id id)
+rs_ht_del(struct rs_ht *ht, rs_ht_bucket_id hash)
 {
-    void *d = ht->buckets[id];
-    ht->buckets[id] = NULL;
+    void *d = ht->buckets[hash % ht->length];
+    ht->buckets[hash % ht->length] = NULL;
     return d;
 }
 
