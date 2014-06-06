@@ -92,4 +92,5 @@ rs_ht_load(struct rs_ht *ht)
 int
 rs_ht_is_empty(struct rs_ht *ht)
 {
+    return 0 == rs_ht_size(ht);
 }
