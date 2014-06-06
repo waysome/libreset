@@ -62,9 +62,9 @@ rs_ht_put(struct rs_ht *ht, void *d, size_t ds)
 }
 
 void *
-rs_ht_get(struct rs_ht *ht, rs_ht_bucket_id)
+rs_ht_get(struct rs_ht *ht, rs_ht_bucket_id id)
 {
-    // TODO
+    return ht->buckets[id];
 }
 
 void *
