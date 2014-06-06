@@ -68,9 +68,11 @@ rs_ht_get(struct rs_ht *ht, rs_ht_bucket_id id)
 }
 
 void *
-rs_ht_del(struct rs_ht *ht, rs_ht_bucket_id)
+rs_ht_del(struct rs_ht *ht, rs_ht_bucket_id id)
 {
-    // TODO
+    void *d = ht->buckets[id];
+    ht->buckets[id] = NULL;
+    return d;
 }
 
 
