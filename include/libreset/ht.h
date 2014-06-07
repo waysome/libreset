@@ -2,6 +2,7 @@
 #define __RS_HASHTABLE__
 
 #include <stdlib.h>
+#include <stdint.h>
 
 /**
  * @brief hashtable type. We don't show our implementation
