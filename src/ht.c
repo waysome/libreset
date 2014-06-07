@@ -158,7 +158,7 @@ rs_ht_size(struct rs_ht *ht)
 float
 rs_ht_load(struct rs_ht *ht)
 {
-    // TODO
+    return (ht ? (float)ht->length / (float) rs_ht_size(ht) : 0);
 }
 
 int
