@@ -130,6 +130,18 @@ rs_ht_del(struct rs_ht *ht, rs_ht_hash hash)
     return d;
 }
 
+int
+rs_ht_map_on(struct rs_ht *ht, struct rs_ht *other, unsigned int factor)
+{
+    int ret = 0;
+    rs_ht_hash i;
+
+    for (i = 0; i < ht->length; i++) {
+        other->buckets[i*factor] = ht->buckets[i];
+    }
+
+    return ret;
+}
 
 /*
  * metainformations

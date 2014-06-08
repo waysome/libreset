@@ -43,6 +43,10 @@ rs_ht_hash          rs_ht_put    (struct rs_ht *ht, void *d, size_t ds);
 void *              rs_ht_get    (struct rs_ht *ht, rs_ht_hash);
 void *              rs_ht_del    (struct rs_ht *ht, rs_ht_hash);
 
+int                 rs_ht_map_on    (struct rs_ht *ht,
+                                    struct rs_ht *other,
+                                    unsigned int factor);
+
 /*
  * metainformations
  */
