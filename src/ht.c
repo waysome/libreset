@@ -100,6 +100,22 @@ rs_ht_get(struct rs_ht *ht, rs_ht_hash hash)
     return v;
 }
 
+size_t
+rs_ht_getsize(struct rs_ht *ht, rs_ht_hash hash)
+{
+    struct ll_element *bucket = ht->buckets[hash % ht->length];
+    size_t res = 0;
+
+    for(; res == 0 && bucket; bucket = bucket->next) {
+        if (hash == ht->hashfunc(bucket->value, bucket->vsize)) {
+            res = bucket->vsize;
+            break;
+        }
+    }
+
+    return res;
+}
+
 void *
 rs_ht_del(struct rs_ht *ht, rs_ht_hash hash)
 {

@@ -87,6 +87,16 @@ rs_ht_hash          rs_ht_put    (struct rs_ht *ht, void *d, size_t ds);
 void *              rs_ht_get    (struct rs_ht *ht, rs_ht_hash);
 
 /**
+ * @brief Get the size of an element by its hash
+ *
+ * @param ht The hashtable
+ * @param rs_ht_hash The hash
+ *
+ * @return The size of the element with the passed hash, zero if not found.
+ */
+size_t              rs_ht_getsize(struct rs_ht *ht, rs_ht_hash);
+
+/**
  * @brief Delete something by its hash
  *
  * @param ht The hashtable
