@@ -1,0 +1,17 @@
+\section{Overview}
+
+    The proposed data-structure is a hash-table which uses an amortised dynamic
+    array for its list of buckets and AVLs as implementation for its buckets.
+    While each bucket is a fully functional set on its own, splitting them into
+    smaller domains with a maximum average number of elements reduces the
+    average complexity for queries, insertions and other operations.
+
+    This paper will discuss the algorithms used to implement each operation,
+    drawing lines between the different levels, the overall hash-table and the
+    buckets that is. Each operation's description will also include a short
+    derivation of the operation's class of complexity.
+
+    Additionally, we will discuss the possible use of bloom filters within this
+    data-structure for early denyablity of an elements occurrence in the set.
+
+
