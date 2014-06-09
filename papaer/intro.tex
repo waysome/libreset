@@ -1,0 +1,27 @@
+\section{Introduction}
+
+    %TODO: definition of "set"
+
+    %TODO: refs to some standard source on data structures
+    ``Sets'' or ``Maps'' are often implemented using either hash tables or AVL
+    trees.  For the former one, insertion, deletion and query of an element via
+    a key are generally in $O(1)$ in the average case, but may be in $O(n)$ in
+    the worst case.  For AVLs, these operations are in $O(ln(n))$ in the average
+    \emph{and} in the worst case. If the usage of a set is restricted to these
+    operations, both implementations are suitable.
+
+    However, for many interesting set operations, the behaviour of the
+    data-structures is sub-optimal. E.g. determining whether a set is a subset
+    of another is an especially slow operation if the set type is implemented on
+    top of a hash-table, as for every element of the presumed subset the
+    presence in the second set has to be checked. For AVLs, calculating an
+    intersection may be done by iterating over both AVLs, using a merge-like
+    algorithm to fetch the elements of the intersection in $O(n)$. However, each
+    of the elements has to be inserted in the resulting set, making this a
+    $O(n\cdot ln(n)$ operation.
+
+    This paper introduces a few ideas and techniques on how these to data-types
+    may be combined and on how operations might be implemented to achieve better
+    performance than would normally be possible using standard set
+    implementations.
+
