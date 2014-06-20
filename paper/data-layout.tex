@@ -39,3 +39,41 @@
         \end{equation}
 
 
+    \subsection{Division into buckets}
+
+        Naturally, a hashtable $H$ consists of a number of buckets $b_n$:
+
+        \begin{equation}
+            H = \left\{ b_n | n \in [0, s(H)) \right\}
+        \end{equation}
+
+        In regular hashtables, the bucket an element $i$ is put into is derived
+        by applying the modulo on the hash-value $h$ calculated from the
+        element:
+
+        \begin{equation}
+            n = h(i) \% s(H) \qquad i \in e(b_n)
+        \end{equation}
+
+        Taking into account the constraint described before, this would be
+        equivalent with taking the least significant bits of the hash-value.
+        However, we are using the \em most\em{} significant bits:
+
+        \begin{equation}
+            i \in e(b_n) \qquad n = h(i) \div \frac{2^N}{s}
+        \end{equation}
+
+        Where $N$ is the number of bits of a hash-value.
+        
+        Obviously, this preserves a subset of the natural numbers' ordering
+        relation: using this mapping, hashes of items in later buckets are
+        greater than those in earlier ones:
+
+        \begin{equation}
+            n_1 > n_2 \land i_1 \in e(b_{n_1}) \land i_2 \in e(b_{n_2})
+            \Rightarrow i_1 > i_2
+        \end{equation}
+
+        This feature will proof especially useful when performing resizes and
+        binary operations on sets with different bucket-counts.
+
