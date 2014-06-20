@@ -1,2 +1,19 @@
 \section{Data layout}
 
+    As already implicated, the data is divided into several buckets --like in a
+    regular hashtable. 
+
+    As to be expected, any element which may be part of the set is mapped onto
+    a bucket injectively.
+    The sets made up from the elements which would be mapped to a specific
+    bucket $e(b)$ are disjunctive to the elements which would be mapped to
+    another bucket of the same table:
+
+    \begin{equation}
+        e(b_1) \cap e(b_2) = \emptyset
+    \end{equation}
+
+    Note that $e(b)$ is the set of \em all\em{} elements which \em may\em{}
+    potentially be part of the bucket, rather than elements which \em are\em{}
+    elements of the bucket.
+
