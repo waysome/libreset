@@ -17,3 +17,25 @@
     potentially be part of the bucket, rather than elements which \em are\em{}
     elements of the bucket.
 
+    \subsection{Number of buckets}
+
+        So far, we're just talking about an average hashtable. However, we
+        constrain the number of buckets $s$ to powers of two:
+
+        \begin{equation}
+            s \in \left\{ 2^n | n \in \mathbb{N} \right\}
+        \end{equation}
+
+        Assume having two hashtables $A$ and $B$, where the number of buckets of
+        table $B$ is greater or equal than that of table $A$.
+        The constraint ensures that, in this scenario, any bucket in $A$ is
+        equivalent to a subset of the buckets of $B$, regarding the elements it
+        may contain:
+
+        \begin{equation}
+            s(A) < s(B)
+            \quad\Rightarrow\quad
+            \forall_{0 \leq i \leq s(A)} : e(a_i) = \bigcup_{j\%s(B)=i} e(b_j)
+        \end{equation}
+
+
