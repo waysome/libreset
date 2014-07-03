@@ -1,0 +1,137 @@
+#
+# This is the style file for astyle
+#
+
+#
+# We want ansi style for our source code
+# which is basically
+#
+# int Foo(bool isBar)
+# {
+#     if (isBar) {
+#         bar();
+#         return 1;
+#     } else
+#         return 0;
+# }
+#
+--style=kr
+
+#
+# We want four spaces as indention
+#
+--indent=spaces=4
+
+#
+# We want to have preprocessor macros to be indented as well:
+#
+# #define Is_Bar(arg,a,b) \
+#   (Is_Foo((arg), (a)) \
+#        || Is_Foo((arg), (b)))
+#
+--indent-preprocessor
+
+#
+# We want comments to be indented, too:
+#
+# void Foo()\n"
+# {
+#     // comment
+#     if (isFoo)
+#         bar();
+# }
+#
+--indent-col1-comments
+
+#
+# The conditional indent should be one additional indent to the normal indention
+#
+# if (a < b
+#         || c > d)
+# {
+#     foo++;
+# }
+#
+--min-conditional-indent=1
+
+#
+# ... don't really get what this does...
+#
+--max-instatement-indent=80
+
+#
+# This adds empty lines around blocks (if, for, while...)
+#
+--break-blocks
+
+#
+# We want spaces around operators
+#
+--pad-oper
+
+#
+# And we want spaces after keywords (if, while...)
+#
+--pad-header
+
+#
+# The pointer asterisk should be aligned to the type
+#
+--align-pointer=type
+
+#
+# The reference operator should be aligned to the name
+#
+--align-reference=name
+
+#
+# We don't want this:
+#
+# } else {
+#
+# but we want
+#
+# }
+# else {
+#
+--break-closing-brackets
+
+#
+# And if statements should always have brackets!
+#
+--add-brackets
+
+#
+# We don't want tabs at all
+#
+--convert-tabs
+
+#
+# 80 chars per column!
+#
+--max-code-length=80
+
+#
+# We want to have linebreaks after the logical operators
+#
+--break-after-logical
+
+#
+# We write C code
+#
+--mode=c
+
+#
+# Backups are stored as .backup
+#
+--suffix=.backup
+
+#
+# Show us formatted files
+#
+--formatted
+
+#
+# We want linux lineendings
+#
+--lineend=linux
