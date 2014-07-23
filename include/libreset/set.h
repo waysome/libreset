@@ -1,97 +1,166 @@
 #ifndef __LIBRESET_H__
 #define __LIBRESET_H__
 
+/**
+ * The set type
+ */
 struct r_set;
 
+
+/**
+ * Set configuration type
+ */
 struct r_set_cfg
 {
-    size_t  (*hashf)(void* const);
-    int     (*cmpf)(void* const, void* const);
+    size_t  (*hashf)(void const*); //!< hash function
+    int     (*cmpf)(void const*, void const*); //!< compare function
 };
 
 
+/**
+ * Allocate a set object
+ *
+ * @return A pointer to the set object or NULL on failure
+ */
 struct r_set*
 r_set_alloc(
-        struct r_set_cfg const* cfg
+        struct r_set_cfg const* cfg //!< configuration for the set object
 );
 
 
+/**
+ * Remove a set object from memory
+ */
 void
 r_set_free(
-        struct r_set* set
+        struct r_set* set //!< Set to remove
 );
 
 
+/**
+ * Insert an object into a set
+ *
+ * @return zero on success, else error code
+ */
 int
 r_set_insert(
-        struct r_set* set,
-        void const* value
+        struct r_set* set, //!< the set
+        void const* value //!< value to insert
 );
 
-
+/**
+ * Remove an object from the set
+ *
+ * @return The removed object or NULL on failure/not found
+ */
 void* const
 r_set_remove(
-        struct r_set* set,
-        void const* cmp
+        struct r_set* set, //!< the set
+        void const* cmp //!< object equal to the one you want to delete
 );
 
 
+/**
+ * Check if a set contains an object
+ *
+ * @return The object if it is in the set, else NULL
+ */
 void* const
 r_set_contains(
-        struct r_set* set,
-        void const* cmp
+        struct r_set* set, //!< the set
+        void const* cmp //!< element to check for
 );
 
 
+/**
+ * Compute union out of two sets
+ *
+ * @return zero on success, else error code
+ */
 int
 r_set_union(
-        struct r_set* dest,
-        struct r_set* set_a,
-        struct r_set* set_b,
+        struct r_set* dest, //!< destination of the result
+        struct r_set* set_a, //!< first argument of the binary operation
+        struct r_set* set_b, //!< second argument of the binary operation
 );
 
 
+/**
+ * Compute intersection of two sets
+ *
+ * @return zero on success, else error code
+ */
 int
 r_set_intersection(
-        struct r_set* dest,
-        struct r_set* set_a,
-        struct r_set* set_b,
+        struct r_set* dest, //!< destination of the result
+        struct r_set* set_a, //!< first argument of the binary operation
+        struct r_set* set_b, //!< second argument of the binary operation
 );
 
 
+/**
+ * Compute set with elements which are in only one of the two arguments
+ *
+ * @return zero on success, else error code
+ */
 int
 r_set_xor(
-        struct r_set* dest,
-        struct r_set* set_a,
-        struct r_set* set_b,
+        struct r_set* dest, //!< destination of the result
+        struct r_set* set_a, //!< first argument of the binary operation
+        struct r_set* set_b, //!< second argument of the binary operation
 );
 
 
+/**
+ * Exclude elements from set_a which are in set_b
+ *
+ * @return zero on success, else error code
+ */
 int
 r_set_exclude(
-        struct r_set* dest,
-        struct r_set* set_a,
-        struct r_set* set_b,
+        struct r_set* dest, //!< destination of the result
+        struct r_set* set_a, //!< first argument of the binary operation
+        struct r_set* set_b, //!< second argument of the binary operation
 );
 
 
+/**
+ * Check if one set is a subset of another
+ *
+ * @return 1 if the first set is a subset of the second one, else zero (0)
+ */
 int
 r_set_is_subset(
-        struct r_set* set_a,
-        struct r_set* set_b,
+        struct r_set* set_a, //!< first argument of the binary operation
+        struct r_set* set_b, //!< second argument of the binary operation
 );
 
 
+/**
+ * Check if two sets are equal
+ *
+ * @note Checks metainformation of the set objects first (comparator function,
+ * hashing function). If they are not equal, the function returns false (zero).
+ *
+ * @warning returns error codes on failure, which are true, too!
+ *
+ * @return 1 if the sets are equal, else 0 (zero)
+ */
 int
 r_set_equal(
-        struct r_set* set_a,
-        struct r_set* set_b,
+        struct r_set* set_a, //!< first argument of the binary operation
+        struct r_set* set_b, //!< second argument of the binary operation
 );
 
 
+/**
+ * Get the cardinality of a set
+ *
+ * @return the cardinality of the set
+ */
 size_t
 r_set_cardinality(
-        struct r_set* set
+        struct r_set* set //!< the set to get the cardinality for
 );
 
 #endif //__LIBRESET_H__
