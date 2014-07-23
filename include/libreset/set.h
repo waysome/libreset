@@ -164,4 +164,17 @@ r_set_cardinality(
         struct r_set const* set //!< the set to get the cardinality for
 );
 
+
+/**
+ * Select entries from a set for a new set
+ *
+ * @return zero on success, else error code
+ */
+int
+r_set_select(
+        struct r_set* dest, //!< destination set
+        struct r_set const* src, //!< source set
+        int (*predicate)(void const*), //!< predicate for selection
+);
+
 #endif //__LIBRESET_H__
