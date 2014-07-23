@@ -12,8 +12,9 @@ struct r_set;
  */
 struct r_set_cfg
 {
-    size_t  (*hashf)(void const*); //!< hash function
-    int     (*cmpf)(void const*, void const*); //!< compare function
+    size_t          (*hashf)(void const*); //!< hash function
+    int             (*cmpf)(void const*, void const*); //!< compare function
+    void const*     (*copy)(void const*); //!< copy function
 };
 
 
