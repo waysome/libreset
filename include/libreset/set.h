@@ -174,7 +174,8 @@ int
 r_set_select(
         struct r_set* dest, //!< destination set
         struct r_set const* src, //!< source set
-        int (*predicate)(void const*), //!< predicate for selection
+        int (*predicate)(void const*, void*), //!< predicate for selection
+        void* //!< parameter for the predicate function
 );
 
 #endif //__LIBRESET_H__
