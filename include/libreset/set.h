@@ -18,12 +18,12 @@ struct r_set_cfg
 
 
 /**
- * Allocate a set object
+ * Allocate and initialize set object
  *
  * @return A pointer to the set object or NULL on failure
  */
 struct r_set*
-r_set_alloc(
+r_set_new(
         struct r_set_cfg const* cfg //!< configuration for the set object
 );
 
@@ -32,7 +32,7 @@ r_set_alloc(
  * Remove a set object from memory
  */
 void
-r_set_free(
+r_set_destroy(
         struct r_set* set //!< Set to remove
 );
 
