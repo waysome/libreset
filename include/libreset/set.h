@@ -14,7 +14,7 @@ struct r_set_cfg
 {
     size_t          (*hashf)(void const*); //!< hash function
     int             (*cmpf)(void const*, void const*); //!< compare function
-    void const*     (*copy)(void const*); //!< copy function
+    void const*     (*copyf)(void const*); //!< copy function
 };
 
 
