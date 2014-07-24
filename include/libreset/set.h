@@ -1,6 +1,8 @@
 #ifndef __LIBRESET_H__
 #define __LIBRESET_H__
 
+#include <stddef.h>
+
 /**
  * The set type
  */
