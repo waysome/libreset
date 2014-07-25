@@ -170,6 +170,10 @@ r_set_cardinality(
 /**
  * Select entries from a set for a new set
  *
+ * The predicate function gets two values passed, the first one is the actual
+ * value for the predicate function to check, the second one is the parameter
+ * one can pass through the r_set_select() function.
+ *
  * @return zero on success, else error code
  */
 int
