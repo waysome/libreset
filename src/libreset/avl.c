@@ -61,7 +61,24 @@ avl_del(
     int (*cmp)(void* const, void* const, void*),
     void* etc
 ) {
-    // TODO
+    struct avl_el* parent;
+    struct avl_el* found;
+    int f = find_element_with_parent(root, cmp, etc, &parent, &found);
+
+    if (f) {
+
+        // TODO: reorganize tree if neccessary, else:
+        if (found->l == NULL && found->r == NULL) {
+            if (parent->l == found) {
+                parent->l = NULL;
+            } else {
+                parent->r = NULL;
+            }
+        }
+
+        free(found);
+    }
+
     return 0;
 }
 
