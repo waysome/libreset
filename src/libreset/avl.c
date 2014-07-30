@@ -1,9 +1,10 @@
 #include "libreset/avl.h"
 
+#include <stdlib.h>
+
 struct avl_el*
 avl_alloc(void) {
-    // TODO
-    return NULL;
+    return avl_add(NULL, NULL);
 }
 
 int
