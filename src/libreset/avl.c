@@ -105,6 +105,16 @@ avl_unlink(
     int (*cmp)(void* const, void* const, void*),
     void* etc
 ) {
-    // TODO
-    return NULL;
+    struct avl_el* parent;
+    struct avl_el* found;
+    int f = find_element_with_parent(root, cmp, etc, &parent, &found);
+
+    if (f) {
+        parent->l = NULL;
+        parent->r = NULL;
+
+        // TODO: resort parent tree (root)
+    }
+
+    return found;
 }
