@@ -47,7 +47,7 @@ avl_add(
 int
 avl_del(
     struct avl_el* root, //!< The root where to start the search from
-    int (*cmp)(void* const, void*), //!< the comperator function
+    int (*cmp)(void* const, void* const, void*), //!< the comperator function
     void* etc //!< an additional parameter to the comperator function
 );
 
@@ -59,7 +59,7 @@ avl_del(
 struct avl_el*
 avl_find(
     struct avl_el* root, //!< The root where to start the search from
-    int (*cmp)(void* const, void*), //!< the comperator function
+    int (*cmp)(void* const, void* const, void*), //!< the comperator function
     void* etc //!< an additional parameter to the comperator function
 );
 
