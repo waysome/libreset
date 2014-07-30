@@ -94,8 +94,9 @@ avl_find(
     int (*cmp)(void* const, void* const, void*),
     void* etc
 ) {
-    // TODO
-    return NULL;
+    struct avl_el* found;
+    find_element_with_parent(root, cmp, etc, NULL, &found);
+    return found;
 }
 
 struct avl_el*
