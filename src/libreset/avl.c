@@ -8,6 +8,12 @@
  * Helper function to find an element and its parent, for simplification of
  * avl_find() and avl_del() functions.
  *
+ * If the element is found, the found_dest pointer is set and the parent_dest
+ * pointer is set. They can be NULL, but it is clearly unreasonable to set them
+ * both to NULL.
+ *
+ * The parent_dest and found_dest are always safe to return without check.
+ *
  * @return 1 if the element is found, else 0
  */
 static int
