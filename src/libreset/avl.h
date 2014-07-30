@@ -71,7 +71,7 @@ avl_find(
 struct avl_el*
 avl_unlink(
     struct avl_el* root, //!< The root of the tree
-    int (*cmp)(void* const, void*), //!< the comperator function
+    int (*cmp)(void* const, void* const, void*), //!< the comperator function
     void* etc //!< an additional parameter to the comperator function
 );
 

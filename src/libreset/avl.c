@@ -102,7 +102,7 @@ avl_find(
 struct avl_el*
 avl_unlink(
     struct avl_el* root,
-    int (*cmp)(void* const, void*),
+    int (*cmp)(void* const, void* const, void*),
     void* etc
 ) {
     // TODO
