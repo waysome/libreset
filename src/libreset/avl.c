@@ -21,8 +21,19 @@ avl_add(
     int (*cmp)(void* const, void* const),
     void* const d
 ) {
-    // TODO
-    return NULL;
+    struct avl_el* new = calloc(1, sizeof(*new));
+
+    if (new) {
+        new->d = d;
+        new->l = NULL;
+        new->r = NULL;
+
+        if (root) {
+            // TODO: Adding the element (new) to the tree (root)
+        }
+    }
+
+    return new;
 }
 
 int
