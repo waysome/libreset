@@ -35,6 +35,7 @@ avl_destroy(
 struct avl_el*
 avl_add(
     struct avl_el* root, //!< The root of the avl tree where to insert
+    int (*cmp)(void* const, void* const), //!< the comperator function
     void* const d //!< The data element
 );
 
