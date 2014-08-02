@@ -44,12 +44,12 @@ struct avl_el*
 avl_add(
     struct avl_el* root,
     int (*cmp)(void* const, void* const),
-    void* const d
+    void* const data
 ) {
     struct avl_el* new = calloc(1, sizeof(*new));
 
     if (new) {
-        new->d = d;
+        new->data = data;
         new->l = NULL;
         new->r = NULL;
 

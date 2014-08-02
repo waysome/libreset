@@ -2,7 +2,7 @@
 #define __AVL_H__
 
 struct avl_el {
-    void*   d;
+    void*   data;
     struct  avl_el* l;
     struct  avl_el* r;
 };
