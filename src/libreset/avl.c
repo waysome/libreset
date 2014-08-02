@@ -36,8 +36,20 @@ int
 avl_destroy(
     struct avl_el* root
 ) {
-    // TODO
-    return 0;
+    if (root->l) {
+        avl_destroy(root->l);
+        root->l = NULL;
+    }
+
+    if (root->r) {
+        avl_destroy(root->r);
+        root->r = NULL;
+    }
+
+    root->data = NULL;
+    free(root);
+
+    return 1;
 }
 
 struct avl_el*
