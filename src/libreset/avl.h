@@ -1,10 +1,16 @@
 #ifndef __AVL_H__
 #define __AVL_H__
 
+/**
+ * AVL Tree element data type
+ *
+ * This data type defines an AVL element. All operations for the AVL tree
+ * implementation operate on this data type. There is no special root node type.
+ */
 struct avl_el {
-    void*   data;
-    struct  avl_el* l;
-    struct  avl_el* r;
+    void*   data;       //!< pointer to the data of the node
+    struct  avl_el* l;  //!< Next left node
+    struct  avl_el* r;  //!< Next right node
 };
 
 /**
