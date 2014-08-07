@@ -186,3 +186,6 @@ By adding you agree on the following:
 If something was not mentioned here, have a look at
 [this](https://www.kernel.org/doc/Documentation/SubmittingPatches), we want to
 orientate on this kernel styleguide on how to submit patches.
+
+If you want to contribute without writing code, testing or writing
+documentation, feel free to order us some pizza.
