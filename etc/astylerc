@@ -62,7 +62,16 @@
 #
 # This adds empty lines around blocks (if, for, while...)
 #
---break-blocks
+# As this visually kills code like:
+#
+#  int i = 8;
+#  while (i) {
+#    i >>= 1;
+#  }
+#
+# we disable this feature for now.
+#
+#--break-blocks
 
 #
 # We want spaces around operators
