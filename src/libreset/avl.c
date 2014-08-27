@@ -26,7 +26,31 @@ find_element_with_parent(
     struct avl_el** parent_dest, //!< destination of the ptr to the parent
     struct avl_el** found_dest //!< destination of the ptr to the element
 ) {
-    return 0;
+    struct avl_el* next;
+    int predret = pred(root, etc);
+
+    if (root == NULL) {
+        return 0;
+    }
+
+    if (predret == 0) {
+        if (parent_dest) {
+            *parent_dest = NULL;
+        }
+        if (found_dest) {
+            *found_dest = root;
+        }
+        return 1;
+    } else if (predret == -1) {
+        next = root->l;
+    } else {
+        next = root->r;
+    }
+
+    if (parent_dest) {
+        *parent_dest = root;
+    }
+    return find_element_with_parent(next, pred, etc, parent_dest, found_dest);
 }
 
 struct avl_el*
