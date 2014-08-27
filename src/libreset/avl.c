@@ -73,7 +73,7 @@ avl_add(
     return new;
 }
 
-int
+struct avl_el*
 avl_del(
     struct avl_el* root,
     int (*cmp)(void* const, void* const, void*),

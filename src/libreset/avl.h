@@ -48,9 +48,12 @@ avl_add(
 /**
  * Delete an element from the avl tree
  *
- * @return 1 on success, else a negative error code
+ * The element of the delete operation is returned, so we do not have a dangling
+ * pointer laying around.
+ *
+ * @return the element on success, else NULL
  */
-int
+struct avl_el*
 avl_del(
     struct avl_el* root, //!< The root where to start the search from
     int (*cmp)(void* const, void* const, void*), //!< the comperator function
