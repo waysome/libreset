@@ -8,6 +8,7 @@
  * implementation operate on this data type. There is no special root node type.
  */
 struct avl_el {
+    rs_hash hash;
     void*   data;       //!< pointer to the data of the node
     struct  avl_el* l;  //!< Next left node
     struct  avl_el* r;  //!< Next right node
