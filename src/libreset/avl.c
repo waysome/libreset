@@ -2,6 +2,8 @@
 
 #include <stdlib.h>
 
+#include "libreset/hash.h"
+
 /**
  * Find an element and its parent
  *
