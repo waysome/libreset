@@ -199,9 +199,7 @@ avl_add(
         new->l = NULL;
         new->r = NULL;
 
-        if (root) {
-            // TODO: Adding the element (new) to the tree (root)
-        }
+        new = insert(new, root);
     }
 
     return new;
