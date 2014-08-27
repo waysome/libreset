@@ -29,7 +29,7 @@ find_element_with_parent(
 
 struct avl_el*
 avl_alloc(void) {
-    return avl_add(NULL, NULL, NULL);
+    return avl_add(NULL, NULL);
 }
 
 int
@@ -55,7 +55,6 @@ avl_destroy(
 struct avl_el*
 avl_add(
     struct avl_el* root,
-    int (*cmp)(void* const, void* const),
     void* const data
 ) {
     struct avl_el* new = calloc(1, sizeof(*new));
