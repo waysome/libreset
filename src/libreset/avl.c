@@ -19,8 +19,8 @@
 static int
 find_element_with_parent(
     struct avl_el* root, //!< root of the tree
-    int (*cmp)(void* const, void* const, void*), //!< comparator function
-    void* etc, //!< additional argument for the comperator function
+    int (*pred)(void* const, void*), //!< predicate function
+    void* etc, //!< additional argument for the predicate function
     struct avl_el** parent_dest, //!< destination of the ptr to the parent
     struct avl_el** found_dest //!< destination of the ptr to the element
 ) {
@@ -75,12 +75,12 @@ avl_add(
 struct avl_el*
 avl_del(
     struct avl_el* root,
-    int (*cmp)(void* const, void* const, void*),
+    int (*pred)(void* const, void*),
     void* etc
 ) {
     struct avl_el* parent;
     struct avl_el* found;
-    int f = find_element_with_parent(root, cmp, etc, &parent, &found);
+    int f = find_element_with_parent(root, pred, etc, &parent, &found);
 
     if (f) {
 
@@ -102,23 +102,23 @@ avl_del(
 struct avl_el*
 avl_find(
     struct avl_el* root,
-    int (*cmp)(void* const, void* const, void*),
+    int (*pred)(void* const, void*),
     void* etc
 ) {
     struct avl_el* found;
-    find_element_with_parent(root, cmp, etc, NULL, &found);
+    find_element_with_parent(root, pred, etc, NULL, &found);
     return found;
 }
 
 struct avl_el*
 avl_unlink(
     struct avl_el* root,
-    int (*cmp)(void* const, void* const, void*),
+    int (*pred)(void* const, void*),
     void* etc
 ) {
     struct avl_el* parent;
     struct avl_el* found;
-    int f = find_element_with_parent(root, cmp, etc, &parent, &found);
+    int f = find_element_with_parent(root, pred, etc, &parent, &found);
 
     if (f) {
         parent->l = NULL;

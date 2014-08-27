@@ -55,8 +55,8 @@ avl_add(
 struct avl_el*
 avl_del(
     struct avl_el* root, //!< The root where to start the search from
-    int (*cmp)(void* const, void* const, void*), //!< the comperator function
-    void* etc //!< an additional parameter to the comperator function
+    int (*pred)(void* const, void*), //!< the predicate function
+    void* etc //!< an additional parameter to the predicate function
 );
 
 /**
@@ -67,8 +67,8 @@ avl_del(
 struct avl_el*
 avl_find(
     struct avl_el* root, //!< The root where to start the search from
-    int (*cmp)(void* const, void* const, void*), //!< the comperator function
-    void* etc //!< an additional parameter to the comperator function
+    int (*pred)(void* const, void*), //!< the predicate function
+    void* etc //!< an additional parameter to the predicate function
 );
 
 /**
@@ -79,8 +79,8 @@ avl_find(
 struct avl_el*
 avl_unlink(
     struct avl_el* root, //!< The root of the tree
-    int (*cmp)(void* const, void* const, void*), //!< the comperator function
-    void* etc //!< an additional parameter to the comperator function
+    int (*pred)(void* const, void*), //!< the predicate function
+    void* etc //!< an additional parameter to the predicate function
 );
 
 #endif //__AVL_H__
