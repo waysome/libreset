@@ -77,3 +77,11 @@
         This feature will proof especially useful when performing resizes and
         binary operations on sets with different bucket-counts.
 
+    \subsection{Bucket sub-structure}
+
+        Each bucket consists of an AVL tree on it's own, using the hashes as
+        keys.
+        The AVL tree consists of nodes, each containing one or more elements
+        with identical hashes, e.g. a list of elements.
+
+
