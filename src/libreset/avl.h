@@ -84,4 +84,30 @@ avl_unlink(
     void* etc //!< an additional parameter to the predicate function
 );
 
+/**
+ * Get the hash value of an element
+ *
+ * @return The elements hash value.
+ */
+static inline struct rs_hash
+avl_get_hash(
+    struct avl_el* el //!< The element to get the hash for
+);
+
+
+/*
+ *
+ *
+ * inline implementations
+ *
+ *
+ */
+
+static inline rs_hash
+__fastcall__
+__pure__
+avl_get_hash(struct avl_el* el) {
+    return el->hash;
+}
+
 #endif //__AVL_H__
