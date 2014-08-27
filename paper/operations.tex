@@ -1,2 +1,83 @@
 \section{Operations}
 
+    This section will discuss the operations.
+    In this section, $b_n$ will denote the number of nodes in bucket $n$.
+
+    \subsection{Insertion}
+
+        An item is inserted by performing the following steps:
+        \begin{itemize}
+            \item calculating the hash of the item ($O(1)$)
+            \item choosing the bucket $i$ as explained in the previous section
+                ($O(1)$)
+            \item conditionally performing a resize (assuming amortized $O(1)$)
+            \item inserting the item in the AVL tree, using the hash value as
+                key (worst case $O(log(b_i))$)
+        \end{itemize}
+        The overall worst-case complexity is in $O(log(b_i))$.
+
+
+    \subsection{Search}
+
+        An item may be found by performing the following steps:
+        \begin{itemize}
+            \item calculating the hash of the item ($O(1)$)
+            \item choosing the bucket $i$ as explained in the previous section
+                ($O(1)$)
+            \item finding the item in the AVL tree, using the hash value as
+                key (worst case $O(log(b_i))$)
+        \end{itemize}
+        The overall worst-case complexity is in $O(log(b_i))$.
+
+
+    \subsection{Union}
+
+        The union of two sets is calculated by merging one of the sets into the
+        other.
+        This is done bucket by bucket.
+        If the number of buckets of the operand is lower than the number of
+        bucket in the target set, one bucket $i$ is merged by:
+        \begin{itemize}
+            \item extracting the sub-AVL from the source bucket $s$ (worst case
+                $O(log(b_s))$)
+            \item merging the extracted sub-AVL into the target bucket
+                (worst case $O(b_i+b_s)$)
+            \item rebalancing the tree (worst case $O(b_i+b_s)$)
+        \end{itemize}
+
+        If, however, the number of buckets the source set consists of is greater
+        or equal the number of buckets in the target set, one bucket $i$ is
+        merged by performing the following steps:
+        \begin{itemize}
+             \item merging each source bucket $s$ into the target bucket (worst
+                case $O(O(b_i \sum_s b_s))$)
+            \item rebalancing the tree (worst case $O(b_i \sum_s b_s)$)
+        \end{itemize}
+
+        After the buckets are merged, the hash-table might be resized.
+
+        Although the overall worst case may be $O(in_d+n_s)$, the actual
+        operation is expected to be much faster, if some constraints are met.
+
+
+    \subsection{Intersection}
+
+        The intersection of two sets is calculated by removing elements from a
+        target set which are not in a source set.
+        This is done bucket by bucket for each of the target set's buckets or,
+        if the operand's number of bucket is greater, to each sub-domain
+        corresponding to a bucket of the operand.
+        %TODO: ref to the algo
+        The hash-table might be resized afterwards.
+
+
+    \subsection{Exclusion}
+
+        The exclusion of elements from a set is done the same way an
+        intersection is performed, but negating the predicate for removal of
+        elements.
+        Exclusion is performed by removing elements which \emph{are} in the
+        source set.
+
+
+
