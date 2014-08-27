@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "libreset/hash.h"
+#include "libreset/util/macros.h"
 
 /**
  * Find an element and its parent
@@ -51,6 +52,76 @@ find_element_with_parent(
         *parent_dest = root;
     }
     return find_element_with_parent(next, pred, etc, parent_dest, found_dest);
+}
+
+/**
+ * Perform a rotation between a root node and its left child
+ *
+ * @warning Call only if root node has left child
+ *
+ * @return The new root
+ */
+static struct avl_el*
+single_rotate_with_left(struct avl_el* root) {
+    struct avl_el* k = NULL;
+
+    k = root->l;
+    root->l = k->r;
+    k->r = root;
+
+    root->height = MAX(avl_height(root->l), avl_height(root->r)) + 1;
+    k->height    = MAX(avl_height(k->l), root->height) + 1;
+
+    return k;
+}
+
+/**
+ * Perform a rotation between a root node and its right child
+ *
+ * @warning Call only if root node has right child
+ *
+ * @return The new root
+ */
+static struct avl_el*
+single_rotate_with_right(struct avl_el* root) {
+    struct avl_el* k = NULL;
+
+    k = root->r;
+    root->r = k->l;
+    k->l = root;
+
+    root->height = MAX(avl_height(root->l), avl_height(root->r)) + 1;
+    k->height    = MAX(avl_height(k->r), root->height) + 1;
+
+    return k;
+}
+
+/**
+ * Perform left-right double rotation
+ *
+ * @warning Call only if root node has a left child and this one has a right
+ * child
+ *
+ * @return The new root
+ */
+static inline struct avl_el*
+double_rotate_with_left(struct avl_el* root) {
+    root->l = single_rotate_with_right(root->l);
+    return single_rotate_with_left(root);
+}
+
+/**
+ * Perform right-left double rotation
+ *
+ * @warning Call only if root node has a right child and this one has a left
+ * child
+ *
+ * @return The new root
+ */
+static inline struct avl_el*
+double_rotate_with_right(struct avl_el* root) {
+    root->r = single_rotate_with_left(root->r);
+    return single_rotate_with_right(root);
 }
 
 struct avl_el*
