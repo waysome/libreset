@@ -10,6 +10,7 @@
 struct avl_el {
     rs_hash hash;
     void*   data;       //!< pointer to the data of the node
+    signed int height;  //!< The height of the subtree
     struct  avl_el* l;  //!< Next left node
     struct  avl_el* r;  //!< Next right node
 };
@@ -94,6 +95,16 @@ avl_get_hash(
     struct avl_el* el //!< The element to get the hash for
 );
 
+/**
+ * Get the height of the avl tree
+ *
+ * @return The height of the avl tree
+ */
+inline static signed int
+avl_height(
+    struct avl_el* root //!< The root element
+);
+
 
 /*
  *
@@ -108,6 +119,17 @@ __fastcall__
 __pure__
 avl_get_hash(struct avl_el* el) {
     return el->hash;
+}
+
+inline static signed int
+avl_height(
+    struct avl_el* root //!< The root element
+) {
+    if (root == NULL) {
+        return -1
+    } else {
+        return root->height;
+    }
 }
 
 #endif //__AVL_H__
