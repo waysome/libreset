@@ -55,6 +55,32 @@ find_element_with_parent(
 }
 
 /**
+ * Get the higher child of a node
+ *
+ * @note NULL-safe. If either of the children of the root node is NULL, the
+ * other child is returned.
+ *
+ * @warning Returns NULL if both childs are NULL.
+ *
+ * @return The higher child of a node, the right one if both are of equal height
+ */
+static inline struct avl_el*
+find_higher_child(struct avl_el* root) {
+    if (!root->l) {
+        return root->r;
+    }
+    if (!root->r) {
+        return root->l;
+    }
+
+    if (root->l->height > root->r->height) {
+        return root->l;
+    } else {
+        return root->r;
+    }
+}
+
+/**
  * Perform a rotation between a root node and its left child
  *
  * @warning Call only if root node has left child
