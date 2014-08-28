@@ -189,6 +189,32 @@ double_rotate_with_right(struct avl_el* root) {
 }
 
 /**
+ * Find leftmost node of the passed node
+ *
+ * @note Uses `p` as temporary variable while retreiving the leftmost node.
+ *
+ * @note Ensures `p` to be NULL if the leftmost node has no parent
+ *
+ * @return The leftmost node starting from the passed node
+ */
+static inline struct avl_el*
+        __returns_nonnull__
+find_leftmost_node_with_parent(
+    struct avl_el* root, //!< The root
+    struct avl_el** p    //!< Destination for parent of leftmost node
+) {
+    if (root) {
+        while (root->l) {
+            *p = root;
+            root = root->l;
+        }
+    } else {
+        *p = NULL;
+    }
+    return root;
+}
+
+/**
  * Add a node to a tree
  *
  * @return the new root node
