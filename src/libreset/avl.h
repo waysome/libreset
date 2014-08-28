@@ -1,3 +1,24 @@
+/**
+ * @file avl.h
+ *
+ * This is the interface definition for the AVL tree implementation. The
+ * implementation of the AVL element type is public, but the provided functions
+ * should be used when interacting with it.
+ *
+ * @authors Matthias Beyer
+ *
+ * @copyright See the LICENSE file shipped with the repository.
+ */
+
+/*
+ * @addtogroup internal_avl_interface "(internal) AVL interface definition"
+ *
+ * This group contains the definition of the interface for the AVL tree
+ * implementation, meaning public (but only for internal use) functions.
+ *
+ * @{
+ */
+
 #ifndef __AVL_H__
 #define __AVL_H__
 
@@ -127,5 +148,7 @@ avl_height(
 ) {
     return root == NULL ? 0 : root->height;
 }
+
+/** @} */
 
 #endif //__AVL_H__
