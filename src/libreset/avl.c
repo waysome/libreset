@@ -94,6 +94,31 @@ height_diff(
 }
 
 /**
+ * Recompute the height for a subtree
+ *
+ * @invariant \f$ -1 \leqslant H(n) \leqslant +1 \f$, Where \f$ H(n) \f$ is the
+ * height of a node.
+ *
+ * @note NULL-safe, returns zero
+ *
+ * @return The height of the passed node or zero if the node is NULL
+ */
+static inline int
+recompute_height(struct avl_el* root) {
+    if (!root) {
+        return 0;
+    }
+
+    if (!root->l && !root->r) {
+        root->height = 0;
+    } else {
+        root->height = - recompute_height(root->l) + recompute_height(root->r);
+    }
+
+    return root->height;
+}
+
+/**
  * Perform a rotation between a root node and its left child
  *
  * @warning Call only if root node has left child
