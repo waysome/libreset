@@ -58,7 +58,7 @@ done
 echo_cyan "Check done, rm -rf '$tmpdir'"
 rm -rf $tmpdir
 
-if ( $bad = 1 )
+if [ $bad = 1 ]
 then
     echo_red "Bad formatted file found. You cannot commit"
     exit 1
