@@ -31,7 +31,7 @@ echo_cyan() {
 
 changed=$(git diff --name-only HEAD | grep "\.[ch]$")
 
-tempdir=/tmp/git-pre-commit-hook-$$
+tmpdir=/tmp/git-pre-commit-hook-$$
 
 mkdir -p $tmpdir
 
