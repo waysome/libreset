@@ -1,19 +1,32 @@
 #ifndef __ELEMENT_H__
 #define __ELEMENT_H__
 
+/**
+ * @file element.h
+ *
+ * This file contains the type definition and helper function definition for the
+ * element type.
+ *
+ * @note For internal use only.
+ */
+
 #include "libreset/hash.h"
 
 /**
  * Element type
+ *
+ * The element type contains of two basic members:
+ *  - The hash of the element
+ *  - A pointer to the actual element
  */
 struct rs_element
 {
-    rs_hash hash;
-    void*   data;
+    rs_hash hash; //!< hash of the element
+    void*   data; //!< ptr to the actual element
 };
 
 /**
- * initialize a rs_element object
+ * Initialize a rs_element object
  */
 static inline void
 rs_element_init(
