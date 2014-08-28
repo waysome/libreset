@@ -21,6 +21,14 @@
  * for an compiler macro, we use the normal naming convention here.
  */
 
+/*
+ * @addtogroup internal_util_attribute_macros "(internal) __attribute__ macros"
+ *
+ * This group contains helper macros for GCCs __attribute__ macros
+ *
+ * @{
+ */
+
 #ifdef __GNUC__
 
 #define __always_inline__       __attribute__((always_inline))
@@ -80,5 +88,7 @@
 #define RS_FORCE_INLINE
 
 #endif // __GNUC__
+
+/** @} */
 
 #endif //__UTIL_ATTRIBUTES_H__
