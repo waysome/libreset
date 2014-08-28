@@ -1,0 +1,67 @@
+#!/usr/bin/bash
+
+if [ -z $(which astyle 2>/dev/null) ]
+then
+    echo "No 'astyle' found, please install or put in PATH"
+    echo "You cannot commit"
+fi
+
+if [ -z $(which diff 2>/dev/null) ]
+then
+    echo "No 'diff' found, please install or put in PATH"
+    echo "You cannot commit"
+fi
+
+Green="\033[32m"
+Red="\033[31m"
+Cyan="\033[0;36m"
+Color_Off="\033[0m"
+
+echo_green() {
+    echo -e "${Cyan}[pre-commit]:${Color_Off} ${Green}$*${Color_Off}"
+}
+
+echo_red() {
+    echo -e "${Cyan}[pre-commit]:${Color_Off} ${Red}$*${Color_Off}"
+}
+
+echo_cyan() {
+    echo -e "${Cyan}[pre-commit]: $*${Color_Off}"
+}
+
+changed=$(git diff --name-only HEAD)
+
+tempdir=/tmp/git-pre-commit-hook-$$
+
+mkdir -p $tmpdir
+
+bad=0
+
+echo_cyan "Starting astyle check in '$tmpdir'"
+
+for file in $changed
+do
+    echo_cyan "Checking: $file"
+    cp $file $tmpdir/
+    astyle --options=./etc/astylerc < $tmpdir/$file > $tmpdir/${file}-formatted
+    diff $tmpdir/$file $tmpdir/$file-formatted > /dev/null
+
+    if ( $? = 1 )
+    then
+        echo_red "Format bad: $file"
+        bad=1
+    else
+        echo_green "Format ok: $file"
+    fi
+done
+
+echo_cyan "Check done, rm -rf '$tmpdir'"
+rm -rf $tmpdir
+
+if ( $bad = 1 )
+then
+    echo_red "Bad formatted file found. You cannot commit"
+    exit 1
+else
+    exit 0
+fi
