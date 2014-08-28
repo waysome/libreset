@@ -42,9 +42,13 @@ echo_cyan "Starting astyle check in '$tmpdir'"
 for file in $changed
 do
     echo_cyan "Checking: $file"
-    cp $file $tmpdir/
-    astyle --options=./etc/astylerc < $tmpdir/$file > $tmpdir/${file}-formatted
-    diff $tmpdir/$file $tmpdir/$file-formatted > /dev/null
+    fpath=$tmpdir/$(basename $file)
+    fpath_formatted=$tmpdir/$(basename $file)-formatted
+
+    cp $file $fpath
+
+    astyle --options=./etc/astylerc < $fpath > $fpath_formatted
+    diff $fpath $fpath_formatted > /dev/null
 
     if ( $? = 1 )
     then
@@ -53,6 +57,9 @@ do
     else
         echo_green "Format ok: $file"
     fi
+
+    echo_cyan "Check on $file done, rm '$fpath', '$fpath_formatted'"
+    rm $fpath $fpath_formatted
 done
 
 echo_cyan "Check done, rm -rf '$tmpdir'"
