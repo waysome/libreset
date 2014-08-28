@@ -295,6 +295,9 @@ avl_add(
     return new;
 }
 
+/**
+ * @bug When deleting the root node, everything crashes.
+ */
 struct avl_el*
 avl_del(
     struct avl_el* root,
@@ -307,19 +310,86 @@ avl_del(
 
     if (f) {
 
-        // TODO: reorganize tree if neccessary, else:
-        if (found->l == NULL && found->r == NULL) {
+        /**
+         * Three possible cases:
+         *
+         * 1) `found` has no children. Delete `found`
+         * 2) `found` has one child. Delete `found` and link `parent` to the
+         *     child of `found`
+         * 3) `found` has two children:
+         *      3.1) find `found`s successor `z` (which is the leftmost node in
+         *           the right subtree of `found`)
+         *      3.2) replace `found` with its successor `z`
+         *      3.3) delete `z`
+         *           Note: `z` does not have a left child.
+         *           Note: `z` has at most one child, we can use case (1) or (2)
+         *                 to delete `z`
+         */
+
+        if (!found->l && !found->r) {
+            /* case (1) */
             if (parent->l == found) {
                 parent->l = NULL;
-            } else {
+            } else { /* parent->r == found */
                 parent->r = NULL;
             }
+        } else if ((found->l && !found->r) || (!found->l && found->r)) {
+            /* case (2) */
+            struct avl_el* link = (found->l) ? found->l : found->r;
+
+            if (parent->l == found) {
+                parent->l = link;
+            } else { /* parent->r == found */
+                parent->r = link;
+            }
+        } else { /* `found` has two children */
+            /* case (3) */
+
+            /*
+             * Find successor of `found`, which is called `lm` here (for
+             * 'leftmost'). Also find its parent.
+             *
+             * Store its child, too, so we have it stored when replacing `found`
+             * with `lm`.
+             */
+            struct avl_el* lm_parent;
+            struct avl_el* lm = find_leftmost_node_with_parent(found, &lm_parent);
+            struct avl_el* lm_child = (lm->r ? lm->r : NULL);
+
+            /*
+             * replace `lm` with `found`
+             */
+            if (parent->l == found) {
+                parent->l = lm;
+            } else {
+                parent->r = lm;
+            }
+
+            /*
+             * Replace `lm` left and right ptr and its height with the data from
+             * `found`.
+             */
+            lm->r       = parent->r;
+            lm->l       = parent->l;
+            lm->height  = parent->height;
+
+            /*
+             * `lm` is always left node after `lm_parent`
+             *
+             * Set possible child of `lm` to the left node after the parent of
+             * `lm`, `lm_parent`
+             */
+            lm_parent->l = (lm_child ? lm_child : NULL);
         }
 
+        /*
+         * Nothing should now point to `found` and nothing should dangling
+         * around, all ptrs from `found` to somewhere are safed.
+         */
         free(found);
     }
 
-    return 0;
+    return root;
 }
 
 struct avl_el*
