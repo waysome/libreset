@@ -389,6 +389,10 @@ avl_del(
         free(found);
     }
 
+    /**
+     * @todo rebalancing, with rotations if neccessary.
+     */
+
     return root;
 }
 
