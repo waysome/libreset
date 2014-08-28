@@ -125,11 +125,7 @@ inline static signed int
 avl_height(
     struct avl_el* root //!< The root element
 ) {
-    if (root == NULL) {
-        return -1
-    } else {
-        return root->height;
-    }
+    return root == NULL ? 0 : root->height;
 }
 
 #endif //__AVL_H__
