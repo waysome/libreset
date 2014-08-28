@@ -29,7 +29,7 @@ echo_cyan() {
     echo -e "${Cyan}[pre-commit]: $*${Color_Off}"
 }
 
-changed=$(git diff --name-only HEAD | grep "\.[ch]$)
+changed=$(git diff --name-only HEAD | grep "\.[ch]$")
 
 tempdir=/tmp/git-pre-commit-hook-$$
 
