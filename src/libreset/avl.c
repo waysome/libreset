@@ -81,6 +81,19 @@ find_higher_child(struct avl_el* root) {
 }
 
 /**
+ * Get the height difference between two nodes
+ */
+static inline signed int
+height_diff(
+    struct avl_el* a, //!< The first node
+    struct avl_el* b  //!< The first node
+) {
+    int h1 = (a == NULL ? 0 : a->height);
+    int h2 = (b == NULL ? 0 : b->height);
+    return ((h1 >= h2) ? (h1 - h2) : (h2 - h1));
+}
+
+/**
  * Perform a rotation between a root node and its left child
  *
  * @warning Call only if root node has left child
