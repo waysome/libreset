@@ -113,18 +113,6 @@ avl_find(
 );
 
 /**
- * Unlink a subtree from a tree
- *
- * @return The new root element or NULL on failure
- */
-struct avl*
-avl_unlink(
-    struct avl* avl, //!< The root of the tree
-    rs_predicate_function pred, //!< the predicate function
-    void* etc //!< an additional parameter to the predicate function
-);
-
-/**
  * Get the hash value of an element
  *
  * @return The elements hash value.

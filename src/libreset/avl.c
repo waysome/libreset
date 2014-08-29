@@ -417,23 +417,3 @@ avl_find(
     find_element_with_parent(avl->root, pred, etc, NULL, &found);
     return found;
 }
-
-struct avl*
-avl_unlink(
-    struct avl* avl,
-    int (*pred)(void* const, void*),
-    void* etc
-) {
-    struct avl_el* parent;
-    struct avl_el* found;
-    int f = find_element_with_parent(avl->root, pred, etc, &parent, &found);
-
-    if (f) {
-        parent->l = NULL;
-        parent->r = NULL;
-
-        // TODO: resort parent tree (root)
-    }
-
-    return NULL /* not implemented by now */;
-}
