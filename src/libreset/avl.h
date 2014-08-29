@@ -75,6 +75,17 @@ avl_add(
 );
 
 /**
+ * Predicate function type
+ *
+ * This is the predicate function type for selecting nodes of the avl in an
+ * algorithm by predicate.
+ *
+ * The function gets an additional parameter (void*), which can be used to pass
+ * data to the function.
+ */
+typedef int (*rs_predicate_function)(void* const, void*);
+
+/**
  * Delete an element from the avl tree
  *
  * The element of the delete operation is returned, so we do not have a dangling
@@ -85,7 +96,7 @@ avl_add(
 struct avl_el*
 avl_del(
     struct avl* avl, //!< The avl where to search in
-    int (*pred)(void* const, void*), //!< the predicate function
+    rs_predicate_function pred, //!< the predicate function
     void* etc //!< an additional parameter to the predicate function
 );
 
@@ -97,7 +108,7 @@ avl_del(
 struct avl_el*
 avl_find(
     struct avl* avl , //!< The avl where to search in
-    int (*pred)(void* const, void*), //!< the predicate function
+    rs_predicate_function pred, //!< the predicate function
     void* etc //!< an additional parameter to the predicate function
 );
 
@@ -109,7 +120,7 @@ avl_find(
 struct avl*
 avl_unlink(
     struct avl* avl, //!< The root of the tree
-    int (*pred)(void* const, void*), //!< the predicate function
+    rs_predicate_function pred, //!< the predicate function
     void* etc //!< an additional parameter to the predicate function
 );
 
