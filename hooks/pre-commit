@@ -50,7 +50,7 @@ do
     astyle --options=./etc/astylerc < $fpath > $fpath_formatted
     diff $fpath $fpath_formatted > /dev/null
 
-    if ( $? = 1 )
+    if [ $? -eq 1 ]
     then
         echo_red "Format bad: $file"
         bad=1
@@ -65,7 +65,7 @@ done
 echo_cyan "Check done, rm -rf '$tmpdir'"
 rm -rf $tmpdir
 
-if [ $bad = 1 ]
+if [ $bad -eq 1 ]
 then
     echo_red "Bad formatted file found. You cannot commit"
     exit 1
