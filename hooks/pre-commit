@@ -6,6 +6,7 @@ do
     then
         echo "No '$i' found, please install or put it in PATH"
         echo "You cannot commit"
+        exit 1
     fi
 done
 
