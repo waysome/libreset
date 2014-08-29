@@ -44,9 +44,8 @@ do
     cp $file $fpath
 
     astyle --options=./etc/astylerc < $fpath > $fpath_formatted
-    diff $fpath $fpath_formatted > /dev/null
 
-    if [ $? -ne 0 ]
+    if ! diff $fpath $fpath_formatted > /dev/null
     then
         echo_red "Format bad: $file"
         bad=1
