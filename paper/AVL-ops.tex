@@ -9,4 +9,89 @@
     be assumed for the actual number to be irrelevant for the algorithms'
     classes of complexity.
 
+    \subsection{Isolating subtrees}
+    \label{sec:AVL_ops-isolate}
+
+        As previously discussed, buckets represent ranges of integral numbers.
+        %TODO: ref
+        Since buckets have to be split during resizes and other operations,
+        sometimes subtrees have to be split into an AVL with hashes which are
+        greater than or equal a specific number and an AVL containing elements
+        with hashes lower than that number:
+        \begin{equation}
+            [a,b) \mapsto [a,c), [c,b)
+        \end{equation}
+
+        Since each node's left children's keys are lower than the current's
+        node's one while the right children's keys are greater, splitting an
+        AVL into items with lower and greater keys is a simple procedure:
+        \begin{itemize}
+            \item find the first item which does not fall in the category of
+                the root node
+            \item split it from it's parent
+        \end{itemize}
+        This results in two AVLs (from which one may not be balanced).
+
+    \subsection{Merging AVLs}
+    \label{sec:AVL_ops-merge}
+
+        Similar to isolation, AVLs may also be merged.
+        However, merging will not be constrained to AVLs representing
+        exclusively disjunct sets, neither regarding the actual items
+        nor the ranges they represent.
+
+        \begin{itemize}
+            \item split the tree to merge in nodes with keys greater and lower
+                than the current AVL's root node's key, extracting the node
+                with an \emph{identical} key. ($O(log(n))$)
+            \item merge that node with the root node, if present ($O(1)$)
+            \item proceed with the corresponding sub-trees
+            \item if one of the target's subtree is empty, link the remaining
+                subtrees from the source
+        \end{itemize}
+
+        This algorithm is in $O(n)$ (every node is processed once).
+        For AVLs which represent exclusively disjunct ranges, this algorithm
+        is in $O(log(n))$.
+
+
+    \subsection{Intersecting AVLs}
+    \label{sec:AVL_ops-intersect}
+
+        Determination of an AVL's intersection with another AVL is similar to
+        merging an AVL into another:
+
+        \begin{itemize}
+            \item split the tree to merge in nodes with keys greater and lower
+                than the current AVL's root node's key, extracting the node
+                with an \emph{identical} key. ($O(log(n))$)
+            \item remove all items from that node which are not in the root node
+                of the previously isolated subtree ($O(n)$)
+            \item proceed with the corresponding sub-trees
+        \end{itemize}
+
+        This algorithm is in $O(n)$ (every node is processed once).
+        For AVLs which represent exclusively disjunct ranges, this algorithm
+        is in $O(log(n))$.
+
+
+    \subsection{Excluding one AVL's elements from another}
+    \label{sec:AVL_ops-exclude}
+
+        Exclusion of one AVL's elements from another AVL is also similar to
+        merging AVLs:
+
+        \begin{itemize}
+            \item split the tree to merge in nodes with keys greater and lower
+                than the current AVL's root node's key, extracting the node
+                with an \emph{identical} key. ($O(log(n))$)
+            \item remove all items from that node which are in the root node
+                of the previously isolated subtree ($O(n)$)
+            \item proceed with the corresponding sub-trees
+        \end{itemize}
+
+        This algorithm is in $O(n)$ (every node is processed once).
+        For AVLs which represent exclusively disjunct ranges, this algorithm
+        is in $O(log(n))$
+
 
