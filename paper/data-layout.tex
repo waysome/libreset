@@ -1,4 +1,5 @@
 \section{Data layout}
+\label{sec:data_layout}
 
     As already implicated, the data is divided into several buckets --like in a
     regular hashtable. 
@@ -18,6 +19,7 @@
     elements of the bucket.
 
     \subsection{Number of buckets}
+    \label{sec:data_layout-bucketnum}
 
         So far, we're just talking about an average hashtable. However, we
         constrain the number of buckets $s$ to powers of two:
@@ -40,6 +42,7 @@
 
 
     \subsection{Division into buckets}
+    \label{sec:data_layout-bucketdiv}
 
         Naturally, a hashtable $H$ consists of a number of buckets $b_n$:
 
@@ -78,6 +81,7 @@
         binary operations on sets with different bucket-counts.
 
     \subsection{Bucket sub-structure}
+    \label{sec:data_layout-bucketstruct}
 
         Each bucket consists of an AVL tree on it's own, using the hashes as
         keys.
