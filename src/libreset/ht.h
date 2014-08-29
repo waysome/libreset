@@ -11,7 +11,7 @@
  */
 struct rs_ht_bucket
 {
-    struct avl_el avl;
+    struct avl avl;
 };
 
 /**
