@@ -252,6 +252,24 @@ insert(struct avl_el* new, struct avl_el* root) {
     return root;
 }
 
+static void
+destroy_subtree(
+    struct avl_el* root
+) {
+    if (root->l) {
+        destroy_subtree(root->l);
+        root->l = NULL;
+    }
+
+    if (root->r) {
+        destroy_subtree(root->r);
+        root->r = NULL;
+    }
+
+    root->data = NULL;
+    free(root);
+}
+
 struct avl*
 avl_alloc(void) {
     return calloc(1, sizeof(struct avl));
@@ -259,22 +277,15 @@ avl_alloc(void) {
 
 int
 avl_destroy(
-    struct avl_el* root
+    struct avl* avl
 ) {
-    if (root->l) {
-        avl_destroy(root->l);
-        root->l = NULL;
+    if (avl && avl->root) {
+        destroy_subtree(avl->root);
+        free(avl);
+        return 1;
+    } else {
+        return 0;
     }
-
-    if (root->r) {
-        avl_destroy(root->r);
-        root->r = NULL;
-    }
-
-    root->data = NULL;
-    free(root);
-
-    return 1;
 }
 
 struct avl_el*
