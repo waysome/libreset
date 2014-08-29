@@ -1,16 +1,13 @@
 #!/bin/bash
 
-if [ -z $(which astyle 2>/dev/null) ]
-then
-    echo "No 'astyle' found, please install or put in PATH"
-    echo "You cannot commit"
-fi
-
-if [ -z $(which diff 2>/dev/null) ]
-then
-    echo "No 'diff' found, please install or put in PATH"
-    echo "You cannot commit"
-fi
+for i in astyle diff
+do
+    if ! type $i 2> /dev/null
+    then
+        echo "No '$i' found, please install or put it in PATH"
+        echo "You cannot commit"
+    fi
+done
 
 Green="\033[32m"
 Red="\033[31m"
