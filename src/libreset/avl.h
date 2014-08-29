@@ -50,7 +50,7 @@ struct avl_el {
  *
  * @return A pointer to a new avl_el object or NULL on failure
  */
-struct avl_el*
+struct avl*
 avl_alloc(void);
 
 /**
@@ -60,7 +60,7 @@ avl_alloc(void);
  */
 int
 avl_destroy(
-    struct avl_el* root //!< The root node of the tree
+    struct avl* avl //!< The avl tree
 );
 
 /**
@@ -70,7 +70,7 @@ avl_destroy(
  */
 struct avl_el*
 avl_add(
-    struct avl_el* root, //!< The root of the avl tree where to insert
+    struct avl* avl, //!< The avl tree where to insert
     void* const d, //!< The data element
 );
 
@@ -84,7 +84,7 @@ avl_add(
  */
 struct avl_el*
 avl_del(
-    struct avl_el* root, //!< The root where to start the search from
+    struct avl* avl, //!< The avl where to search in
     int (*pred)(void* const, void*), //!< the predicate function
     void* etc //!< an additional parameter to the predicate function
 );
@@ -96,7 +96,7 @@ avl_del(
  */
 struct avl_el*
 avl_find(
-    struct avl_el* root, //!< The root where to start the search from
+    struct avl* avl , //!< The avl where to search in
     int (*pred)(void* const, void*), //!< the predicate function
     void* etc //!< an additional parameter to the predicate function
 );
@@ -106,9 +106,9 @@ avl_find(
  *
  * @return The new root element or NULL on failure
  */
-struct avl_el*
+struct avl*
 avl_unlink(
-    struct avl_el* root, //!< The root of the tree
+    struct avl* avl, //!< The root of the tree
     int (*pred)(void* const, void*), //!< the predicate function
     void* etc //!< an additional parameter to the predicate function
 );
@@ -124,9 +124,9 @@ avl_get_hash(
 );
 
 /**
- * Get the height of the avl tree
+ * Get the height of the avl sub tree
  *
- * @return The height of the avl tree
+ * @return The height of the avl sub tree
  */
 inline static signed int
 avl_height(
