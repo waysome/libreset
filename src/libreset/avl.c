@@ -311,13 +311,13 @@ avl_add(
  */
 struct avl_el*
 avl_del(
-    struct avl_el* root,
+    struct avl* avl,
     int (*pred)(void* const, void*),
     void* etc
 ) {
     struct avl_el* parent;
     struct avl_el* found;
-    int f = find_element_with_parent(root, pred, etc, &parent, &found);
+    int f = find_element_with_parent(avl->root, pred, etc, &parent, &found);
 
     if (f) {
 
@@ -404,7 +404,7 @@ avl_del(
      * @todo rebalancing, with rotations if neccessary.
      */
 
-    return root;
+    return avl->root;
 }
 
 struct avl_el*
