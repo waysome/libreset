@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 if [ -z $(which astyle 2>/dev/null) ]
 then
