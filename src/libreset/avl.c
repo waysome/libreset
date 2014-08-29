@@ -409,12 +409,12 @@ avl_del(
 
 struct avl_el*
 avl_find(
-    struct avl_el* root,
+    struct avl* avl,
     int (*pred)(void* const, void*),
     void* etc
 ) {
     struct avl_el* found;
-    find_element_with_parent(root, pred, etc, NULL, &found);
+    find_element_with_parent(avl->root, pred, etc, NULL, &found);
     return found;
 }
 
