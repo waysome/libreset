@@ -78,10 +78,11 @@ style. Here are just some examples:
     case 1:
         // do something
         break;
-    case 2: {
-        // or something else, but in a block, if you need to
-        break;
-    }
+    case 2:
+        {
+            // or something else, but in a block, if you need to
+            break;
+        }
     default:
         // do whatever
         break;
