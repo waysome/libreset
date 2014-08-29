@@ -23,6 +23,13 @@
 #define __AVL_H__
 
 /**
+ * AVL Tree type
+ */
+struct avl {
+    struct avl_el* root;
+};
+
+/**
  * AVL Tree element data type
  *
  * This data type defines an AVL element. All operations for the AVL tree
