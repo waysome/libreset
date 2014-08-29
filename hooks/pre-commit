@@ -26,8 +26,6 @@ echo_cyan() {
     echo -e "${Cyan}[pre-commit]: $*${Color_Off}"
 }
 
-changed=$(git diff --name-only HEAD | grep "\.[ch]$")
-
 tmpdir=/tmp/git-pre-commit-hook-$$
 
 mkdir -p $tmpdir
@@ -36,7 +34,7 @@ bad=0
 
 echo_cyan "Starting astyle check in '$tmpdir'"
 
-for file in $changed
+for file in $(git diff --name-only HEAD | grep "\.[ch]$")
 do
     echo_cyan "Checking: $file"
     fpath=$tmpdir/$(basename $file)
