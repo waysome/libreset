@@ -252,9 +252,9 @@ insert(struct avl_el* new, struct avl_el* root) {
     return root;
 }
 
-struct avl_el*
+struct avl*
 avl_alloc(void) {
-    return avl_add(NULL, NULL);
+    return calloc(1, sizeof(struct avl));
 }
 
 int
