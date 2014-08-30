@@ -221,8 +221,17 @@ find_leftmost_node_with_parent(
  */
 static struct avl_el*
 insert(struct avl_el* new, struct avl_el** root) {
-    signed int cmpres = new->hash == (*root)->hash ? 0 : (new->hash >
-                                                          (*root)->hash ? -1 : 1);
+    signed int cmpres;
+
+    if (new->hash == (*root)->hash) {
+        cmpres = 0;
+    } else {
+        if (new->hash > (*root)->hash) {
+            cmpres = -1;
+        } else {
+            cmpres = 1;
+        }
+    }
 
     if (*root == NULL) {
         return new;
