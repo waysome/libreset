@@ -226,7 +226,9 @@ insert(struct avl_el* new, struct avl_el** root) {
 
     if (*root == NULL) {
         return new;
-    } else if (cmpres == 1) {
+    }
+
+    if (cmpres == 1) {
         (*root)->l = insert(new, &(*root)->l);
         if (avl_height((*root)->l) - avl_height((*root)->r) == 2) {
             if (new->hash != (*root)->l->hash) {
