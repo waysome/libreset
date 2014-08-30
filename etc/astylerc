@@ -3,11 +3,10 @@
 #
 
 #
-# We want ansi style for our source code
+# We want attach style for our source code
 # which is basically
 #
-# int Foo(bool isBar)
-# {
+# int Foo(bool isBar) {
 #     if (isBar) {
 #         bar();
 #         return 1;
@@ -15,7 +14,16 @@
 #         return 0;
 # }
 #
---style=kr
+# But we write our functions like this:
+#
+# int
+# Foo(
+#   bool isBar
+# ) {
+#   /* actual code */
+# }
+#
+--style=attach
 
 #
 # We want four spaces as indention
@@ -96,14 +104,16 @@
 #
 # We don't want this:
 #
-# } else {
-#
-# but we want
-#
 # }
 # else {
 #
---break-closing-brackets
+# but we want
+#
+# } else {
+#
+# so we disable this feature
+#
+#--break-closing-brackets
 
 #
 # And if statements should always have brackets!
