@@ -1,2 +1,91 @@
 \section{Data layout}
+\label{sec:data_layout}
+
+    As already implicated, the data is divided into several buckets --like in a
+    regular hashtable. 
+
+    As to be expected, any element which may be part of the set is mapped onto
+    a bucket injectively.
+    The sets made up from the elements which would be mapped to a specific
+    bucket $e(b)$ are disjunctive to the elements which would be mapped to
+    another bucket of the same table:
+
+    \begin{equation}
+        e(b_1) \cap e(b_2) = \emptyset
+    \end{equation}
+
+    Note that $e(b)$ is the set of \em all\em{} elements which \em may\em{}
+    potentially be part of the bucket, rather than elements which \em are\em{}
+    elements of the bucket.
+
+    \subsection{Number of buckets}
+    \label{sec:data_layout-bucketnum}
+
+        So far, we're just talking about an average hashtable. However, we
+        constrain the number of buckets $s$ to powers of two:
+
+        \begin{equation}
+            s \in \left\{ 2^n | n \in \mathbb{N} \right\}
+        \end{equation}
+
+        Assume having two hashtables $A$ and $B$, where the number of buckets of
+        table $B$ is greater or equal than that of table $A$.
+        The constraint ensures that, in this scenario, any bucket in $A$ is
+        equivalent to a subset of the buckets of $B$, regarding the elements it
+        may contain:
+
+        \begin{equation}
+            s(A) < s(B)
+            \quad\Rightarrow\quad
+            \forall_{0 \leq i \leq s(A)} : e(a_i) = \bigcup_{j\%s(B)=i} e(b_j)
+        \end{equation}
+
+
+    \subsection{Division into buckets}
+    \label{sec:data_layout-bucketdiv}
+
+        Naturally, a hashtable $H$ consists of a number of buckets $b_n$:
+
+        \begin{equation}
+            H = \left\{ b_n | n \in [0, s(H)) \right\}
+        \end{equation}
+
+        In regular hashtables, the bucket an element $i$ is put into is derived
+        by applying the modulo on the hash-value $h$ calculated from the
+        element:
+
+        \begin{equation}
+            n = h(i) \% s(H) \qquad i \in e(b_n)
+        \end{equation}
+
+        Taking into account the constraint described before, this would be
+        equivalent with taking the least significant bits of the hash-value.
+        However, we are using the \em most\em{} significant bits:
+
+        \begin{equation}
+            i \in e(b_n) \qquad n = h(i) \div \frac{2^N}{s}
+        \end{equation}
+
+        Where $N$ is the number of bits of a hash-value.
+        
+        Obviously, this preserves a subset of the natural numbers' ordering
+        relation: using this mapping, hashes of items in later buckets are
+        greater than those in earlier ones:
+
+        \begin{equation}
+            n_1 > n_2 \land i_1 \in e(b_{n_1}) \land i_2 \in e(b_{n_2})
+            \Rightarrow i_1 > i_2
+        \end{equation}
+
+        This feature will proof especially useful when performing resizes and
+        binary operations on sets with different bucket-counts.
+
+    \subsection{Bucket sub-structure}
+    \label{sec:data_layout-bucketstruct}
+
+        Each bucket consists of an AVL tree on it's own, using the hashes as
+        keys.
+        The AVL tree consists of nodes, each containing one or more elements
+        with identical hashes, e.g. a list of elements.
+
 
