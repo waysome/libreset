@@ -1,0 +1,76 @@
+#!/bin/bash
+
+for i in astyle diff
+do
+    if ! type $i 2> /dev/null
+    then
+        echo "No '$i' found, please install or put it in PATH"
+        echo "You cannot commit"
+        exit 1
+    fi
+done
+
+p=$(pwd)
+cd $(git rev-parse --show-toplevel)
+
+Green="\033[32m"
+Red="\033[31m"
+Cyan="\033[0;36m"
+Color_Off="\033[0m"
+
+echo_green() {
+    echo -e "${Cyan}[pre-commit]:${Color_Off} ${Green}$*${Color_Off}"
+}
+
+echo_red() {
+    echo -e "${Cyan}[pre-commit]:${Color_Off} ${Red}$*${Color_Off}"
+}
+
+echo_cyan() {
+    echo -e "${Cyan}[pre-commit]: $*${Color_Off}"
+}
+
+tmpdir=/tmp/git-pre-commit-hook-$$
+
+mkdir -p $tmpdir
+
+bad=0
+
+echo_cyan "Starting astyle check in '$tmpdir'"
+
+for file in $(git diff --name-only HEAD | grep "\.[ch]$")
+do
+    echo_cyan "Checking: $file"
+    fpath=$tmpdir/$(basename $file)
+    fpath_formatted=$tmpdir/$(basename $file)-formatted
+
+    cp $file $fpath
+
+    astyle --options=./etc/astylerc < $fpath > $fpath_formatted
+    # delete last line of $fpath_formatted
+    sed -i '$ d' $fpath_formatted
+
+    if ! diff $fpath $fpath_formatted > /dev/null
+    then
+        echo_red "Format bad: $file"
+        bad=1
+    else
+        echo_green "Format ok: $file"
+    fi
+
+    echo_cyan "Check on $file done, rm '$fpath', '$fpath_formatted'"
+    rm $fpath $fpath_formatted
+done
+
+echo_cyan "Check done, rm -rf '$tmpdir'"
+rm -rf $tmpdir
+
+if [ $bad -eq 1 ]
+then
+    echo_red "Bad formatted file found. You cannot commit"
+    cd $p
+    exit 1
+fi
+
+cd $p
+exit 0

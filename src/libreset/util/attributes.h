@@ -41,10 +41,10 @@
 #define __unused__              __attribute__((unused))
 #define __visibility__(x)       __attribute__((visibility(x)))
 
-        #define __vis_default__     __visibility__(default)
-        #define __vis_hidden__      __visibility__(hidden)
-        #define __vis_internal__    __visibility__(internal)
-        #define __vis_protected__   __visibility__(protected)
+#define __vis_default__     __visibility__(default)
+#define __vis_hidden__      __visibility__(hidden)
+#define __vis_internal__    __visibility__(internal)
+#define __vis_protected__   __visibility__(protected)
 
 #define __warn_unused_result__  __attribute__((warn_unused_result))
 
@@ -70,10 +70,10 @@
 #define __unused__
 #define __visibility__(x)
 
-        #define __default__
-        #define __hidden__
-        #define __internal__
-        #define __protected__
+#define __default__
+#define __hidden__
+#define __internal__
+#define __protected__
 
 #define __warn_unused_result__
 
