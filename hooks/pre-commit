@@ -44,6 +44,7 @@ do
     cp $file $fpath
 
     astyle --options=./etc/astylerc < $fpath > $fpath_formatted
+    # delete last line of $fpath_formatted
     sed -i '$ d' $fpath_formatted
 
     if ! diff $fpath $fpath_formatted > /dev/null
