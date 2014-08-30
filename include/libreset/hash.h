@@ -5,6 +5,9 @@
 
 /**
  * The hash type
+ *
+ * The `rs_hash` type is guaranteed to be able to be handled with the normal
+ * comparators.
  */
 typedef rs_hash uint64_t;
 
