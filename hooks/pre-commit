@@ -10,6 +10,9 @@ do
     fi
 done
 
+p=$(pwd)
+cd $(git rev-parse --show-toplevel)
+
 Green="\033[32m"
 Red="\033[31m"
 Cyan="\033[0;36m"
@@ -65,7 +68,9 @@ rm -rf $tmpdir
 if [ $bad -eq 1 ]
 then
     echo_red "Bad formatted file found. You cannot commit"
+    cd $p
     exit 1
 fi
 
+cd $p
 exit 0
