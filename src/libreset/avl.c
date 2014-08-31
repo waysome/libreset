@@ -63,7 +63,7 @@
 static int
 find_element_with_parent(
     struct avl_el* root, //!< root of the tree
-    int (*pred)(void* const, void*), //!< predicate function
+    rs_predicate_function pred, //!< predicate function
     void* etc, //!< additional argument for the predicate function
     struct avl_el** parent_dest, //!< destination of the ptr to the parent
     struct avl_el** found_dest //!< destination of the ptr to the element
@@ -378,7 +378,7 @@ avl_add(
 struct avl_el*
 avl_del(
     struct avl* avl,
-    int (*pred)(void* const, void*),
+    rs_predicate_function pred,
     void* etc
 ) {
     struct avl_el* parent;
@@ -477,7 +477,7 @@ avl_del(
 struct avl_el*
 avl_find(
     struct avl* avl,
-    int (*pred)(void* const, void*),
+    rs_predicate_function pred,
     void* etc
 ) {
     struct avl_el* found;
