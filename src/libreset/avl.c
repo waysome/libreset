@@ -11,11 +11,52 @@
  * Helper function to find an element and its parent, for simplification of
  * avl_find() and avl_del() functions.
  *
- * If the element is found, the found_dest pointer is set and the parent_dest
- * pointer is set. They can be NULL, but it is clearly unreasonable to set them
- * both to NULL.
+ * The value of `*found_dest` is a pointer to the found node, after the function
+ * returns
  *
- * The parent_dest and found_dest are always safe to return without check.
+ * The value of `*parent_dest` is a pointer to the parent of the found node,
+ * after the function returns.
+ *
+ * @warning `pred` shouldn't be NULL
+ *
+ * @note `found_dest` can be NULL
+ *
+ * @note `parent_dest` can be NULL
+ *
+ * @note It doesn't make sense that `found_dest` _and_ `parent_dest` are NULL.
+ *
+ * @note Does pre-order search.
+ *
+ * @parblock
+ *
+ * @b Approach:
+ *
+ *  1.  Check if the passed `struct avl_el` exists, return 0 if not, do
+ *      not touch anything.
+ *
+ *  2.  If the root node is the node we search:
+ *
+ *      2.1.    Set the `*parent_dest` to NULL, as we assume this is
+ *              the first recursion step
+ *
+ *      2.2.    If the `found_dest` exists, set it.
+ *
+ *      2.3.    return 1, we found it
+ *
+ *  3. Check the left and the right subtree by doing a recursion step.
+ *
+ *      Found:  If the recursion step has found the node we look for, set
+ *              `*parent_dest` accordingly and only if it is not set
+ *              yet.
+ *              This prevents further (upper) recursion steps from
+ *              re-setting it, which would result the root node of the
+ *              tree we operate on to be saved as the parent node, which
+ *              is wrong.
+ *              return 1 afterwards, we found it.
+ *
+ *      Not:    The node we look for is not in the tree. Ensure the
+ *              `*parent_node` is NULL and return 0, nothing found.
+ * @endparblock
  *
  * @return 1 if the element is found, else 0
  */
