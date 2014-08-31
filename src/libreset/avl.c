@@ -27,32 +27,46 @@ find_element_with_parent(
     struct avl_el** parent_dest, //!< destination of the ptr to the parent
     struct avl_el** found_dest //!< destination of the ptr to the element
 ) {
-    struct avl_el* next;
-    int predret = pred(root, etc);
 
-    if (root == NULL) {
+    if (!root) {
         return 0;
     }
 
-    if (predret == 0) {
+    if (pred(root, etc) && found_dest) {
         if (parent_dest) {
             *parent_dest = NULL;
         }
-        if (found_dest) {
-            *found_dest = root;
-        }
+        *found_dest = root;
         return 1;
-    } else if (predret == -1) {
-        next = root->l;
-    } else {
-        next = root->r;
     }
 
-    if (parent_dest) {
-        *parent_dest = root;
+    if (find_element_with_parent(root->l, pred, etc, parent_dest, found_dest) ||
+        find_element_with_parent(root->r, pred, etc, parent_dest, found_dest)) {
+        /**
+         * Element FOUND in one of the subtrees tree
+         *
+         * - found_dest was set by find_element_with_parent() call
+         * - set parent_dest if and only if it was not set before (by a
+         *   recursion step)
+         */
+        if (parent_dest && *parent_dest != NULL) {
+            *parent_dest = root;
+        }
+
+        return 1;
     }
-    return find_element_with_parent(next, pred, etc, parent_dest, found_dest);
+    /* element NOT FOUND in one of the subtrees */
+
+    /**
+     * ensure the parent_dest is NULL
+     */
+    if (parent_dest) {
+        *parent_dest = NULL;
+    }
+
+    return 0;
 }
+
 
 /**
  * Get the higher child of a node
