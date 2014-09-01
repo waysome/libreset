@@ -52,6 +52,11 @@ struct ll_element*
 ll_element_alloc_new(
     void* data
 ) {
+    struct ll_element* el = ll_element_alloc();
+    if (el) {
+        el->data = data;
+    }
+    return el;
 }
 
 void
