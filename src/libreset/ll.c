@@ -63,7 +63,6 @@ void
 ll_element_destroy(
     struct ll_element* el
 ) {
+    free(el);
 }
-
-
 
