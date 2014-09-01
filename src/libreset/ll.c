@@ -45,6 +45,7 @@ ll_delete(
 
 struct ll_element*
 ll_element_alloc(void) {
+    return calloc(1, sizeof(struct ll_element));
 }
 
 struct ll_element*
