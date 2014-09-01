@@ -14,14 +14,14 @@ ll_destroy(
 }
 
 struct ll*
-ll_append(
+ll_insert(
     struct ll* ll,
     struct ll_element* e
 ) {
 }
 
 struct ll*
-ll_append_data(
+ll_insert_data(
     struct ll* ll,
     void* data
 ) {

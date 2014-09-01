@@ -20,10 +20,10 @@ void
 ll_destroy(struct ll* ll);
 
 struct ll*
-ll_append(struct ll* ll, struct ll_element* e);
+ll_insert(struct ll* ll, struct ll_element* e);
 
 struct ll*
-ll_append_data(struct ll* ll, void* data);
+ll_insert_data(struct ll* ll, void* data);
 
 struct ll*
 ll_delete(struct ll* ll, struct ll_element* del);
