@@ -151,7 +151,7 @@ height_diff(
 /**
  * Recompute the height for a subtree
  *
- * @invariant \f$ -1 \leqslant H(n) \leqslant +1 \f$, Where \f$ H(n) \f$ is the
+ * @invariant \f$ -1 \leq H(n) \leq +1 \f$, Where \f$ H(n) \f$ is the
  * height of a node.
  *
  * @note NULL-safe, returns zero
