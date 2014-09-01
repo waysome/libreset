@@ -18,6 +18,13 @@ ll_insert(
     struct ll* ll,
     struct ll_element* e
 ) {
+    if (!ll || !e) {
+        return NULL;
+    }
+
+    e->next = ll->head;
+    ll->head = e;
+    return ll;
 }
 
 struct ll*
