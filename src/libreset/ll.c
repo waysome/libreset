@@ -32,6 +32,8 @@ ll_insert_data(
     struct ll* ll,
     void* data
 ) {
+    struct ll_element* el = ll_element_alloc_new(data);
+    return ll_insert(ll, el);
 }
 
 struct ll*
