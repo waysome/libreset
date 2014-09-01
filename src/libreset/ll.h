@@ -11,7 +11,6 @@ struct ll_element {
 
 struct ll {
     struct ll_element* head;
-    struct ll_element* last;
 };
 
 struct ll*
