@@ -28,8 +28,8 @@ ll_insert_data(struct ll* ll, void* data);
 struct ll*
 ll_delete(struct ll* ll, struct ll_element* del);
 
-#define ll_foreach(ll)
-
+#define ll_foreach(it,ll) \
+    for (struct ll_element* it = ll->head; it; it = it->next)
 
 struct ll_element*
 ll_element_alloc(void);
