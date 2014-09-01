@@ -11,6 +11,14 @@ void
 ll_destroy(
     struct ll* ll
 ) {
+    struct ll_element* iter = ll->head;
+    struct ll_element* next;
+
+    while (iter) {
+        next = iter->next;
+        free(iter);
+        iter = next;
+    }
 }
 
 struct ll*
