@@ -41,6 +41,20 @@ ll_delete(
     struct ll* ll,
     struct ll_element* del
 ) {
+    struct ll_element* iter;
+    struct ll_element* last;
+
+    for (iter = ll->head; iter; iter = iter->next) {
+        if (iter == del) {
+            last->next = iter->next;
+            free(iter);
+            break;
+        }
+
+        last = iter;
+    }
+
+    return ll;
 }
 
 struct ll_element*
