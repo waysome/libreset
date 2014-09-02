@@ -13,9 +13,6 @@ struct ll {
     struct ll_element* head;
 };
 
-struct ll*
-ll_alloc(void);
-
 void
 ll_destroy(struct ll* ll);
 

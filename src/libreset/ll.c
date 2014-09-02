@@ -2,11 +2,6 @@
 
 #include <stdlib.h>
 
-struct ll*
-ll_alloc(void) {
-    return calloc(1, sizeof(struct ll));
-}
-
 void
 ll_destroy(
     struct ll* ll
