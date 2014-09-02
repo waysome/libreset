@@ -54,7 +54,11 @@ ll_delete(
 
     for (iter = ll->head; iter; iter = iter->next) {
         if (iter == del) {
-            last->next = iter->next;
+            if (iter == ll->head) {
+                ll->head = iter->next;
+            } else {
+                last->next = iter->next;
+            }
             free(iter);
             break;
         }
