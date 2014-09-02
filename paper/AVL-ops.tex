@@ -95,3 +95,115 @@
         is in $O(log(n))$
 
 
+    \subsection{Rebalancing an AVL}
+    \label{sec:AVL_ops-rebalance}
+
+        An AVL tree is rebalanced by means of rotations.
+        However, if the tree is unbalanced by more than one element, the
+        rebalancing is not as trivial as it usually would be for AVL trees.
+
+        By performing rotations, one can move elements from one subtree to
+        another.
+        For unbalanced trees, however, one has to ensure that, by doing so, the
+        imbalance is reduced rather than extended.
+        This is achieved by observing the number of elements in each affected
+        subtree and basing the choice of rotations to be performed on that
+        information.
+
+        The number of elements $n$ which may fit into a subtree, as a function
+        of the height $h$, is:
+
+        \begin{equation}
+            n(h) = 2^h-1
+        \end{equation}
+
+        If the height is increased by $1$, this yields:
+
+        \begin{equation}
+            n(h+1)
+                = 2^{h+1}-1
+                = 2\cdot 2^h -1
+                = 2\cdot \left(2^h-1\right) +1
+                = 2n(h)+1
+        \end{equation}
+
+        Given two subtrees $a$ and $b$ of a node, the height of those nodes
+        must not differ by more than one.
+        However, the subtrees themselves might not be balanced.
+        Because of this, we may base the condition on the number of elements
+        rather than the maximal height of a subtree.
+
+        A subtree $a$ being higher than $b$ by more than one may be expressed
+        be the following relation:
+
+        \begin{equation}
+            n_a > 2n_b + 1
+        \end{equation}
+
+        Now consider the following right-rotation with the sub-trees $a$, $b$
+        and $c$:
+
+        \begin{figure}[!h]
+            \caption{Right rotation}
+            \label{fig:AVL_ops-rebalance-rot}
+            \begin{center}
+                \includegraphics{fig/right-rot.1}
+            \end{center}
+        \end{figure}
+
+        The rotation has to be carried out, if
+
+        \begin{equation}
+            n_a + n_b + 1 = n_l > 2n_c +1
+            \label{sec:AVL_ops-rebalance-rot_preq}
+        \end{equation}
+
+        Which may also be expressed as either
+
+        \begin{equation}
+            n_a + n_b > 2n_c \qquad \mathrm{or} \qquad n_b > 2n_c - n_a
+        \end{equation}
+
+        However, the result must not be imbalanced in the opposite direction,
+        that is the right subtree's potential height being more than one higher
+        than the left subtree's one:
+
+        \begin{equation}
+            2n_a + 1 \geq n_r = n_b + n_c + 1
+            \label{sec:AVL_ops-rebalance-rot_cond1}
+        \end{equation}
+
+        Which may also be expressed as either
+
+        \begin{equation}
+            2n_a \geq n_b + n_c \qquad \mathrm{or} \qquad 2n_a - n_c \geq n_b
+        \end{equation}
+
+        Combining those two constrains yields:
+
+        \begin{equation}
+            2n_a - n_c \geq n_b > 2n_c -n_a
+        \end{equation}
+
+        Which may be simplified to:
+
+        \begin{equation}
+            n_a > n_c
+            \label{sec:AVL_ops-rebalance-rot_cond2}
+        \end{equation}
+
+        If the tree is imbalanced according to equation
+        \ref{sec:AVL_ops-rebalance-rot_preq} but the condition in equation
+        \ref{sec:AVL_ops-rebalance-rot_cond2} is not met, left-rotations have to
+        be carried out in the left subtree until the condition is met and the
+        right-rotation can be performed.
+
+        After the tree is balanced on the top level, the subtrees may be
+        rebalanced recursively.
+
+        The algorithm is expected to be in $O(n)$ for most cases and in
+        $O(log(n))$, if only one leaf causes the imbalance.
+
+        %TODO: optional approach
+
+
