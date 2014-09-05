@@ -22,6 +22,8 @@
 #ifndef __AVL_H__
 #define __AVL_H__
 
+#include "libreset/ll.h"
+
 /**
  * AVL Tree type
  */
@@ -37,7 +39,7 @@ struct avl {
  */
 struct avl_el {
     rs_hash hash;
-    void*   data;       //!< pointer to the data of the node
+    struct ll ll;       //!< The linkedlist where the data elements are stored
     signed int height;  //!< The height of the subtree
     struct  avl_el* l;  //!< Next left node
     struct  avl_el* r;  //!< Next right node
