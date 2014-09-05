@@ -270,6 +270,37 @@ find_leftmost_node_with_parent(
 }
 
 /**
+ * Find a node by its hash
+ *
+ * @warning `root` may not be NULL
+ *
+ * @return Pointer to a node with the hash `hash` or NULL if none is found
+ *
+ * @todo Check relation
+ */
+static struct avl_el*
+find_node_with_hash(
+    struct avl_el* root,    //!< The node where to begin to search in
+    rs_hash h               //!< The hash to search for
+) {
+    if (root->hash == h) {
+        return root;
+    }
+
+    if (root->hash >= h) {
+        if (root->l) {
+            return find_node_with_hash(root->l, h);
+        }
+    } else {
+        if (root->r) {
+            return find_node_with_hash(root->r, h);
+        }
+    }
+
+    return NULL;
+}
+
+/**
  * Add a data element to a avl tree
  *
  * @return Ptr to the struct avl_el node where the data was inserted into or
