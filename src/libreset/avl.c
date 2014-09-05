@@ -301,6 +301,20 @@ find_node_with_hash(
 }
 
 /**
+ * Insert a node into a tree
+ *
+ * Does rotations and updates the root node if neccessary
+ *
+ * @warning Updates `root` if neccessary
+ */
+static void
+insert_node_into_tree(
+    struct avl_el* node, //!< node to insert
+    struct avl_el** root //!< Ptr to root node
+) {
+}
+
+/**
  * Add a data element to a avl tree
  *
  * @return Ptr to the struct avl_el node where the data was inserted into or
