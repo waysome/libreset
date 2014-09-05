@@ -188,5 +188,19 @@ If something was not mentioned here, have a look at
 [this](https://www.kernel.org/doc/Documentation/SubmittingPatches), we want to
 orientate on this kernel styleguide on how to submit patches.
 
+## Utility scripts
+
+We added a gitignore entry for `./u`, so you can simply put your utilities into
+this directory:
+
+```bash
+mkdir u
+mv /my/great/util.script ./u/
+```
+
+And you don't mess up the repository.
+
+## Contribute pizza!
+
 If you want to contribute without writing code, testing or writing
 documentation, feel free to order us some pizza.

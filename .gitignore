@@ -26,3 +26,12 @@ bject files
 
 *.backup
 
+#
+# Directory where the gentle programmer can put her/his utility snippets when
+# working with the codebase.
+#
+# For example, you can put vim scripts in there when working with vim, so you
+# can load them into your vim session and do work for you.
+#
+./u
+./u/*
