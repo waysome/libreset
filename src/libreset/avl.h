@@ -121,7 +121,7 @@ avl_find(
  *
  * @return The elements hash value.
  */
-static inline struct rs_hash
+static inline rs_hash
 avl_get_hash(
     struct avl_el* el //!< The element to get the hash for
 );

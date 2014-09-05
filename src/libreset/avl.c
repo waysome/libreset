@@ -317,8 +317,28 @@ insert_node_into_tree(
 /**
  * Add a data element to a avl tree
  *
+ * @warning Modifies `root` if neccessary
+ *
  * @return Ptr to the struct avl_el node where the data was inserted into or
  *         NULL on failure
+ *
+ * Steps to insert a data element into the tree:
+ *
+ * There are two possible cases:
+ *
+ * 1) The hash is already present in the tree. If that is case, we only have to
+ * find the struct avl_el object to append the data element to.
+ *
+ * 2) The hash is _not_ present in the tree. We then have to add a new
+ * struct avl_el object to the tree, inserting the data element there.
+ *
+ * Approach: Find the struct avl_el node where the hash is equal to the one for
+ * the data element to insert. If there is none, create a new struct avl_el
+ * node, add the element to it and insert this one into the tree.
+ *
+ * @todo What if out of memory?
+ *
+ * @todo Approach for inserting not optimal.
  */
 static struct avl_el*
 insert(
@@ -326,6 +346,26 @@ insert(
     rs_hash hash,           //!< The hash of the data to insert
     struct avl_el** root    //!< root node ptr source and destination
 ) {
+    struct avl_el* node = find_node_with_hash(*root, hash);
+
+    if (node) {
+        /* case 1) */
+        ll_insert_data(&node->ll, data);
+    } else {
+        /* case 2) */
+        node = calloc(1, sizeof(struct avl_el));
+        if (node) {
+            node->hash = hash;
+            node->r = NULL;
+            node->l = NULL;
+
+            insert_node_into_tree(node, root);
+        } else {
+            /* out of memory. What now? */
+        }
+    }
+
+    return node;
 }
 
 static void
