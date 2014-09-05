@@ -1,0 +1,209 @@
+\section{AVL operations and algorithms}
+\label{sec:AVL_ops}
+
+    This section will discuss special operations on AVL trees. Basic operations
+    like insertion, search and deletion will not be discussed in this document.
+    In the following subsections, $n$ will denote the number of elements in the
+    AVL.
+    Furthermore, for each node a sufficiently small number of sub-elements will
+    be assumed for the actual number to be irrelevant for the algorithms'
+    classes of complexity.
+
+    \subsection{Isolating subtrees}
+    \label{sec:AVL_ops-isolate}
+
+        As previously discussed, buckets represent ranges of integral numbers.
+        %TODO: ref
+        Since buckets have to be split during resizes and other operations,
+        sometimes subtrees have to be split into an AVL with hashes which are
+        greater than or equal a specific number and an AVL containing elements
+        with hashes lower than that number:
+        \begin{equation}
+            [a,b) \mapsto [a,c), [c,b)
+        \end{equation}
+
+        Since each node's left children's keys are lower than the current's
+        node's one while the right children's keys are greater, splitting an
+        AVL into items with lower and greater keys is a simple procedure:
+        \begin{itemize}
+            \item find the first item which does not fall in the category of
+                the root node
+            \item split it from it's parent
+        \end{itemize}
+        This results in two AVLs (from which one may not be balanced).
+
+    \subsection{Merging AVLs}
+    \label{sec:AVL_ops-merge}
+
+        Similar to isolation, AVLs may also be merged.
+        However, merging will not be constrained to AVLs representing
+        exclusively disjunct sets, neither regarding the actual items
+        nor the ranges they represent.
+
+        \begin{itemize}
+            \item split the tree to merge in nodes with keys greater and lower
+                than the current AVL's root node's key, extracting the node
+                with an \emph{identical} key. ($O(log(n))$)
+            \item merge that node with the root node, if present ($O(1)$)
+            \item proceed with the corresponding sub-trees
+            \item if one of the target's subtree is empty, link the remaining
+                subtrees from the source
+        \end{itemize}
+
+        This algorithm is in $O(n)$ (every node is processed once).
+        For AVLs which represent exclusively disjunct ranges, this algorithm
+        is in $O(log(n))$.
+
+
+    \subsection{Intersecting AVLs}
+    \label{sec:AVL_ops-intersect}
+
+        Determination of an AVL's intersection with another AVL is similar to
+        merging an AVL into another:
+
+        \begin{itemize}
+            \item split the tree to merge in nodes with keys greater and lower
+                than the current AVL's root node's key, extracting the node
+                with an \emph{identical} key. ($O(log(n))$)
+            \item remove all items from that node which are not in the root node
+                of the previously isolated subtree ($O(n)$)
+            \item proceed with the corresponding sub-trees
+        \end{itemize}
+
+        This algorithm is in $O(n)$ (every node is processed once).
+        For AVLs which represent exclusively disjunct ranges, this algorithm
+        is in $O(log(n))$.
+
+
+    \subsection{Excluding one AVL's elements from another}
+    \label{sec:AVL_ops-exclude}
+
+        Exclusion of one AVL's elements from another AVL is also similar to
+        merging AVLs:
+
+        \begin{itemize}
+            \item split the tree to merge in nodes with keys greater and lower
+                than the current AVL's root node's key, extracting the node
+                with an \emph{identical} key. ($O(log(n))$)
+            \item remove all items from that node which are in the root node
+                of the previously isolated subtree ($O(n)$)
+            \item proceed with the corresponding sub-trees
+        \end{itemize}
+
+        This algorithm is in $O(n)$ (every node is processed once).
+        For AVLs which represent exclusively disjunct ranges, this algorithm
+        is in $O(log(n))$
+
+
+    \subsection{Rebalancing an AVL}
+    \label{sec:AVL_ops-rebalance}
+
+        An AVL tree is rebalanced by means of rotations.
+        However, if the tree is unbalanced by more than one element, the
+        rebalancing is not as trivial as it usually would be for AVL trees.
+
+        By performing rotations, one can move elements from one subtree to
+        another.
+        For unbalanced trees, however, one has to ensure that, by doing so, the
+        imbalance is reduced rather than extended.
+        This is achieved by observing the number of elements in each affected
+        subtree and basing the choice of rotations to be performed on that
+        information.
+
+        The number of elements $n$ which may fit into a subtree, as a function
+        of the height $h$, is:
+
+        \begin{equation}
+            n(h) = 2^h-1
+        \end{equation}
+
+        If the height is increased by $1$, this yields:
+
+        \begin{equation}
+            n(h+1)
+                = 2^{h+1}-1
+                = 2\cdot 2^h -1
+                = 2\cdot \left(2^h-1\right) +1
+                = 2n(h)+1
+        \end{equation}
+
+        Given two subtrees $a$ and $b$ of a node, the height of those nodes
+        must not differ by more than one.
+        However, the subtrees themselves might not be balanced.
+        Because of this, we may base the condition on the number of elements
+        rather than the maximal height of a subtree.
+
+        A subtree $a$ being higher than $b$ by more than one may be expressed
+        be the following relation:
+
+        \begin{equation}
+            n_a > 2n_b + 1
+        \end{equation}
+
+        Now consider the following right-rotation with the sub-trees $a$, $b$
+        and $c$:
+
+        \begin{figure}[!h]
+            \caption{Right rotation}
+            \label{fig:AVL_ops-rebalance-rot}
+            \begin{center}
+                \includegraphics{fig/right-rot.1}
+            \end{center}
+        \end{figure}
+
+        The rotation has to be carried out, if
+
+        \begin{equation}
+            n_a + n_b + 1 = n_l > 2n_c +1
+            \label{sec:AVL_ops-rebalance-rot_preq}
+        \end{equation}
+
+        Which may also be expressed as either
+
+        \begin{equation}
+            n_a + n_b > 2n_c \qquad \mathrm{or} \qquad n_b > 2n_c - n_a
+        \end{equation}
+
+        However, the result must not be imbalanced in the opposite direction,
+        that is the right subtree's potential height being more than one higher
+        than the left subtree's one:
+
+        \begin{equation}
+            2n_a + 1 \geq n_r = n_b + n_c + 1
+            \label{sec:AVL_ops-rebalance-rot_cond1}
+        \end{equation}
+
+        Which may also be expressed as either
+
+        \begin{equation}
+            2n_a \geq n_b + n_c \qquad \mathrm{or} \qquad 2n_a - n_c \geq n_b
+        \end{equation}
+
+        Combining those two constrains yields:
+
+        \begin{equation}
+            2n_a - n_c \geq n_b > 2n_c -n_a
+        \end{equation}
+
+        Which may be simplified to:
+
+        \begin{equation}
+            n_a > n_c
+            \label{sec:AVL_ops-rebalance-rot_cond2}
+        \end{equation}
+
+        If the tree is imbalanced according to equation
+        \ref{sec:AVL_ops-rebalance-rot_preq} but the condition in equation
+        \ref{sec:AVL_ops-rebalance-rot_cond2} is not met, left-rotations have to
+        be carried out in the left subtree until the condition is met and the
+        right-rotation can be performed.
+
+        After the tree is balanced on the top level, the subtrees may be
+        rebalanced recursively.
+
+        The algorithm is expected to be in $O(n)$ for most cases and in
+        $O(log(n))$, if only one leaf causes the imbalance.
+
+        %TODO: optional approach
+
+

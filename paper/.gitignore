@@ -8,4 +8,7 @@
 #table of contents
 *.toc
 
+#metapost-output
+*.1
+
 
