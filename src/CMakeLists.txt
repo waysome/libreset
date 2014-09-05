@@ -13,6 +13,11 @@ set(SOURCE_FILES
 )
 
 #
+# General compile options
+#
+add_compile_options(-Wall -Wextra -Wunused -Wformat -Wno-unused-parameter -pedantic)
+
+#
 # Libreset will be a shared object
 #
 add_library(reset SHARED ${SOURCE_FILES})
