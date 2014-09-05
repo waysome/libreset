@@ -270,52 +270,17 @@ find_leftmost_node_with_parent(
 }
 
 /**
- * Add a node to a tree
+ * Add a data element to a avl tree
  *
- * @return the new root node
+ * @return Ptr to the struct avl_el node where the data was inserted into or
+ *         NULL on failure
  */
 static struct avl_el*
-insert(struct avl_el* new, struct avl_el** root) {
-    signed int cmpres;
-
-    if (new->hash == (*root)->hash) {
-        cmpres = 0;
-    } else {
-        if (new->hash > (*root)->hash) {
-            cmpres = -1;
-        } else {
-            cmpres = 1;
-        }
-    }
-
-    if (*root == NULL) {
-        return new;
-    }
-
-    if (cmpres == 1) {
-        (*root)->l = insert(new, &(*root)->l);
-        if (avl_height((*root)->l) - avl_height((*root)->r) == 2) {
-            if (new->hash != (*root)->l->hash) {
-                *root = single_rotate_with_left(*root);
-            } else {
-                *root = double_rotate_with_left(*root);
-            }
-        }
-    } else if (cmpres == -1) {
-        (*root)->r = insert(new, &(*root)->r);
-        if (avl_height((*root)->r) - avl_height((*root)->l) == 2) {
-            if (new->hash != (*root)->r->hash) {
-                *root = single_rotate_with_right(*root);
-            } else {
-                *root = double_rotate_with_right(*root);
-            }
-        }
-    } else {
-        // TODO: `new` is already in the tree
-    }
-
-    (*root)->height = MAX(avl_height((*root)->l), avl_height((*root)->r)) + 1;
-    return *root;
+insert(
+    void* data,             //!< The data ptr to insert
+    rs_hash hash,           //!< The hash of the data to insert
+    struct avl_el** root    //!< root node ptr source and destination
+) {
 }
 
 static void
@@ -357,19 +322,10 @@ avl_destroy(
 struct avl_el*
 avl_add(
     struct avl* avl,
-    void* const data
+    void* const data,
+    rs_hash hash
 ) {
-    struct avl_el* new = calloc(1, sizeof(*new));
-
-    if (new) {
-        new->data = data;
-        new->l = NULL;
-        new->r = NULL;
-
-        new = insert(new, &avl->root);
-    }
-
-    return new;
+    return insert(data, hash, &avl->root);
 }
 
 /**
