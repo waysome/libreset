@@ -11,5 +11,5 @@
  */
 typedef rs_hash size_t;
 
-#endif //__LIBRESET_HASH_H__
+#endif /* __LIBRESET_HASH_H__ */
 
