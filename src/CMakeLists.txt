@@ -10,6 +10,7 @@
 #
 set(SOURCE_FILES
     libreset/ll.c
+    libreset/avl.c
 )
 
 #
