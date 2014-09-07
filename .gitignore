@@ -26,6 +26,12 @@ bject files
 
 *.backup
 
+# Other build environment related stuff
+CMakeCache.txt
+CMakeFiles
+Makefile
+*.cmake
+
 #
 # Directory where the gentle programmer can put her/his utility snippets when
 # working with the codebase.

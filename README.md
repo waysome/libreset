@@ -13,6 +13,16 @@ cardinality and checking equality of sets, do common set operations, including
 creating unions, intersections, excluding one set from another, xor'ing two sets
 etc.
 
+## How to build
+
+The build is [cmake](http://cmake.org) based. If you want to build the library,
+run the following commands from the repository's root directory:
+
+```sh
+cmake .
+make
+```
+
 ## How it works
 
 If you want to know how it works, please have a look at the paper (in
