@@ -15,8 +15,8 @@ etc.
 
 ## How to build
 
-The build is cmake based. If you want to build the library, run the following
-commands from the repository's root directory:
+The build is [cmake](http://cmake.org) based. If you want to build the library,
+run the following commands from the repository's root directory:
 
 ```sh
 cmake .
