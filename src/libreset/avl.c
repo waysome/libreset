@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "libreset/hash.h"
+#include "libreset/util/likely.h"
 #include "libreset/util/macros.h"
 
 /**
@@ -306,12 +307,60 @@ find_node_with_hash(
  * Does rotations and updates the root node if neccessary
  *
  * @warning Updates `root` if neccessary
+ *
+ * @return The new root node for the subtree
  */
-static void
+static struct avl_el*
 insert_node_into_tree(
     struct avl_el* node, //!< node to insert
     struct avl_el** root //!< Ptr to root node
 ) {
+    signed int cmpres;
+
+    if (!root || !node) {
+        return NULL;
+    }
+
+    if (*root == NULL) {
+        *root = node;
+        return *root;
+    }
+
+    if (unlikely(node->hash == (*root)->hash)) {
+        cmpres = 0;
+    } else {
+        if (node->hash > (*root)->hash) {
+            cmpres = -1;
+        } else {
+            cmpres = 1;
+        }
+    }
+
+    if (cmpres == 1) { /* node < root */
+        (*root)->l = insert_node_into_tree(node, &(*root)->l);
+
+        if (avl_height((*root)->l) - avl_height((*root)->r) == 2) {
+            if (likely(node->hash != (*root)->l->hash)) {
+                *root = single_rotate_with_left(*root);
+            } else {
+                *root = double_rotate_with_left(*root);
+            }
+        }
+    } else if (cmpres == -1) { /* node > root */
+        (*root)->r = insert_node_into_tree(node, &(*root)->r);
+        if (avl_height((*root)->r) - avl_height((*root)->l) == 2) {
+            if (likely(node->hash != (*root)->r->hash)) {
+                *root = single_rotate_with_right(*root);
+            } else {
+                *root = double_rotate_with_right(*root);
+            }
+        }
+    } else { /* node == root -> should never happen */
+        /* something really strange happened if this case is true */
+    }
+
+    (*root)->height = MAX(avl_height((*root)->l), avl_height((*root)->l)) + 1;
+    return *root;
 }
 
 /**
