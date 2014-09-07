@@ -23,6 +23,7 @@
 #define __AVL_H__
 
 #include "libreset/ll.h"
+#include "libreset/util/attributes.h"
 #include "libreset/hash.h"
 
 /**
