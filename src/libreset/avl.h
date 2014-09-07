@@ -76,7 +76,7 @@ struct avl_el*
 avl_add(
     struct avl* avl, //!< The avl tree where to insert
     void* const d, //!< The data element
-    rs_hash hash, //!< The hash for the data element
+    rs_hash hash //!< The hash for the data element
 );
 
 /**
