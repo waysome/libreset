@@ -15,7 +15,8 @@ set(SOURCE_FILES
 #
 # General compile options
 #
-add_compile_options(-Wall -Wextra -Wunused -Wformat -Wno-unused-parameter -pedantic)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wunused -Wformat")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-parameter -pedantic")
 
 #
 # Libreset will be a shared object
