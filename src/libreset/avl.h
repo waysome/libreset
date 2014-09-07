@@ -147,7 +147,6 @@ avl_height(
  */
 
 static inline rs_hash
-__fastcall__
 __pure__
 avl_get_hash(struct avl_el* el) {
     return el->hash;
