@@ -1,6 +1,6 @@
-#include "libreset/avl.h"
-
 #include <stdlib.h>
+
+#include "libreset/avl.h"
 
 #include "libreset/hash.h"
 #include "libreset/util/likely.h"
