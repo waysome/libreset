@@ -25,4 +25,4 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11")
 #
 add_library(reset SHARED ${SOURCE_FILES})
 
-
+include_directories(./ ../include)
