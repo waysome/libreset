@@ -431,7 +431,6 @@ destroy_subtree(
         root->r = NULL;
     }
 
-    root->data = NULL;
     free(root);
 }
 
