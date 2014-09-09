@@ -84,7 +84,7 @@ find_element_with_parent(
 
     if (find_element_with_parent(root->l, pred, etc, parent_dest, found_dest) ||
         find_element_with_parent(root->r, pred, etc, parent_dest, found_dest)) {
-        /**
+        /*
          * Element FOUND in one of the subtrees tree
          *
          * - found_dest was set by find_element_with_parent() call
@@ -99,7 +99,7 @@ find_element_with_parent(
     }
     /* element NOT FOUND in one of the subtrees */
 
-    /**
+    /*
      * ensure the parent_dest is NULL
      */
     if (parent_dest) {
@@ -478,7 +478,7 @@ avl_del(
         return NULL;
     }
 
-    /**
+    /*
      * Three possible cases:
      *
      * 1) `found` has no children. Delete `found`
