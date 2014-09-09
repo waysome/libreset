@@ -49,6 +49,27 @@
  */
 #define BITCOUNT(type) (sizeof((type)) << 3)
 
+/**
+ * Mask the `n` least significant bits.
+ *
+ * Example:
+ *
+ *  LSB_MASK((char) 4) = 0b00001111
+ *
+ */
+#define LSB_MASK(n) (~MSB_MASK(n))
+
+/**
+ * Mask the `n` most significant bits.
+ *
+ * Example:
+ *
+ *  MSB_MASK((char) 4) = 0b11110000
+ *
+ * Using `__typeof__` here to be sure we actually create the same type as passed
+ */
+#define MSB_MASK(n) ((~(__typeof__((n)))0) << (n))
+
 /** @} */
 
 #endif //__MACROS_H__
