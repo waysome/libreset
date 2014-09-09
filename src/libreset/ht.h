@@ -9,16 +9,14 @@
  * Type for hashtable bucket
  *
  */
-struct rs_ht_bucket
-{
+struct rs_ht_bucket {
     struct avl avl;
 };
 
 /**
  * Hashtable type
  */
-struct rs_ht
-{
+struct rs_ht {
     struct rs_ht_bucket* buckets;
     size_t nbuckets;
 };
@@ -30,7 +28,8 @@ struct rs_ht
  */
 struct rs_ht*
 rs_ht_init(
-    struct rs_ht* ht //!< The hashtable object to initialize
+    struct rs_ht* ht, //!< The hashtable object to initialize
+    size_t n //!< The initial number of buckets
 );
 
 /**
