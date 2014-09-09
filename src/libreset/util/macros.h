@@ -41,6 +41,14 @@
         ((__typeof__(x)) x > (__typeof__(x)) y ?    \
          (__typeof__(x)) y : (__typeof__(x)) x)
 
+/**
+ * Get the bitcount of a type
+ *
+ * @note Doing a `x << 3` is equivalent to `x * 8`, so the number of bytes in a
+ * type << 3 is the number of bits in the type.
+ */
+#define BITCOUNT(type) (sizeof((type)) << 3)
+
 /** @} */
 
 #endif //__MACROS_H__
