@@ -26,7 +26,7 @@ make
 ## How it works
 
 If you want to know how it works, please have a look at the paper (in
-`./paper`).
+`./paper`) which is provided by the "paper" target.
 
 ## Contributing
 
