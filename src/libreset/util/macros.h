@@ -70,6 +70,11 @@
  */
 #define MSB_MASK(n) ((~(__typeof__((n)))0) << (n))
 
+/**
+ * Compute the power of 2 to a constant value
+ */
+#define CONSTPOW_TWO(m) (2 << (m))
+
 /** @} */
 
 #endif //__MACROS_H__
