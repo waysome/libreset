@@ -9,35 +9,35 @@
  * Type for hashtable bucket
  *
  */
-struct rs_ht_bucket {
+struct ht_bucket {
     struct avl avl;
 };
 
 /**
  * Hashtable type
  */
-struct rs_ht {
-    struct rs_ht_bucket* buckets;
+struct ht {
+    struct ht_bucket* buckets;
     size_t nbuckets;
 };
 
 /**
- * Initialize a struct rs_ht object
+ * Initialize a struct ht object
  *
- * @return the pointer to the passed struct rs_ht object, NULL on failure
+ * @return the pointer to the passed struct ht object, NULL on failure
  */
-struct rs_ht*
-rs_ht_init(
-    struct rs_ht* ht, //!< The hashtable object to initialize
+struct ht*
+ht_init(
+    struct ht* ht, //!< The hashtable object to initialize
     size_t n //!< The initial number of buckets
 );
 
 /**
- * Destroy a struct rs_ht object
+ * Destroy a struct ht object
  */
 void
-rs_ht_destroy(
-    struct rs_ht* ht //!< The hashtable object to destory
+ht_destroy(
+    struct ht* ht //!< The hashtable object to destory
 );
 
 /**
@@ -45,10 +45,10 @@ rs_ht_destroy(
  *
  * @return the found element or NULL on failure
  */
-struct rs_element*
-rs_ht_find(
-    struct rs_ht* ht, //!< The hashtable object to search in
-    rs_hash hash //!< The hash of the element to find
+struct element*
+ht_find(
+    struct ht* ht, //!< The hashtable object to search in
+    hash hash //!< The hash of the element to find
 );
 
 /**
@@ -57,8 +57,8 @@ rs_ht_find(
  * @return 1 on success, else zero
  */
 int
-rs_ht_insert(
-    struct rs_ht* ht, //!< The hashtable object to insert into
+ht_insert(
+    struct ht* ht, //!< The hashtable object to insert into
     void* data, //!< The data
     size_t datasize //!< The size of the data in bytes
 );
@@ -68,10 +68,10 @@ rs_ht_insert(
  *
  * @return the deleted element or NULL if not found
  */
-struct rs_element*
-rs_ht_del(
-    struct rs_ht* ht, //!< The hashtable object to delete from
-    rs_hash hash
+struct element*
+ht_del(
+    struct ht* ht, //!< The hashtable object to delete from
+    hash hash
 );
 
 #endif //__HT_H__
