@@ -9,7 +9,7 @@
  * The `rs_hash` type is guaranteed to be able to be handled with the normal
  * comparators.
  */
-typedef rs_hash size_t;
+typedef size_t rs_hash;
 
 #endif //__LIBRESET_HASH_H__
 
