@@ -20,6 +20,11 @@ option(HARD_MODE "Enables extra checks for use during development" OFF)
 
 
 #
+# Enable testing
+#
+enable_testing()
+
+#
 # Libreset's sources reside in ./src/.
 #
 add_subdirectory(src)
