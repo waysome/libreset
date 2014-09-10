@@ -81,6 +81,12 @@ new_avl_el(
     rs_hash h //!< The hash for the new struct avl_el object
 );
 
+static struct avl_el*
+insert_element_into_tree(
+    struct avl_el* el, //!< The element to insert
+    struct avl_el** root //!< The root element of the tree where to insert
+);
+
 
 /*
  *
@@ -158,6 +164,18 @@ new_avl_el(
 }
 
 /**
+ * Insert an struct avl_el object into the avl tree
+ *
+ * @return The new root element
+ */
+static struct avl_el*
+insert_element_into_tree(
+    struct avl_el* el, //!< The element to insert
+    struct avl_el** root //!< The root element of the tree where to insert
+) {
+}
+
+/*
  * Add a data element to the avl tree
  *
  * @return The element where the data is now in.
