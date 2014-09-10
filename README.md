@@ -34,6 +34,6 @@ Please have a look at the CONTIBUTING.md file
 
 ## License
 
-BSD Licensed.
+LGPLv2.1 Licensed.
 
 Please have a look at the LICENSE file
