@@ -10,9 +10,14 @@ before_install:
 install:
     - sudo apt-get install -q
         gcc-4.8
+        texlive-metapost
+        texlive-latex-base
+        texlive-latex-extra
+        texlive-latex-recommended
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 40
     - sudo update-alternatives --config gcc
 
 script:
     - cmake .
     - make
+    - make paper

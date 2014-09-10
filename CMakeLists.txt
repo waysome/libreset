@@ -10,5 +10,6 @@ project(libreset C)
 # Libreset's sources reside in ./src/.
 #
 add_subdirectory(src)
+add_subdirectory(paper)
 
 
