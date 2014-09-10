@@ -1,5 +1,7 @@
 #include <stdlib.h>
 
+#include "libreset/util/likely.h"
+#include "libreset/util/macros.h"
 #include "libreset/hash.h"
 
 #include "ll.h"
@@ -178,6 +180,48 @@ insert_element_into_tree(
     struct avl_el* el, //!< The element to insert
     struct avl_el** root //!< The root element of the tree where to insert
 ) {
+    signed int cmp;
+
+    if (!root || !el) {
+        return NULL;
+    }
+    if (*root == NULL) {
+        *root = el;
+        return *root;
+    }
+
+    if (unlikely(el->hash == (*root)->hash)) {
+        cmp = 0;
+    } else {
+        cmp = (el->hash > (*root)->hash) ? -1 : 1;
+    }
+
+    if (unlikely(cmp == 0)) {
+        /* Shouldn't be possible */
+    } else if (cmp == 1) {
+        (*root)->l = insert_element_into_tree(el, &(*root)->l);
+
+        if (avl_height((*root)->l) - avl_height((*root)->r) == 2) {
+            if (likely(el->hash != (*root)->l->hash)) {
+                *root = single_rotate_with_left(*root);
+            } else {
+                *root = double_rotate_with_left(*root);
+            }
+        }
+    } else { /* cmp == -1 */
+        (*root)->r = insert_element_into_tree(el, &(*root)->r);
+
+        if (avl_height((*root)->r) - avl_height((*root)->l) == 2) {
+            if (likely(el->hash != (*root)->r->hash)) {
+                *root = single_rotate_with_right(*root);
+            } else {
+                *root = double_rotate_with_right(*root);
+            }
+        }
+    }
+
+    (*root)->height = MAX(avl_height((*root)->l), avl_height((*root)->r)) + 1;
+    return *root;
 }
 
 /**
