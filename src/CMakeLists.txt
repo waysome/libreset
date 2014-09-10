@@ -38,3 +38,14 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11")
 add_library(reset SHARED ${SOURCE_FILES})
 
 
+#
+# Style checks
+#
+foreach(file_in ${SOURCE_FILES} ${HEADER_FILES})
+    add_test(
+        NAME style_${file_in}
+        COMMAND ${CHECKSTYLE} ${file_in}
+    )
+endforeach()
+
+
