@@ -9,6 +9,7 @@ before_install:
 
 install:
     - sudo apt-get install -q
+        astyle
         gcc-4.8
         texlive-metapost
         texlive-latex-base
