@@ -1,5 +1,8 @@
 #include <stdlib.h>
 
+#include "libreset/hash.h"
+
+#include "ll.h"
 #include "avl.h"
 #include "util/macros.h"
 
@@ -66,6 +69,13 @@ regen_metadata(
     struct avl_el* node //!< The node to regenerate
 );
 
+static struct avl_el*
+add(
+    void* data,
+    rs_hash hash,
+    struct avl_el** root
+);
+
 
 /*
  *
@@ -109,6 +119,15 @@ avl_find(
     return iter;
 }
 
+struct avl_el*
+avl_add(
+    struct avl* avl, //!< The avl tree where to insert
+    void* const d, //!< The data element
+    rs_hash hash //!< The hash for the data element
+) {
+    return add(d, hash, &avl->root);
+}
+
 /*
  *
  *
@@ -116,6 +135,33 @@ avl_find(
  *
  *
  */
+
+/**
+ * Add a data element to the avl tree
+ *
+ * @return The element where the data is now in.
+ */
+static struct avl_el*
+add(
+    void* data, //!< The data ptr to insert
+    rs_hash hash, //!< The hash for the data to insert
+    struct avl_el** root //!< The root of the (sub) tree to insert
+) {
+    struct avl_el* element = element_with_hash(*root, hash);
+
+    if (element) {
+        ll_insert_data(&element->ll, data);
+    } else {
+        element = new_avl_el(hash);
+        if (element) {
+            insert_element_into_tree(element, root);
+        } else {
+            /* out of memory */
+        }
+    }
+
+    return element;
+}
 
 static void
 destroy_subtree(
@@ -231,4 +277,3 @@ regen_metadata(
     // regenerate the node count
     node->node_cnt = 1 + avl_node_cnt(node->l) + avl_node_cnt(node->r);
 }
-
