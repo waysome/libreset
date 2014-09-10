@@ -13,6 +13,19 @@ set(SOURCE_FILES
 )
 
 #
+# HEADER_FILES holds all headers to process.
+#
+set(HEADER_FILES
+    libreset/avl.h
+    libreset/ht.h
+    libreset/ll.h
+    libreset/util/attributes.h
+    libreset/util/likely.h
+    libreset/util/macros.h
+)
+
+
+#
 # General compile options
 #
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wunused -Wformat")
