@@ -166,7 +166,7 @@ By adding you agree on the following:
 
      (a) I have carried out a technical review of this patch to
          evaluate its appropriateness and readiness for inclusion into
-         the mainline kernel.
+         the project code base.
 
      (b) Any problems, concerns, or questions relating to the patch
          have been communicated back to the submitter.  I am satisfied
@@ -174,7 +174,7 @@ By adding you agree on the following:
 
      (c) While there may be things that could be improved with this
          submission, I believe that it is, at this time, (1) a
-         worthwhile modification to the kernel, and (2) free of known
+         worthwhile modification to the codebase, and (2) free of known
          issues which would argue against its inclusion.
 
      (d) While I have reviewed the patch and believe it to be sound, I
