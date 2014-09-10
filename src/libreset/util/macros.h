@@ -24,10 +24,9 @@
  * @note Opens own scope, so the temp variables do not show up outside of the
  * macro.
  */
-#define MAX(x,y)                    \
-       ({ __typeof__ (x) _x = (x);  \
-          __typeof__ (y) _y = (y);  \
-          _x > _y ? _x : _y; })
+#define MAX(x,y)                                    \
+        ((__typeof__(x)) x > (__typeof__(x)) y ?    \
+         (__typeof__(x)) x : (__typeof__(x)) y)
 
 /**
  * Computes the minimum value of the two passed values
@@ -38,10 +37,9 @@
  * @note Opens own scope, so the temp variables do not show up outside of the
  * macro.
  */
-#define MIN(x,y)                    \
-       ({ __typeof__ (x) _x = (x);  \
-          __typeof__ (y) _y = (y);  \
-          _x < _y ? _x : _y; })
+#define MIN(x,y)                                    \
+        ((__typeof__(x)) x > (__typeof__(x)) y ?    \
+         (__typeof__(x)) y : (__typeof__(x)) x)
 
 /** @} */
 
