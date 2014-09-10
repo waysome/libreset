@@ -76,6 +76,11 @@ add(
     struct avl_el** root
 );
 
+static struct avl_el*
+new_avl_el(
+    rs_hash h //!< The hash for the new struct avl_el object
+);
+
 
 /*
  *
@@ -135,6 +140,22 @@ avl_add(
  *
  *
  */
+
+/**
+ * Create a new struct avl_el object
+ *
+ * @return Ptr to the new struct avl_el object or NULL on failure
+ */
+static struct avl_el*
+new_avl_el(
+    rs_hash h //!< The hash for the new struct avl_el object
+) {
+    struct avl_el* el = calloc(1, sizeof(*el));
+    if (el) {
+        el->hash = h;
+    }
+    return el;
+}
 
 /**
  * Add a data element to the avl tree
