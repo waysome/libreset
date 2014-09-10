@@ -22,3 +22,4 @@ script:
     - cmake .
     - make
     - make paper
+    - ctest -VV .
