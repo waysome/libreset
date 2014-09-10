@@ -22,3 +22,4 @@ script:
     - cmake -DHARD_MODE=ON .
     - make
     - make paper
+    - ctest -VV .
