@@ -113,6 +113,7 @@ typedef int (*rs_predicate_function)(void* const, void*);
 struct avl_el*
 avl_del(
     struct avl* avl, //!< The avl where to search in
+    rs_hash, //!< The hash of the element to remove
     rs_predicate_function pred, //!< the predicate function
     void* etc //!< an additional parameter to the predicate function
 );
