@@ -122,6 +122,19 @@ insert_element_into_tree(
 );
 
 /*
+ * Swap two avl elements by swapping their values
+ *
+ * @warning This is kind of a hack. The linkedlist object inside the avl_el
+ * object is accessed directly. This is neither neat nor nice, but it works good
+ * and fast.
+ */
+static inline void
+swp_avl_els(
+    struct avl_el* a, //!< First element
+    struct avl_el* b  //!< Second element
+);
+
+/*
  *
  *
  * interface implementation
@@ -232,6 +245,32 @@ insert_element_into_tree(
 
     regen_metadata(*root);
     return *root;
+}
+
+static inline void
+swp_avl_els(
+    struct avl_el* a,
+    struct avl_el* b
+) {
+    struct avl_el tmp;
+
+    tmp.hash    = a->hash;
+    tmp.ll.head = a->ll.head;
+    tmp.height  = a->height;
+    tmp.l       = a->l;
+    tmp.r       = a->r;
+
+    a->hash     = b->hash;
+    a->ll.head  = b->ll.head;
+    a->height   = b->height;
+    a->l        = b->l;
+    a->r        = b->r;
+
+    a->hash     = tmp.hash;
+    a->ll.head  = tmp.ll.head;
+    a->height   = tmp.height;
+    a->l        = tmp.l;
+    a->r        = tmp.r;
 }
 
 static void
