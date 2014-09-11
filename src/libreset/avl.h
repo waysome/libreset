@@ -41,7 +41,7 @@ struct avl {
  */
 struct avl_el {
     rs_hash hash;
-    struct ll ll;           //!< The linkedlist where the data elements are stored
+    struct ll ll;           //!< The linked list containing stored elements
     unsigned int height;    //!< The height of the subtree
     struct  avl_el* l;      //!< Next left node
     struct  avl_el* r;      //!< Next right node
