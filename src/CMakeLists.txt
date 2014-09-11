@@ -12,6 +12,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 # files.
 #
 set(SOURCE_FILES
+    libreset/avl.c
     libreset/ll.c
 )
 
