@@ -16,6 +16,26 @@ destroy_subtree(
     struct avl_el* node //!< A node to destroy
 );
 
+/**
+ * Rotate a node counter-clockwise
+ *
+ * @return new root or NULL, if the rotation could not be performed
+ */
+static struct avl_el*
+rotate_left(
+    struct avl_el* node //!< The node to rotate
+);
+
+/**
+ * Rotate a node clockwise
+ *
+ * @return new root or NULL, if the rotation could not be performed
+ */
+static struct avl_el*
+rotate_right(
+    struct avl_el* node //!< The node to rotate
+);
+
 
 /*
  *
@@ -64,3 +84,16 @@ destroy_subtree(
     free(node);
 }
 
+static struct avl_el*
+rotate_left(
+    struct avl_el* node
+) {
+    return 0;
+}
+
+static struct avl_el*
+rotate_right(
+    struct avl_el* node
+) {
+    return 0;
+}
