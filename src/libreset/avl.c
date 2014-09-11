@@ -158,5 +158,10 @@ static void
 regen_metadata(
     struct avl_el* node //!< The node to regenerate
 ) {
-    //TODO: implement
+    //regenerate the height
+    node->height = 1 + avl_height(node->l) + avl_height(node->r);
+
+    //regenerate the node count
+    node->node_cnt = 1 + avl_node_cnt(node->l) + avl_node_cnt(node->r);
 }
+
