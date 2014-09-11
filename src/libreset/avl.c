@@ -205,6 +205,125 @@ avl_add(
     return element;
 }
 
+struct avl_el*
+avl_del(
+    struct avl* avl,
+    rs_hash hash,
+    rs_predicate_function pred,
+    void* etc
+) {
+    if (!avl || !avl->root) {
+        return NULL;
+    }
+
+    struct avl_el* parent = NULL;
+    struct avl_el* found = avl->root;
+
+    while (found->hash != hash) {
+        parent = found;
+        if (found->hash > hash) {
+            found = found->l;
+        } else {
+            found = found->r;
+        }
+    }
+
+    if (found == avl->root && found->hash != hash) {
+        /* We haven't found an element with the hash */
+        return NULL;
+    }
+
+    /* We have found the element */
+    struct ll_element* ll_del_element;
+    ll_foreach(lliter, &(found->ll)) {
+        if (pred(lliter->data, etc)) {
+            ll_del_element = lliter;
+            break;
+        }
+    }
+    ll_delete(&(found->ll), ll_del_element);
+
+    if (!ll_is_empty(&(found->ll))) {
+        /* If there are still elements in the avl element, we can return it
+         * because we are ready now */
+        return found;
+    }
+
+    /*
+     * We must delete the whole avl element and rebalance the tree
+     *
+     * Three cases are possible now:
+     * 1) The found element has no children. We can simply remove it then (and
+     *    fix the appropriate pointer in the parent).
+     *
+     * 2) The found element has one child. So we delete the found element and
+     *    let the parent point to the child of found.
+     *
+     * 3) The found element has two children.
+     *
+     *      3.1) Find the successor of `found` (`z`), which should be the
+     *           leftmost node in the right subtree of `found`.
+     *      3.2) Replace `found` with `z`
+     *      3.3) Delete `z`
+     *           Note: `z` does not have a left child
+     *           Note: `z` has at most one child, we can use case (1) or (2) to
+     *                 delete `z`
+     */
+
+    if (!found->l && !found->r) {
+        /* case 1 */
+        if (parent->l == found) {
+            parent->l = NULL;
+        } else {
+            parent->r = NULL;
+        }
+        free(found);
+    } else if ((found->l && !found->r) || (!found->l && found->r)) {
+        /* case 2 */
+        struct avl_el* link = (found->l) ? found->l : found->r;
+
+        if (parent->l == found) {
+            parent->l = link;
+        } else {
+            parent->r = link;
+        }
+        free(found);
+    } else {
+        /* case 3 */
+
+        /* find successor of `found`, call it `z`, its parent `zp` */
+        struct avl_el* zp = found;
+        struct avl_el* z = found->r;
+        while (z->l) {
+            zp = z;
+            z = z->l;
+        }
+
+        /* Possible child of `z`, lets call it `z_ch`. It cannot be the left. */
+        struct avl_el* z_ch = z->r;
+
+        /* replace `z` with `found` */
+        swp_avl_els(z, found);
+
+        /*
+         * If `z` had a child, set the ptr of the parent to it.
+         * The left ptr of the parent must be set, as `z` was the left child of
+         * its parent.
+         */
+        if (z_ch) {
+            zp->l = z_ch;
+        }
+
+        free(z);
+    }
+
+    /**
+     * @todo rebalancing
+     */
+
+    return avl->root;
+}
+
 /*
  *
  *
