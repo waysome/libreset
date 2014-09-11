@@ -15,5 +15,6 @@ find_program(DOXYGEN doxygen)
 #
 add_subdirectory(src)
 add_subdirectory(paper)
+add_subdirectory(doc)
 
 
