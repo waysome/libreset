@@ -132,7 +132,7 @@ avl_get_hash(
  *
  * @return The height of the avl sub tree
  */
-inline static signed int
+inline static unsigned int
 avl_height(
     struct avl_el* root //!< The root element
 );
@@ -151,7 +151,7 @@ avl_get_hash(struct avl_el* el) {
     return el->hash;
 }
 
-inline static signed int
+inline static unsigned int
 avl_height(
     struct avl_el* root //!< The root element
 ) {
