@@ -3,6 +3,9 @@
 #
 
 
+include_directories(${PROJECT_SOURCE_DIR}/include)
+
+
 #
 # We use the var SOURCE_FILES to hold all source files to be linked together
 # into libreset. Additionally, checks checky may be performed on that source
