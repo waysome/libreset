@@ -130,7 +130,28 @@ static struct avl_el*
 rotate_right(
     struct avl_el* node
 ) {
-    return 0;
+    if (!node) {
+        return NULL;
+    }
+
+    if (!node->l) {
+        return NULL;
+    }
+
+    struct avl_el* new_root=node->l;
+
+    //relocate the middle subtree
+    node->l=new_root->r;
+
+    //old root node is now child of new root node
+    new_root->r=node;
+
+    //regenerate the node's metadata
+    regen_metadata(node);
+    regen_metadata(new_root);
+
+    //return new root node
+    return new_root;
 }
 
 static void
