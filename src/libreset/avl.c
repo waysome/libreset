@@ -36,6 +36,20 @@ rotate_right(
     struct avl_el* node //!< The node to rotate
 );
 
+/**
+ * Regenerate a node's height and node_cnt
+ *
+ * @return void
+ *
+ * This function regenerates the buffered metadata of a node with a depth of 1.
+ * The function does not recurse but only takes into account the metadata of
+ * direct children.
+ */
+static void
+regen_metadata(
+    struct avl_el* node //!< The node to regenerate
+);
+
 
 /*
  *
@@ -96,4 +110,11 @@ rotate_right(
     struct avl_el* node
 ) {
     return 0;
+}
+
+static void
+regen_metadata(
+    struct avl_el* node //!< The node to regenerate
+) {
+    //TODO: implement
 }
