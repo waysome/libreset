@@ -139,6 +139,17 @@ avl_height(
 );
 
 
+/**
+ * Get the number of nodes a subtree contains
+ *
+ * @return The number of nodes the subtree contains
+ */
+inline static unsigned int
+avl_node_cnt(
+    struct avl_el* root //!< The root element
+);
+
+
 /*
  *
  *
@@ -157,6 +168,13 @@ avl_height(
     struct avl_el* root //!< The root element
 ) {
     return root == NULL ? 0 : root->height;
+}
+
+inline static unsigned int
+avl_node_cnt(
+    struct avl_el* root //!< The root element
+) {
+    return (root == NULL) ? 0 : (root->node_cnt);
 }
 
 /** @} */
