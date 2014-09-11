@@ -11,6 +11,12 @@ find_program(DOXYGEN doxygen)
 
 
 #
+# Project options
+#
+option(HARD_MODE "Enables extra checks for use during development" OFF)
+
+
+#
 # Libreset's sources reside in ./src/.
 #
 add_subdirectory(src)
