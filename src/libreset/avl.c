@@ -104,6 +104,11 @@ insert_element_into_tree(
     struct avl_el** root //!< The root element of the tree where to insert
 );
 
+/**
+ * Find an element by hash
+ *
+ * @return Ptr to the found element or NULL if there is none.
+ */
 static struct avl_el*
 element_with_hash(
     struct avl_el* root,    //!< The element where to begin to search in
@@ -229,15 +234,10 @@ insert_element_into_tree(
     return *root;
 }
 
-/**
- * Find an element by hash
- *
- * @return Ptr to the found element or NULL if there is none.
- */
 static struct avl_el*
 element_with_hash(
-    struct avl_el* root,    //!< The element where to begin to search in
-    rs_hash h               //!< The hash to search for
+    struct avl_el* root,
+    rs_hash h
 ) {
     if (!root) {
         return NULL;
