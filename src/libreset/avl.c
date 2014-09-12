@@ -102,11 +102,7 @@ static struct avl_el*
 rotate_left(
     struct avl_el* node
 ) {
-    if (!node) {
-        return NULL;
-    }
-
-    if (!node->r) {
+    if (!node || !node->r) {
         return NULL;
     }
 
