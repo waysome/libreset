@@ -131,25 +131,25 @@ rebalance_subtree(
     while (avl_node_cnt(root->r) > (2*avl_node_cnt(root->l)+1)) {
         // perform right-rotations in the right subtree if necessary
         while (avl_node_cnt(root->r->r) <= avl_node_cnt(root->l)) {
-            root->r=rotate_right(root->r);
+            root->r = rotate_right(root->r);
         }
 
-        root=rotate_left(root);
+        root = rotate_left(root);
     }
 
     // perform a right-rotation if there are too many nodes in the right subtree
     while (avl_node_cnt(root->l) > (2*avl_node_cnt(root->r)+1)) {
         // perform left-rotations in the right subtree if necessary
         while (avl_node_cnt(root->l->l) <= avl_node_cnt(root->r)) {
-            root->l=rotate_left(root->l);
+            root->l = rotate_left(root->l);
         }
 
-        root=rotate_right(root);
+        root = rotate_right(root);
     }
 
     // now rebalance the children
-    root->l=rebalance_subtree(root->l);
-    root->r=rebalance_subtree(root->r);
+    root->l = rebalance_subtree(root->l);
+    root->r = rebalance_subtree(root->r);
 
     return root;
 }
