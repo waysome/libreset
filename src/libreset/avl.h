@@ -41,10 +41,11 @@ struct avl {
  */
 struct avl_el {
     rs_hash hash;
-    struct ll ll;       //!< The linkedlist where the data elements are stored
-    signed int height;  //!< The height of the subtree
-    struct  avl_el* l;  //!< Next left node
-    struct  avl_el* r;  //!< Next right node
+    struct ll ll;           //!< The linked list containing stored elements
+    unsigned int height;    //!< The height of the subtree
+    unsigned int node_cnt;  //!< The number of nodes which are in the subtree
+    struct  avl_el* l;      //!< Next left node
+    struct  avl_el* r;      //!< Next right node
 };
 
 /**
@@ -132,8 +133,19 @@ avl_get_hash(
  *
  * @return The height of the avl sub tree
  */
-inline static signed int
+inline static unsigned int
 avl_height(
+    struct avl_el* root //!< The root element
+);
+
+
+/**
+ * Get the number of nodes a subtree contains
+ *
+ * @return The number of nodes the subtree contains
+ */
+inline static unsigned int
+avl_node_cnt(
     struct avl_el* root //!< The root element
 );
 
@@ -151,11 +163,18 @@ avl_get_hash(struct avl_el* el) {
     return el->hash;
 }
 
-inline static signed int
+inline static unsigned int
 avl_height(
     struct avl_el* root //!< The root element
 ) {
     return root == NULL ? 0 : root->height;
+}
+
+inline static unsigned int
+avl_node_cnt(
+    struct avl_el* root //!< The root element
+) {
+    return (root == NULL) ? 0 : (root->node_cnt);
 }
 
 /** @} */
