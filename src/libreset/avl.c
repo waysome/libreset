@@ -71,11 +71,16 @@ regen_metadata(
     struct avl_el* node //!< The node to regenerate
 );
 
+/*
+ * Add a data element to the avl tree
+ *
+ * @return The element where the data is now in.
+ */
 static struct avl_el*
 add(
-    void* data,
-    rs_hash hash,
-    struct avl_el** root
+    void* data, //!< The data ptr to insert
+    rs_hash hash, //!< The hash for the data to insert
+    struct avl_el** root //!< The root of the (sub) tree to insert
 );
 
 static struct avl_el*
@@ -255,16 +260,11 @@ element_with_hash(
     return NULL;
 }
 
-/*
- * Add a data element to the avl tree
- *
- * @return The element where the data is now in.
- */
 static struct avl_el*
 add(
-    void* data, //!< The data ptr to insert
-    rs_hash hash, //!< The hash for the data to insert
-    struct avl_el** root //!< The root of the (sub) tree to insert
+    void* data,
+    rs_hash hash,
+    struct avl_el** root
 ) {
     struct avl_el* element = element_with_hash(*root, hash);
 
