@@ -108,17 +108,17 @@ rotate_left(
 
     struct avl_el* new_root=node->r;
 
-    //relocate the middle subtree
+    // relocate the middle subtree
     node->r=new_root->l;
 
-    //old root node is now child of new root node
+    // old root node is now child of new root node
     new_root->l=node;
 
-    //regenerate the node's metadata
+    // regenerate the node's metadata
     regen_metadata(node);
     regen_metadata(new_root);
 
-    //return new root node
+    // return new root node
     return new_root;
 }
 
