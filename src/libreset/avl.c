@@ -83,6 +83,11 @@ add(
     struct avl_el** root //!< The root of the (sub) tree to insert
 );
 
+/**
+ * Create a new struct avl_el object
+ *
+ * @return Ptr to the new struct avl_el object or NULL on failure
+ */
 static struct avl_el*
 new_avl_el(
     rs_hash h //!< The hash for the new struct avl_el object
@@ -159,14 +164,9 @@ avl_add(
  *
  */
 
-/**
- * Create a new struct avl_el object
- *
- * @return Ptr to the new struct avl_el object or NULL on failure
- */
 static struct avl_el*
 new_avl_el(
-    rs_hash h //!< The hash for the new struct avl_el object
+    rs_hash h
 ) {
     struct avl_el* el = calloc(1, sizeof(*el));
     if (el) {
