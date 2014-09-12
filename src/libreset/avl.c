@@ -55,6 +55,7 @@ rotate_right(
  * Regenerate a node's height and node_cnt
  *
  * @return void
+ * @warning This function will crash when being passed NULL.
  *
  * This function regenerates the buffered metadata of a node with a depth of 1.
  * The function does not recurse but only takes into account the metadata of
