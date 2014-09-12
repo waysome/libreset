@@ -18,6 +18,20 @@ destroy_subtree(
 );
 
 /**
+ * Rebalance a subtree
+ *
+ * This function will recursively rebalance a subtree.
+ * It uses the metadata of a subtree's root node to check whether the subtree
+ * already is balanced. This way, unnecessary recursions are omitted.
+ *
+ * @return new root
+ */
+static struct avl_el*
+rebalance_subtree(
+    struct avl_el* root //!< The root of the subtree to rebalance
+);
+
+/**
  * Rotate a node counter-clockwise
  *
  * @return new root or NULL, if the rotation could not be performed
@@ -97,6 +111,47 @@ destroy_subtree(
     }
 
     free(node);
+}
+
+static struct avl_el*
+rebalance_subtree(
+    struct avl_el* root
+) {
+    //check whether the root node is NULL
+    if (!root) {
+        return NULL;
+    }
+
+    // check whether the subtrees is already balanced
+    if (avl_node_cnt(root) > (unsigned int) (1 << (avl_height(root)-1) ) - 1) {
+        return root;
+    }
+
+    // perform a left-rotation if there are too many nodes in the right subtree
+    while (avl_node_cnt(root->r) > (2*avl_node_cnt(root->l)+1)) {
+        // perform right-rotations in the right subtree if necessary
+        while (avl_node_cnt(root->r->r) <= avl_node_cnt(root->l)) {
+            root->r=rotate_right(root->r);
+        }
+
+        root=rotate_left(root);
+    }
+
+    // perform a right-rotation if there are too many nodes in the right subtree
+    while (avl_node_cnt(root->l) > (2*avl_node_cnt(root->r)+1)) {
+        // perform left-rotations in the right subtree if necessary
+        while (avl_node_cnt(root->l->l) <= avl_node_cnt(root->r)) {
+            root->l=rotate_left(root->l);
+        }
+
+        root=rotate_right(root);
+    }
+
+    // now rebalance the children
+    root->l=rebalance_subtree(root->l);
+    root->r=rebalance_subtree(root->r);
+
+    return root;
 }
 
 static struct avl_el*
