@@ -41,6 +41,23 @@ avl_destroy(
     return 1;
 }
 
+struct avl_el*
+avl_find(
+    struct avl* avl,
+    rs_hash hash
+) {
+    struct avl_el* iter = avl->root;
+
+    while (iter && iter->hash != hash) {
+        if (iter->hash > hash) {
+            iter = iter->l;
+        } else {
+            iter = iter->r;
+        }
+    }
+
+    return iter;
+}
 
 /*
  *

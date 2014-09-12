@@ -107,15 +107,14 @@ avl_del(
 );
 
 /**
- * Find an element in a avl tree
+ * Find a node in a avl tree which has the passed hash
  *
- * @return The found element or NULL if there was nothing found
+ * @return The found node or NULL if there was nothing found
  */
 struct avl_el*
 avl_find(
-    struct avl* avl , //!< The avl where to search in
-    rs_predicate_function pred, //!< the predicate function
-    void* etc //!< an additional parameter to the predicate function
+    struct avl* avl, //!< The avl where to search in
+    rs_hash hash //!< The hash of the element to find
 );
 
 /**
