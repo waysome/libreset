@@ -97,6 +97,9 @@ new_avl_el(
 /**
  * Insert an struct avl_el object into the avl tree
  *
+ * @pre An element with the hash of the to-insert element (`el`) is not in the
+ *      tree `root` points to.
+ *
  * @return The new root element
  */
 static struct avl_el*
@@ -191,8 +194,6 @@ insert_element_into_tree(
     struct avl_el* el,
     struct avl_el** root
 ) {
-    signed int cmp;
-
     if (!root || !el) {
         return NULL;
     }
@@ -201,15 +202,7 @@ insert_element_into_tree(
         return *root;
     }
 
-    if (unlikely(el->hash == (*root)->hash)) {
-        cmp = 0;
-    } else {
-        cmp = (el->hash > (*root)->hash) ? -1 : 1;
-    }
-
-    if (unlikely(cmp == 0)) {
-        /* Shouldn't be possible */
-    } else if (cmp == 1) {
+    if (el->hash < (*root)->hash) {
         (*root)->l = insert_element_into_tree(el, &(*root)->l);
 
         if (avl_height((*root)->l) - avl_height((*root)->r) == 2) {
@@ -219,7 +212,7 @@ insert_element_into_tree(
                 *root = double_rotate_with_left(*root);
             }
         }
-    } else { /* cmp == -1 */
+    } else {
         (*root)->r = insert_element_into_tree(el, &(*root)->r);
 
         if (avl_height((*root)->r) - avl_height((*root)->l) == 2) {
