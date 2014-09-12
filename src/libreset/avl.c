@@ -117,7 +117,7 @@ static struct avl_el*
 rebalance_subtree(
     struct avl_el* root
 ) {
-    //check whether the root node is NULL
+    // check whether the root node is NULL
     if (!root) {
         return NULL;
     }
