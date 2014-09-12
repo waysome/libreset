@@ -1,8 +1,9 @@
 #include <stdlib.h>
 
-#include "libreset/util/likely.h"
-#include "libreset/util/macros.h"
 #include "libreset/hash.h"
+
+#include "util/likely.h"
+#include "util/macros.h"
 
 #include "ll.h"
 #include "avl.h"
