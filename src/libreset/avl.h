@@ -22,8 +22,8 @@
 #ifndef __AVL_H__
 #define __AVL_H__
 
-#include "libreset/ll.h"
-#include "libreset/util/attributes.h"
+#include "ll.h"
+#include "util/attributes.h"
 #include "libreset/hash.h"
 
 /**
