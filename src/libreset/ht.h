@@ -20,6 +20,14 @@
  * along with libreset. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * @addtogroup internal_ht_interface "(internal) Hashtable interface definition"
+ *
+ * This group contains the interface definition for the hashtable type used in
+ * the codebase.
+ *
+ * @{
+ */
 
 #ifndef __HT_H__
 #define __HT_H__
@@ -98,3 +106,7 @@ ht_del(
 );
 
 #endif //__HT_H__
+
+/**
+ * @}
+ */
