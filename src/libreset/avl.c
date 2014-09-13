@@ -317,9 +317,7 @@ avl_del(
         free(z);
     }
 
-    /**
-     * @todo rebalancing
-     */
+    rebalance_subtree(avl->root);
 
     return avl->root;
 }
