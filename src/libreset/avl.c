@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include "avl.h"
+#include "util/macros.h"
 
 
 /*
@@ -14,6 +15,55 @@
 static void
 destroy_subtree(
     struct avl_el* node //!< A node to destroy
+);
+
+/**
+ * Rebalance a subtree
+ *
+ * This function will recursively rebalance a subtree.
+ * It uses the metadata of a subtree's root node to check whether the subtree
+ * already is balanced. This way, unnecessary recursions are omitted.
+ *
+ * @return new root
+ */
+static struct avl_el*
+rebalance_subtree(
+    struct avl_el* root //!< The root of the subtree to rebalance
+);
+
+/**
+ * Rotate a node counter-clockwise
+ *
+ * @return new root or NULL, if the rotation could not be performed
+ */
+static struct avl_el*
+rotate_left(
+    struct avl_el* node //!< The node to rotate
+);
+
+/**
+ * Rotate a node clockwise
+ *
+ * @return new root or NULL, if the rotation could not be performed
+ */
+static struct avl_el*
+rotate_right(
+    struct avl_el* node //!< The node to rotate
+);
+
+/**
+ * Regenerate a node's height and node_cnt
+ *
+ * @return void
+ * @warning This function will crash when being passed NULL.
+ *
+ * This function regenerates the buffered metadata of a node with a depth of 1.
+ * The function does not recurse but only takes into account the metadata of
+ * direct children.
+ */
+static void
+regen_metadata(
+    struct avl_el* node //!< The node to regenerate
 );
 
 
@@ -79,5 +129,106 @@ destroy_subtree(
     }
 
     free(node);
+}
+
+static struct avl_el*
+rebalance_subtree(
+    struct avl_el* root
+) {
+    // check whether the root node is NULL
+    if (!root) {
+        return NULL;
+    }
+
+    // check whether the subtrees is already balanced (see paper)
+    if (avl_node_cnt(root) >
+        (unsigned int) (1 << (avl_height(root) - 1) ) - 1) {
+        return root;
+    }
+
+    // perform a left-rotation if there are too many nodes in the right subtree
+    while (avl_node_cnt(root->r) > (2 * avl_node_cnt(root->l) + 1)) {
+        // perform right-rotations in the right subtree if necessary
+        while (avl_node_cnt(root->r->r) <= avl_node_cnt(root->l)) {
+            root->r = rotate_right(root->r);
+        }
+
+        root = rotate_left(root);
+    }
+
+    // perform a right-rotation if there are too many nodes in the right subtree
+    while (avl_node_cnt(root->l) > (2 * avl_node_cnt(root->r) + 1)) {
+        // perform left-rotations in the right subtree if necessary
+        while (avl_node_cnt(root->l->l) <= avl_node_cnt(root->r)) {
+            root->l = rotate_left(root->l);
+        }
+
+        root = rotate_right(root);
+    }
+
+    // now rebalance the children
+    root->l = rebalance_subtree(root->l);
+    root->r = rebalance_subtree(root->r);
+
+    return root;
+}
+
+static struct avl_el*
+rotate_left(
+    struct avl_el* node
+) {
+    if (!node || !node->r) {
+        return NULL;
+    }
+
+    struct avl_el* new_root = node->r;
+
+    // relocate the middle subtree
+    node->r = new_root->l;
+
+    // old root node is now child of new root node
+    new_root->l = node;
+
+    // regenerate the node's metadata
+    regen_metadata(node);
+    regen_metadata(new_root);
+
+    // return new root node
+    return new_root;
+}
+
+static struct avl_el*
+rotate_right(
+    struct avl_el* node
+) {
+    if (!node || !node->l) {
+        return NULL;
+    }
+
+    struct avl_el* new_root = node->l;
+
+    // relocate the middle subtree
+    node->l = new_root->r;
+
+    // old root node is now child of new root node
+    new_root->r = node;
+
+    // regenerate the node's metadata
+    regen_metadata(node);
+    regen_metadata(new_root);
+
+    // return new root node
+    return new_root;
+}
+
+static void
+regen_metadata(
+    struct avl_el* node //!< The node to regenerate
+) {
+    // regenerate the height
+    node->height = 1 + MAX(avl_height(node->l), avl_height(node->r));
+
+    // regenerate the node count
+    node->node_cnt = 1 + avl_node_cnt(node->l) + avl_node_cnt(node->r);
 }
 
