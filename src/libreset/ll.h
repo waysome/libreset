@@ -47,6 +47,8 @@ struct ll {
 /**
  * Destroy a linked list object
  *
+ * @memberof ll
+ *
  * Removes the linked list from the memory but does not remove the referenced
  * elements.
  */
@@ -57,6 +59,8 @@ ll_destroy(
 
 /**
  * Insert a struct ll_element into a struct ll
+ *
+ * @memberof ll
  *
  * @return the struct ll object which was passed or NULL on failure
  */
@@ -69,6 +73,8 @@ ll_insert(
 /**
  * Insert a element from the actual void* which references the data
  *
+ * @memberof ll
+ *
  * @return the struct ll object which was passed or NULL on failure
  */
 struct ll*
@@ -79,6 +85,8 @@ ll_insert_data(
 
 /**
  * Delete a struct ll_element from the linked list
+ *
+ * @memberof ll
  *
  * @return the struct ll object which was passed or NULL on failure
  */
@@ -101,6 +109,8 @@ ll_delete(
 /**
  * Allocate an struct ll_element object
  *
+ * @memberof ll_element
+ *
  * @return Ptr to the new struct ll_element object or NULL on failure
  */
 struct ll_element*
@@ -108,6 +118,8 @@ ll_element_alloc(void);
 
 /**
  * Allocate an struct ll_element object with data
+ *
+ * @memberof ll_element
  *
  * @return Ptr to the new struct ll_element object or NULL on failure
  */
@@ -118,6 +130,8 @@ ll_element_alloc_new(
 
 /**
  * Destroy an struct ll_element object
+ *
+ * @memberof ll_element
  *
  * @warning The ptr to the next element will be lost, if not saved beforehand
  * @warning The ptr to the data of the element will be lost, if not saved
