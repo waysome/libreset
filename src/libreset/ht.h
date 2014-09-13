@@ -85,7 +85,7 @@ ht_destroy(
 struct ht_bucket*
 ht_find(
     struct ht* ht, //!< The hashtable object to search in
-    hash hash //!< The hash of the element to find
+    rs_hash hash //!< The hash of the element to find
 );
 
 /**
