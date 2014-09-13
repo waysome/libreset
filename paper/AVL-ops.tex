@@ -115,9 +115,61 @@
 
         \begin{equation}
             n(h) = 2^h-1
+            \label{eq:AVL_ops-max_nodes_in_subtree}
         \end{equation}
 
-        If the height is increased by $1$, this yields:
+        On the other side, any subtree with a minimum height of $h$ contains at
+        least this many nodes.
+        Thus, the number of nodes $n$ in any subtree with a minimum height of
+        $h_{min}$ and a maximum height of $h_{max}$ lies within a range which
+        may be derived from the minimum and the maximum height:
+
+        \begin{equation}
+            2^{h_{min}}-1 \leq n \leq 2^{h_{max}}-1
+        \end{equation}
+
+        In an AVL tree, the minimum and the maximum height must not differ by
+        more than one.
+        We will assume now that $h_{max}$ is given and that $h_{min}$ is either
+        exactly $h_{max}$ or $h_{max}-1$.
+        Since in the latter case the number of nodes must be greater than the
+        value yielded by equation \ref{eq:AVL_ops-max_nodes_in_subtree}, for
+        AVLs the number of nodes in a balanced subtree is subject to following
+        constrain:
+
+        \begin{equation}
+            2^{h_{max}-1}-1 < n \leq 2^{h_{max}}-1
+        \end{equation}
+
+        Hence, the number of nodes in a balanced subtree and it's maximal
+        height must satisfy following relation:
+
+        \begin{equation}
+            2^{h_{max}-1}-1 < n
+        \end{equation}
+
+        If the relation is not satisfied, the subtree is not balanced.
+        If we want to rebalance a subtree, we may check whether this constrain
+        is met for the root node, rebalance the subtree locally\footnote{see the
+        following section} by means of rotations and recursively do the same for
+        the children of the new root node.
+
+        During execution of this algorithm, the imbalances within a subtree are
+        targeted optimally and either resolved or moved down the tree until the
+        entire tree is balanced.
+
+        Since, in the worst case, each node of the resulting tree will have been
+        subject to local rebalancing at most once and the number of rotations
+        maximally done scales with $2^{h_{max}}$ for each subtree, the algorithm
+        is in $O(n)$.
+        For imbalances in a leaf or within a single path, e.g. resulting from
+        insertion and deletion of nodes, the rebalancing is done in $O(log(n))$.
+
+    \subsection{Locally rebalance a node}
+    \label{sec:AVL_ops-locally-rebalance}
+
+        If the height is increased by $1$, equation
+        \ref{eq:AVL_ops-max_nodes_in_subtree} yields:
 
         \begin{equation}
             n(h+1)
@@ -197,13 +249,5 @@
         \ref{sec:AVL_ops-rebalance-rot_cond2} is not met, left-rotations have to
         be carried out in the left subtree until the condition is met and the
         right-rotation can be performed.
-
-        After the tree is balanced on the top level, the subtrees may be
-        rebalanced recursively.
-
-        The algorithm is expected to be in $O(n)$ for most cases and in
-        $O(log(n))$, if only one leaf causes the imbalance.
-
-        %TODO: optional approach
 
 
