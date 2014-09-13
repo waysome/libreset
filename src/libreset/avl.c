@@ -204,27 +204,11 @@ insert_element_into_tree(
 
     if (el->hash < (*root)->hash) {
         (*root)->l = insert_element_into_tree(el, &(*root)->l);
-
-        if (avl_height((*root)->l) - avl_height((*root)->r) == 2) {
-            if (likely(el->hash != (*root)->l->hash)) {
-                *root = single_rotate_with_left(*root);
-            } else {
-                *root = double_rotate_with_left(*root);
-            }
-        }
     } else {
         (*root)->r = insert_element_into_tree(el, &(*root)->r);
-
-        if (avl_height((*root)->r) - avl_height((*root)->l) == 2) {
-            if (likely(el->hash != (*root)->r->hash)) {
-                *root = single_rotate_with_right(*root);
-            } else {
-                *root = double_rotate_with_right(*root);
-            }
-        }
     }
 
-    (*root)->height = MAX(avl_height((*root)->l), avl_height((*root)->r)) + 1;
+    regen_metadata(*root);
     return *root;
 }
 
