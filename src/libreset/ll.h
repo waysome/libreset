@@ -19,6 +19,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with libreset. If not, see <http://www.gnu.org/licenses/>.
  */
+
+/**
+ * @addtogroup internal_linkedlist_interface "(internal) Linkedlist interface
+ * definition"
+ *
+ * This group contains the interface definition for the linked list type used in
+ * the codebase.
+ *
+ * @{
+ */
+
 #ifndef __LL_H__
 #define __LL_H__
 
@@ -127,5 +138,9 @@ void
 ll_element_destroy(
     struct ll_element* /**< Ptr to the element to destroy */
 );
+
+/**
+ * @}
+ */
 
 #endif
