@@ -252,6 +252,7 @@ add(
         element = new_avl_el(hash);
         if (element) {
             insert_element_into_tree(element, root);
+            rebalance_subtree(*root);
         } else {
             /* out of memory */
         }
