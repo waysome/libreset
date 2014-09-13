@@ -14,3 +14,16 @@ ht_init(
 
     return ht;
 }
+
+void
+ht_destroy(
+    struct ht* ht
+) {
+    if (ht) {
+        for (; ht->nbuckets > 0; ht->nbuckets--) {
+            avl_destroy(&ht->buckets[ht->nbuckets - 1].avl);
+        }
+        free(ht->buckets);
+        free(ht);
+    }
+}
