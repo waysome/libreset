@@ -6,6 +6,7 @@ add_subdirectory(fig)
 #
 set(TEX_FILES
     AVL-ops.tex
+    bloom-filter.tex
     data-layout.tex
     intro.tex
     main.tex
