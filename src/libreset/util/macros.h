@@ -19,6 +19,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with libreset. If not, see <http://www.gnu.org/licenses/>.
  */
+
+/**
+ * @addtogroup internal-utils "(internal) Utilities"
+ *
+ * @{
+ */
+
 #ifndef __MACROS_H__
 #define __MACROS_H__
 
@@ -99,3 +106,7 @@
 /** @} */
 
 #endif //__MACROS_H__
+
+/**
+ * @}
+ */
