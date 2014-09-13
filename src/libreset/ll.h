@@ -21,8 +21,7 @@
  */
 
 /**
- * @addtogroup internal_linkedlist_interface "(internal) Linkedlist interface
- * definition"
+ * @addtogroup internal_linkedlist_interface
  *
  * This group contains the interface definition for the linked list type used in
  * the codebase.
