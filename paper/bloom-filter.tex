@@ -1,0 +1,40 @@
+\section{Bloom filter usage}
+\label{sec:bloom_filter}
+
+    %TODO: reference
+    A bloom filter is a probabilistic data structure which allows a fast check
+    for a potential membership of an item in a set $B$.
+    As a data structure, it consists of an array of a constant number $m$ of
+    bits $b_0$ to $b_{m-1}$.
+    For an empty set, all those bits are set to $0$.
+    On insertion of an element into the set, $k$ hash functions $h_0$ to
+    $h_{k-1}$ are applied to the element.
+    The resulting values are transformed to positions within the array, e.g.
+    through the modulo operation.
+    Those bits are then set to $1$.
+    Given a set of $n$ elements, the membership of an element $e$ may be checked
+    by checking whether each bit ``pointed'' to by the hash functions applied to
+    the new element are set.
+    If one of those bits is not set, the element is not in the corresponding set
+    $B$.
+
+    \begin{equation}
+        \exists_i : \neg b_{h_i(e)\%m} \Rightarrow e \notin B
+    \end{equation}
+
+    If all the bits relevant for the element are set, the element \emph{may} be
+    in the set $B$:
+
+    \begin{equation}
+        \forall_i : b_{h_i(e)\%m} \Rightarrow
+        p(e \in B) = \left(1 - \left(1 - \frac{1}{m} \right)^{kn} \right)^k
+    \end{equation}
+
+    In libreset, bloom filters will be used as filters to speed up some
+    operations.
+    The use of bloom filters will, however, exceed the classical use for
+    speeding up lookups.
+    The filter may also be used to speed up merges and intersections by allowing
+    early recognition of disjunctive sets.
+
+
