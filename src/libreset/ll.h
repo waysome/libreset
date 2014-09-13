@@ -110,6 +110,7 @@ ll_delete(
  * Allocate an struct ll_element object
  *
  * @memberof ll_element
+ * @static
  *
  * @return Ptr to the new struct ll_element object or NULL on failure
  */
