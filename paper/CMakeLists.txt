@@ -1,11 +1,29 @@
 add_subdirectory(fig)
 
+
+#
+# All the TeX files
+#
+set(TEX_FILES
+    AVL-ops.tex
+    data-layout.tex
+    intro.tex
+    main.tex
+    operations.tex
+    overview.tex
+    parameters.tex
+)
+
+
+#
+# Building facilities for the paper
+#
 add_custom_command(
     OUTPUT main.pdf
     COMMAND pdflatex main
     COMMAND pdflatex main
     MAIN_DEPENDENCY main.tex
-    DEPENDS figures
+    DEPENDS figures ${TEX_FILES}
 )
 
 add_custom_target(paper DEPENDS main.pdf)
