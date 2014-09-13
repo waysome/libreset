@@ -101,7 +101,7 @@
 /**
  * Compute the power of 2 to a constant value
  */
-#define CONSTPOW_TWO(m) (2 << (m))
+#define CONSTPOW_TWO(m) (1 << (m))
 
 /** @} */
 
