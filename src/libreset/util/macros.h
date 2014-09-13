@@ -46,8 +46,8 @@
  * macro.
  */
 #define MAX(x,y)                                    \
-        ((__typeof__(x)) x > (__typeof__(x)) y ?    \
-         (__typeof__(x)) x : (__typeof__(x)) y)
+    ((__typeof__(x)) x > (__typeof__(x)) y ?    \
+     (__typeof__(x)) x : (__typeof__(x)) y)
 
 /**
  * Computes the minimum value of the two passed values
@@ -59,8 +59,8 @@
  * macro.
  */
 #define MIN(x,y)                                    \
-        ((__typeof__(x)) x > (__typeof__(x)) y ?    \
-         (__typeof__(x)) y : (__typeof__(x)) x)
+    ((__typeof__(x)) x > (__typeof__(x)) y ?    \
+     (__typeof__(x)) y : (__typeof__(x)) x)
 
 /**
  * Get the bitcount of a type
