@@ -34,6 +34,7 @@
 
 #include "libreset/hash.h"
 #include "avl.h"
+#include "util/macros.h"
 
 /**
  * Type for hashtable bucket
@@ -50,7 +51,7 @@ struct ht_bucket {
  */
 struct ht {
     struct ht_bucket* buckets; //!< The buckets of the hashtable
-    size_t nbuckets;
+    size_t sizeexp; //!< Exp., 2 must be raised to, to get the size of the ht
 };
 
 /**
@@ -115,6 +116,36 @@ ht_del(
     struct ht* ht, //!< The hashtable object to delete from
     rs_hash hash
 );
+
+/**
+ * Helper to calculate the actual bucket count of the hashtable
+ *
+ * @memberof ht
+ *
+ * @return The number of buckets in `ht` or zero on failure.
+ */
+static inline size_t
+ht_nbuckets(
+    struct ht* ht //!< The hashtable object to calculate the bucket count for
+);
+
+/*
+ *
+ *
+ * inline implementations
+ *
+ *
+ */
+
+static inline size_t
+ht_nbuckets(
+    struct ht* ht
+) {
+    if (!ht) {
+        return 0;
+    }
+    return CONSTPOW_TWO(ht->sizeexp);
+}
 
 #endif //__HT_H__
 
