@@ -21,6 +21,8 @@
  */
 #include "bloom.h"
 
+#include "params.h"
+
 /*
  *
  *
@@ -33,5 +35,31 @@
  * Number of bits in a bloom filter
  */
 #define BLOOM_BITS (sizeof(bloom)*8)
+
+
+/*
+ *
+ *
+ * interface implementation
+ *
+ *
+ */
+
+bloom
+bloom_from_hash(
+    rs_hash hash
+) {
+    bloom result = 0;
+
+    unsigned int vars = HASH_VARIANTS;
+    while (vars--) {
+        result |= 1 << (hash % BLOOM_BITS);
+
+        // transform the hash to generate new variant
+        hash /= BLOOM_BITS;
+    }
+
+    return result;
+}
 
 

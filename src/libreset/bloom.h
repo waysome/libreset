@@ -34,12 +34,25 @@
 
 #include <stddef.h>
 
+#include "libreset/hash.h"
+
 /**
  * Bloom filter type
  *
  * The bloom filter is a probabilistic set representation used for speedups.
  */
 typedef size_t bloom;
+
+/**
+ * Get the bloom filter for an element with a given hash.
+ *
+ * @memberof bloom
+ * @return bloom filter for the given hash
+ */
+bloom
+bloom_from_hash(
+    rs_hash hash //!< hash value for which to calculate the bloom filter
+);
 
 /**
  * @}
