@@ -25,5 +25,6 @@ option(HARD_MODE "Enables extra checks for use during development" OFF)
 add_subdirectory(src)
 add_subdirectory(paper)
 add_subdirectory(doc)
+add_subdirectory(tests)
 
 
