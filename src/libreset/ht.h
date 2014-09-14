@@ -33,8 +33,7 @@
 #define __HT_H__
 
 #include "libreset/hash.h"
-#include "libreset/element.h"
-#include "libreset/avl.h"
+#include "avl.h"
 
 /**
  * Type for hashtable bucket
