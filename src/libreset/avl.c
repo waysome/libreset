@@ -87,7 +87,6 @@ avl_destroy(
     if (avl && avl->root) {
         destroy_subtree(avl->root);
     }
-    free(avl);
     return 1;
 }
 
