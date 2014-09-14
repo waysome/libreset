@@ -38,6 +38,6 @@ ht_find(
         return NULL;
     }
 
-    return &ht->buckets[hash % (CONSTPOW_TWO(BITCOUNT(hash)) / ht->nbuckets)];
+    return &ht->buckets[hash / ((CONSTPOW_TWO(BITCOUNT(hash)) / ht->nbuckets))];
 }
 
