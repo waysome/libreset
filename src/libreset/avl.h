@@ -22,6 +22,7 @@
 #ifndef __AVL_H__
 #define __AVL_H__
 
+#include "bloom.h"
 #include "ll.h"
 #include "util/attributes.h"
 #include "libreset/hash.h"
@@ -41,6 +42,7 @@ struct avl {
  */
 struct avl_el {
     rs_hash hash;
+    bloom filter;           //!< Bloom filter associated with the subtree
     struct ll ll;           //!< The linked list containing stored elements
     unsigned int height;    //!< The height of the subtree
     unsigned int node_cnt;  //!< The number of nodes which are in the subtree
