@@ -20,7 +20,7 @@ main(void) {
      */
     suite_creator_f suite_funcs[] = {
 
-        NULL;
+        NULL
     };
 
     for (iter = suite_funcs[0]; *iter, iter++) {
