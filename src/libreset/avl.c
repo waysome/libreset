@@ -131,7 +131,9 @@ insert_element_into_tree(
 static inline void
 swp_avl_els(
     struct avl_el* a, //!< First element
-    struct avl_el* b  //!< Second element
+    struct avl_el* ap, //!< First elements parent node
+    struct avl_el* b, //!< Second element
+    struct avl_el* bp  //!< Second elements parent node
 );
 
 /**
@@ -316,27 +318,28 @@ insert_element_into_tree(
 static inline void
 swp_avl_els(
     struct avl_el* a,
-    struct avl_el* b
+    struct avl_el* ap,
+    struct avl_el* b,
+    struct avl_el* bp
 ) {
-    struct avl_el tmp;
+    struct avl_el** ap_c = (ap->l == a) ? &ap->l : &ap->r;
+    struct avl_el** bp_c = (bp->l == b) ? &bp->l : &bp->r;
 
-    tmp.hash    = a->hash;
-    tmp.ll.head = a->ll.head;
-    tmp.height  = a->height;
-    tmp.l       = a->l;
-    tmp.r       = a->r;
+    struct avl_el* tmp_lptr = a->l;
+    struct avl_el* tmp_rptr = a->r;
 
-    a->hash     = b->hash;
-    a->ll.head  = b->ll.head;
-    a->height   = b->height;
-    a->l        = b->l;
-    a->r        = b->r;
+    a->l = b->l;
+    a->r = b->r;
 
-    a->hash     = tmp.hash;
-    a->ll.head  = tmp.ll.head;
-    a->height   = tmp.height;
-    a->l        = tmp.l;
-    a->r        = tmp.r;
+    b->l = tmp_lptr;
+    b->r = tmp_rptr;
+
+    *ap_c = b;
+    *bp_c = a;
+
+    /**
+     * @todo Do we need to swap the meta attributes of a node here, too?
+     */
 }
 
 static void
@@ -411,7 +414,7 @@ delete_node_from_subtree(
             struct avl_el* z_ch = z->r;
 
             /* replace `z` with `node` */
-            swp_avl_els(z, node);
+            swp_avl_els(z, zp, node, parent);
 
             /*
              * If `z` had a child, set the ptr of the parent to it.
