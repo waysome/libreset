@@ -55,6 +55,18 @@ bloom_from_hash(
 );
 
 /**
+ * Check whether two bloom filters may contain common elements
+ *
+ * @memberof bloom
+ * @return 0 if the sets represented are exclusively disjunctive, 1 otherwise
+ */
+int
+bloom_may_have_common(
+    bloom a, //!< first of the bloom filters to check for common elements
+    bloom b //!< second of the bloom filters to check for common elements
+);
+
+/**
  * @}
  */
 
