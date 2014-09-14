@@ -261,9 +261,9 @@ avl_del(
     ll_delete(&(found->ll), ll_del_element);
 
     if (!ll_is_empty(&(found->ll))) {
-        /* If there are still elements in the avl element, we can return it
+        /* If there are still elements in the avl element, we can return here
          * because we are ready now */
-        return found;
+        return avl->root;
     }
 
     delete_node_from_subtree(found, parent, avl->root);

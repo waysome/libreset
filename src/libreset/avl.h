@@ -108,7 +108,7 @@ typedef int (*rs_predicate_function)(void* const, void*);
  *
  * @memberof avl
  *
- * @return the element on success, else NULL
+ * @return The root node on success, else NULL
  */
 struct avl_el*
 avl_del(
