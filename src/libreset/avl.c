@@ -96,17 +96,6 @@ insert_element_into_tree(
     struct avl_el** root //!< The root element of the tree where to insert
 );
 
-/**
- * Find an element by hash
- *
- * @return Ptr to the found element or NULL if there is none.
- */
-static struct avl_el*
-element_with_hash(
-    struct avl_el* root,    //!< The element where to begin to search in
-    rs_hash h               //!< The hash to search for
-);
-
 /*
  *
  *
@@ -155,7 +144,7 @@ avl_add(
     void* const d, //!< The data element
     rs_hash hash //!< The hash for the data element
 ) {
-    struct avl_el* element = element_with_hash(avl->root, hash);
+    struct avl_el* element = avl_find(avl, hash);
 
     if (element) {
         ll_insert_data(&element->ll, d);
@@ -213,32 +202,6 @@ insert_element_into_tree(
 
     regen_metadata(*root);
     return *root;
-}
-
-static struct avl_el*
-element_with_hash(
-    struct avl_el* root,
-    rs_hash h
-) {
-    if (!root) {
-        return NULL;
-    }
-
-    if (root->hash == h) {
-        return root;
-    }
-
-    if (root->hash >= h) {
-        if (root->l) {
-            return element_with_hash(root->l, h);
-        }
-    } else {
-        if (root->r) {
-            return element_with_hash(root->r, h);
-        }
-    }
-
-    return NULL;
 }
 
 static void
