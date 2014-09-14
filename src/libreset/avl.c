@@ -72,18 +72,6 @@ regen_metadata(
     struct avl_el* node //!< The node to regenerate
 );
 
-/*
- * Add a data element to the avl tree
- *
- * @return The element where the data is now in.
- */
-static struct avl_el*
-add(
-    void* data, //!< The data ptr to insert
-    rs_hash hash, //!< The hash for the data to insert
-    struct avl_el** root //!< The root of the (sub) tree to insert
-);
-
 /**
  * Create a new struct avl_el object
  *
@@ -167,7 +155,21 @@ avl_add(
     void* const d, //!< The data element
     rs_hash hash //!< The hash for the data element
 ) {
-    return add(d, hash, &avl->root);
+    struct avl_el* element = element_with_hash(avl->root, hash);
+
+    if (element) {
+        ll_insert_data(&element->ll, d);
+    } else {
+        element = new_avl_el(hash);
+        if (element) {
+            insert_element_into_tree(element, &avl->root);
+            rebalance_subtree(avl->root);
+        } else {
+            /* Out of memory */
+        }
+    }
+
+    return element;
 }
 
 /*
@@ -236,29 +238,6 @@ element_with_hash(
     }
 
     return NULL;
-}
-
-static struct avl_el*
-add(
-    void* data,
-    rs_hash hash,
-    struct avl_el** root
-) {
-    struct avl_el* element = element_with_hash(*root, hash);
-
-    if (element) {
-        ll_insert_data(&element->ll, data);
-    } else {
-        element = new_avl_el(hash);
-        if (element) {
-            insert_element_into_tree(element, root);
-            rebalance_subtree(*root);
-        } else {
-            /* out of memory */
-        }
-    }
-
-    return element;
 }
 
 static void
