@@ -55,6 +55,8 @@ struct ht {
 /**
  * Initialize a struct ht object
  *
+ * @memberof ht
+ *
  * @return the pointer to the passed struct ht object, NULL on failure
  */
 struct ht*
@@ -65,6 +67,8 @@ ht_init(
 
 /**
  * Destroy a struct ht object
+ *
+ * @memberof ht
  */
 void
 ht_destroy(
@@ -73,6 +77,8 @@ ht_destroy(
 
 /**
  * Find an element inside the hashtable by its hash
+ *
+ * @memberof ht
  *
  * @return the found element or NULL on failure
  */
@@ -85,6 +91,8 @@ ht_find(
 /**
  * Insert data into the hashtable
  *
+ * @memberof ht
+ *
  * @return 1 on success, else zero
  */
 int
@@ -96,6 +104,8 @@ ht_insert(
 
 /**
  * Delete something from the hashtable by hash
+ *
+ * @memberof ht
  *
  * @return the deleted element or NULL if not found
  */

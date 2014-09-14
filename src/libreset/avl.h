@@ -53,6 +53,9 @@ struct avl_el {
  *
  * @note Alias for avl_add(NULL, NULL);
  *
+ * @memberof avl
+ * @static
+ *
  * @return A pointer to a new avl_el object or NULL on failure
  */
 struct avl*
@@ -60,6 +63,8 @@ avl_alloc(void);
 
 /**
  * Destroy an avl tree
+ *
+ * @memberof avl
  *
  * @return 1 on success, else a negative error number
  */
@@ -70,6 +75,8 @@ avl_destroy(
 
 /**
  * Add an entry in an avl tree
+ *
+ * @memberof avl
  *
  * @return The new added element or NULL on failure
  */
@@ -97,6 +104,8 @@ typedef int (*rs_predicate_function)(void* const, void*);
  * The element of the delete operation is returned, so we do not have a dangling
  * pointer laying around.
  *
+ * @memberof avl
+ *
  * @return the element on success, else NULL
  */
 struct avl_el*
@@ -109,6 +118,8 @@ avl_del(
 /**
  * Find a node in a avl tree which has the passed hash
  *
+ * @memberof avl
+ *
  * @return The found node or NULL if there was nothing found
  */
 struct avl_el*
@@ -120,6 +131,8 @@ avl_find(
 /**
  * Get the hash value of an element
  *
+ * @memberof avl_el
+ *
  * @return The elements hash value.
  */
 static inline rs_hash
@@ -129,6 +142,8 @@ avl_get_hash(
 
 /**
  * Get the height of the avl sub tree
+ *
+ * @memberof avl_el
  *
  * @return The height of the avl sub tree
  */
@@ -140,6 +155,8 @@ avl_height(
 
 /**
  * Get the number of nodes a subtree contains
+ *
+ * @memberof avl_el
  *
  * @return The number of nodes the subtree contains
  */
