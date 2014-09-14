@@ -1,0 +1,108 @@
+\section{Bloom filter usage}
+\label{sec:bloom_filter}
+
+    %TODO: reference
+    A bloom filter is a probabilistic data structure which allows a fast check
+    for a potential membership of an item in a set $B$.
+    As a data structure, it consists of an array of a constant number $m$ of
+    bits $b_0$ to $b_{m-1}$.
+    For an empty set, all those bits are set to $0$.
+    On insertion of an element into the set, $k$ hash functions $h_0$ to
+    $h_{k-1}$ are applied to the element.
+    The resulting values are transformed to positions within the array, e.g.
+    through the modulo operation.
+    Those bits are then set to $1$.
+    Given a set of $n$ elements, the membership of an element $e$ may be checked
+    by checking whether each bit ``pointed'' to by the hash functions applied to
+    the new element are set.
+    If one of those bits is not set, the element is not in the corresponding set
+    $B$.
+
+    \begin{equation}
+        \exists_i : \neg b_{h_i(e)\%m} \Rightarrow e \notin B
+    \end{equation}
+
+    If all the bits relevant for the element are set, the element \emph{may} be
+    in the set $B$:
+
+    \begin{equation}
+        \forall_i : b_{h_i(e)\%m} \Rightarrow
+        p(e \in B) = \left(1 - \left(1 - \frac{1}{m} \right)^{kn} \right)^k
+    \end{equation}
+
+    In libreset, bloom filters will be used as filters to speed up some
+    operations.
+    The use of bloom filters will, however, exceed the classical use for
+    speeding up lookups.
+    The filter may also be used to speed up merges and intersections by allowing
+    early recognition of disjunctive sets.
+
+    \subsection{Disjunctive sets}
+    \label{sec:bloom_filter-disjunctive_sets}
+
+        Checking whether the intersection of two sets $A$ and $B$ is not empty
+        is equivalent to checking whether at least one element of set $A$ is in
+        set $B$.
+        The check for membership of one element described earlier may also be
+        expressed in another way: instead of checking whether one of the bits
+        at the positions given by the hashes of the new element is \emph{not}
+        set, one could check whether \emph{less then $k$} of those bits are set:
+
+        \begin{equation}
+            \left( \sum_i b_{h_i(e)\%m} \right) < k \Rightarrow e \notin B
+            \label{eq:bloom_filter-disjunctive_sets-less_than_k}
+        \end{equation}
+
+        We may also represent a single item $e$ by the bloom filter $s(e)$ of a
+        set which contains only that single item:
+
+        \begin{equation}
+            \exists_i : h_i(e)\%m = j \quad\equiv\quad s(e)_j = 1
+        \end{equation}
+
+        Using this filter, \ref{eq:bloom_filter-disjunctive_sets-less_than_k}
+        may be written as:
+
+        \begin{equation}
+            \left( \sum_i b_i \otimes s(e)_i \right) < k \Rightarrow e \notin B
+        \end{equation}
+
+        Note that $i$ now represents a bit rather than a hash function.
+
+        Now consider a set $A$, which contains an arbitrary amount of elements.
+        If A contains no elements which are in B, the above must be true for
+        each of them:
+
+        \begin{equation}
+            \forall_{e \in A} \left( \sum_i b_i \otimes s(e)_i \right) < k
+            \Rightarrow A \cap B = \emptyset
+        \end{equation}
+
+        An even stronger condition for $A$ and $B$ being exclusively disjunctive
+        is achieved by pulling the quantor into the term under the sum:
+
+        \begin{equation}
+            \left( \sum_i b_i \otimes \bigoplus_{e \in A} s(e)_i \right) < k
+            \Rightarrow A \cap B = \emptyset
+        \end{equation}
+
+        Now ``OR''-ing all the bloom filters for a sets element together bitwise
+        will result in the set's bloom filter itself:
+
+        \begin{equation}
+            \bigoplus_{e \in A} s(e)_i = a_i
+        \end{equation}
+
+        Thus:
+
+        \begin{equation}
+            \left( \sum_i b_i \otimes a_i \right) < k
+            \Rightarrow A \cap B = \emptyset
+        \end{equation}
+
+        Assume the result of a bitwise conjunction\footnote{``AND''} of the
+        bloom filters $a$ and $b$ of two sets be given. If the number of bits
+        set in the result is less than the number of hash functions used, the
+        sets are exclusively disjunctive.
+
+
