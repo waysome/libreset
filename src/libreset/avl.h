@@ -22,6 +22,7 @@
 #ifndef __AVL_H__
 #define __AVL_H__
 
+#include "bloom.h"
 #include "ll.h"
 #include "util/attributes.h"
 #include "libreset/hash.h"
@@ -40,8 +41,9 @@ struct avl {
  * implementation operate on this data type. There is no special root node type.
  */
 struct avl_el {
-    rs_hash hash;
     struct ll ll;           //!< The linked list containing stored elements
+    rs_hash hash;
+    bloom filter;           //!< Bloom filter associated with the subtree
     unsigned int height;    //!< The height of the subtree
     unsigned int node_cnt;  //!< The number of nodes which are in the subtree
     struct  avl_el* l;      //!< Next left node

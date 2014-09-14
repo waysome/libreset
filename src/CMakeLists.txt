@@ -14,6 +14,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 set(SOURCE_FILES
     libreset/avl.c
     libreset/ht.c
+    libreset/bloom.c
     libreset/ll.c
 )
 

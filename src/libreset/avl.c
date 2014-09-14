@@ -125,8 +125,14 @@ avl_find(
     rs_hash hash
 ) {
     struct avl_el* iter = avl->root;
+    bloom filter = bloom_from_hash(hash);
 
     while (iter && iter->hash != hash) {
+        //check whether the element _can_ be in the subtree
+        if (!bloom_may_contain(filter, iter->filter)) {
+            return NULL;
+        }
+
         if (iter->hash > hash) {
             iter = iter->l;
         } else {
@@ -316,4 +322,8 @@ regen_metadata(
 
     // regenerate the node count
     node->node_cnt = 1 + avl_node_cnt(node->l) + avl_node_cnt(node->r);
+
+    // regenerate bloom filter
+    node->filter = bloom_from_hash(node->hash) |
+                   node->l->filter | node->r->filter;
 }
