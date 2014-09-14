@@ -125,8 +125,14 @@ avl_find(
     rs_hash hash
 ) {
     struct avl_el* iter = avl->root;
+    bloom filter = bloom_from_hash(hash);
 
     while (iter && iter->hash != hash) {
+        //check whether the element _can_ be in the subtree
+        if (!bloom_may_contain(filter, iter->filter)) {
+            return NULL;
+        }
+
         if (iter->hash > hash) {
             iter = iter->l;
         } else {
