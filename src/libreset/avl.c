@@ -316,4 +316,8 @@ regen_metadata(
 
     // regenerate the node count
     node->node_cnt = 1 + avl_node_cnt(node->l) + avl_node_cnt(node->r);
+
+    // regenerate bloom filter
+    node->filter = bloom_from_hash(node->hash) |
+                   node->l->filter | node->r->filter;
 }
