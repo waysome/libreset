@@ -21,8 +21,9 @@ ht_destroy(
     struct ht* ht
 ) {
     if (ht) {
-        for (; ht->nbuckets > 0; ht->nbuckets--) {
-            avl_destroy(&ht->buckets[ht->nbuckets - 1].avl);
+        size_t i = ht_nbuckets(ht);
+        while (i--) {
+            avl_destroy(&ht->buckets[i].avl);
         }
         free(ht->buckets);
         free(ht);
