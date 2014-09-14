@@ -4,6 +4,7 @@
 /*
  * Include test files below
  */
+#include "ll/ll_test.c"
 
 typedef Suite* (*suite_creator_f)(void);
 
