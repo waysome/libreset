@@ -111,7 +111,7 @@ ht_insert(
 struct element*
 ht_del(
     struct ht* ht, //!< The hashtable object to delete from
-    hash hash
+    rs_hash hash
 );
 
 #endif //__HT_H__
