@@ -30,7 +30,8 @@
 CMakeCache.txt
 CMakeFiles
 Makefile
-*.cmake
+CTestTestfile.cmake
+cmake_install.cmake
 *.stamp
 
 # Test related stuff
