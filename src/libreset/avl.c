@@ -425,7 +425,7 @@ delete_node_from_subtree(
                 zp->l = z_ch;
             }
 
-            free(z);
+            free(node);
         }
 
     }
