@@ -45,9 +45,11 @@ struct ht_bucket {
 
 /**
  * Hashtable type
+ *
+ * The type for the hashtable, holding buckets and size.
  */
 struct ht {
-    struct ht_bucket* buckets;
+    struct ht_bucket* buckets; //!< The buckets of the hashtable
     size_t nbuckets;
 };
 
