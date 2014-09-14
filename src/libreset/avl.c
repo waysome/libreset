@@ -1,5 +1,11 @@
 #include <stdlib.h>
 
+#include "libreset/hash.h"
+
+#include "util/likely.h"
+#include "util/macros.h"
+
+#include "ll.h"
 #include "avl.h"
 #include "util/macros.h"
 
@@ -66,6 +72,29 @@ regen_metadata(
     struct avl_el* node //!< The node to regenerate
 );
 
+/**
+ * Create a new struct avl_el object
+ *
+ * @return Ptr to the new struct avl_el object or NULL on failure
+ */
+static struct avl_el*
+new_avl_el(
+    rs_hash h //!< The hash for the new struct avl_el object
+);
+
+/**
+ * Insert an struct avl_el object into the avl tree
+ *
+ * @pre An element with the hash of the to-insert element (`el`) is not in the
+ *      tree `root` points to.
+ *
+ * @return The new root element
+ */
+static struct avl_el*
+insert_element_into_tree(
+    struct avl_el* el, //!< The element to insert
+    struct avl_el** root //!< The root element of the tree where to insert
+);
 
 /*
  *
@@ -108,6 +137,30 @@ avl_find(
     return iter;
 }
 
+struct avl_el*
+avl_add(
+    struct avl* avl, //!< The avl tree where to insert
+    void* const d, //!< The data element
+    rs_hash hash //!< The hash for the data element
+) {
+    struct avl_el* element = avl_find(avl, hash);
+
+    if (element) {
+        ll_insert_data(&element->ll, d);
+    } else {
+        element = new_avl_el(hash);
+        if (element) {
+            ll_insert_data(&element->ll, d);
+            insert_element_into_tree(element, &avl->root);
+            rebalance_subtree(avl->root);
+        } else {
+            /* Out of memory */
+        }
+    }
+
+    return element;
+}
+
 /*
  *
  *
@@ -115,6 +168,40 @@ avl_find(
  *
  *
  */
+
+static struct avl_el*
+new_avl_el(
+    rs_hash h
+) {
+    struct avl_el* el = calloc(1, sizeof(*el));
+    if (el) {
+        el->hash = h;
+    }
+    return el;
+}
+
+static struct avl_el*
+insert_element_into_tree(
+    struct avl_el* el,
+    struct avl_el** root
+) {
+    if (!root || !el) {
+        return NULL;
+    }
+    if (*root == NULL) {
+        *root = el;
+        return *root;
+    }
+
+    if (el->hash < (*root)->hash) {
+        (*root)->l = insert_element_into_tree(el, &(*root)->l);
+    } else {
+        (*root)->r = insert_element_into_tree(el, &(*root)->r);
+    }
+
+    regen_metadata(*root);
+    return *root;
+}
 
 static void
 destroy_subtree(
@@ -230,4 +317,3 @@ regen_metadata(
     // regenerate the node count
     node->node_cnt = 1 + avl_node_cnt(node->l) + avl_node_cnt(node->r);
 }
-
