@@ -21,4 +21,17 @@
  */
 #include "bloom.h"
 
+/*
+ *
+ *
+ * definitions
+ *
+ *
+ */
+
+/**
+ * Number of bits in a bloom filter
+ */
+#define BLOOM_BITS (sizeof(bloom)*8)
+
 
