@@ -86,6 +86,14 @@ bloom_from_hash(
 }
 
 int
+bloom_may_contain(
+    bloom element,
+    bloom set
+) {
+    return (element & (~set)) == 0;
+}
+
+int
 bloom_may_have_common(
     bloom a,
     bloom b

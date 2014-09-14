@@ -55,6 +55,20 @@ bloom_from_hash(
 );
 
 /**
+ * Check whether an element may be in a bloom filter
+ *
+ * This is much faster than checking whether two sets may have common elements
+ *
+ * @memberof bloom
+ * @return 0 if the element is not in the set, 1 otherwise
+ */
+int
+bloom_may_contain(
+    bloom element, //!< element, represented as a bloom filter
+    bloom set //!< bloom filter representing the set to check
+);
+
+/**
  * Check whether two bloom filters may contain common elements
  *
  * @memberof bloom
