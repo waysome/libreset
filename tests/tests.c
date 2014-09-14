@@ -1,4 +1,5 @@
 #include <check.h>
+#include <stdlib.h>
 
 /*
  * Include test files below
