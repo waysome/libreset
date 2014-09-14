@@ -41,9 +41,9 @@ struct avl {
  * implementation operate on this data type. There is no special root node type.
  */
 struct avl_el {
+    struct ll ll;           //!< The linked list containing stored elements
     rs_hash hash;
     bloom filter;           //!< Bloom filter associated with the subtree
-    struct ll ll;           //!< The linked list containing stored elements
     unsigned int height;    //!< The height of the subtree
     unsigned int node_cnt;  //!< The number of nodes which are in the subtree
     struct  avl_el* l;      //!< Next left node
