@@ -134,6 +134,21 @@ swp_avl_els(
     struct avl_el* b  //!< Second element
 );
 
+/**
+ * Delete a node from a subtree
+ *
+ * Although the node to delete and its parent are already known, this function
+ * uses the recursive approach to re-find them. This is done because we are then
+ * easily able to call the rebalance function when coming up from the recursion
+ * steps.
+ */
+static void
+delete_node_from_subtree(
+    struct avl_el* node, //!< The node to delete
+    struct avl_el* parent, //!< The parent to delete
+    struct avl_el* root //!< The root node of the subtree
+);
+
 /*
  *
  *
@@ -249,73 +264,7 @@ avl_del(
         return found;
     }
 
-    /*
-     * We must delete the whole avl element and rebalance the tree
-     *
-     * Three cases are possible now:
-     * 1) The found element has no children. We can simply remove it then (and
-     *    fix the appropriate pointer in the parent).
-     *
-     * 2) The found element has one child. So we delete the found element and
-     *    let the parent point to the child of found.
-     *
-     * 3) The found element has two children.
-     *
-     *      3.1) Find the successor of `found` (`z`), which should be the
-     *           leftmost node in the right subtree of `found`.
-     *      3.2) Replace `found` with `z`
-     *      3.3) Delete `z`
-     *           Note: `z` does not have a left child
-     *           Note: `z` has at most one child, we can use case (1) or (2) to
-     *                 delete `z`
-     */
-
-    if (!found->l && !found->r) {
-        /* case 1 */
-        if (parent->l == found) {
-            parent->l = NULL;
-        } else {
-            parent->r = NULL;
-        }
-        free(found);
-    } else if ((found->l && !found->r) || (!found->l && found->r)) {
-        /* case 2 */
-        struct avl_el* link = (found->l) ? found->l : found->r;
-
-        if (parent->l == found) {
-            parent->l = link;
-        } else {
-            parent->r = link;
-        }
-        free(found);
-    } else {
-        /* case 3 */
-
-        /* find successor of `found`, call it `z`, its parent `zp` */
-        struct avl_el* zp = found;
-        struct avl_el* z = found->r;
-        while (z->l) {
-            zp = z;
-            z = z->l;
-        }
-
-        /* Possible child of `z`, lets call it `z_ch`. It cannot be the left. */
-        struct avl_el* z_ch = z->r;
-
-        /* replace `z` with `found` */
-        swp_avl_els(z, found);
-
-        /*
-         * If `z` had a child, set the ptr of the parent to it.
-         * The left ptr of the parent must be set, as `z` was the left child of
-         * its parent.
-         */
-        if (z_ch) {
-            zp->l = z_ch;
-        }
-
-        free(z);
-    }
+    delete_node_from_subtree(found, parent, avl->root);
 
     rebalance_subtree(avl->root);
 
@@ -388,6 +337,95 @@ swp_avl_els(
     a->height   = tmp.height;
     a->l        = tmp.l;
     a->r        = tmp.r;
+}
+
+static void
+delete_node_from_subtree(
+    struct avl_el* node,
+    struct avl_el* parent,
+    struct avl_el* root
+) {
+    if (node->hash != root->hash) {
+        if (node->hash < root->hash) {
+            delete_node_from_subtree(node, parent, root->l);
+        } else {
+            delete_node_from_subtree(node, parent, root->r);
+        }
+        rebalance_subtree(root);
+    } else {
+
+        /*
+         * We must delete the whole avl element and rebalance the tree
+         *
+         * Three cases are possible now:
+         * 1) The found element has no children. We can simply remove it then
+         *    (and fix the appropriate pointer in the parent).
+         *
+         * 2) The found element has one child. So we delete the found element
+         *    and let the parent point to the child of found.
+         *
+         * 3) The found element has two children.
+         *
+         *      3.1) Find the successor of `found` (`z`), which should be the
+         *           leftmost node in the right subtree of `found`.
+         *      3.2) Replace `found` with `z`
+         *      3.3) Delete `z`
+         *           Note: `z` does not have a left child
+         *           Note: `z` has at most one child, we can use case (1) or (2)
+         *                 to delete `z`
+         */
+
+        if (!node->l && !node->r) {
+            /* case 1 */
+            if (parent->l == node) {
+                parent->l = NULL;
+            } else {
+                parent->r = NULL;
+            }
+            free(node);
+        } else if ((node->l && !node->r) || (!node->l && node->r)) {
+            /* case 2 */
+            struct avl_el* link = (node->l) ? node->l : node->r;
+
+            if (parent->l == node) {
+                parent->l = link;
+            } else {
+                parent->r = link;
+            }
+            free(node);
+        } else {
+            /* case 3 */
+
+            /* find successor of `node`, call it `z`, its parent `zp` */
+            struct avl_el* zp = node;
+            struct avl_el* z = node->r;
+            while (z->l) {
+                zp = z;
+                z = z->l;
+            }
+
+            /*
+             * Possible child of `z`, lets call it `z_ch`.
+             * It cannot be the left.
+             */
+            struct avl_el* z_ch = z->r;
+
+            /* replace `z` with `node` */
+            swp_avl_els(z, node);
+
+            /*
+             * If `z` had a child, set the ptr of the parent to it.
+             * The left ptr of the parent must be set, as `z` was the left child
+             * of its parent.
+             */
+            if (z_ch) {
+                zp->l = z_ch;
+            }
+
+            free(z);
+        }
+
+    }
 }
 
 static void
