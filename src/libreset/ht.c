@@ -9,8 +9,8 @@ ht_init(
     size_t n
 ) {
     if (ht) {
-        ht->buckets = calloc(n, sizeof(*ht->buckets));
-        ht->nbuckets = n;
+        ht->buckets = calloc(CONSTPOW_TWO(n), sizeof(*ht->buckets));
+        ht->sizeexp = n;
     }
 
     return ht;

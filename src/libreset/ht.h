@@ -64,7 +64,7 @@ struct ht {
 struct ht*
 ht_init(
     struct ht* ht, //!< The hashtable object to initialize
-    size_t n //!< The initial number of buckets
+    size_t n //!< Power, 2 must be raised to, to calc the number of buckets.
 );
 
 /**
