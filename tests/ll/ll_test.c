@@ -60,6 +60,19 @@ START_TEST (test_ll_element_alloc) {
 }
 END_TEST
 
+START_TEST (test_ll_element_alloc_new) {
+    int data = 3;
+    struct ll_element* el = ll_element_alloc_new(&data);
+
+    ck_assert_ptr_ne(el, NULL);
+    ck_assert_ptr_eq(el->data, &data);
+    ck_assert_int_eq(*((int*) el->data), data);
+    ck_assert_ptr_eq(el->next, NULL);
+
+    free(el);
+}
+END_TEST
+
 Suite*
 suite_ll_create(void) {
     Suite* s;
@@ -74,6 +87,7 @@ suite_ll_create(void) {
     tcase_add_test(case_insert, test_ll_insert_multiple);
 
     tcase_add_test(case_insert, test_ll_element_alloc);
+    tcase_add_test(case_insert, test_ll_element_alloc_new);
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_insert);
