@@ -10,6 +10,7 @@ set(TEX_FILES
     data-layout.tex
     intro.tex
     main.tex
+    misc.tex
     operations.tex
     overview.tex
     parameters.tex
