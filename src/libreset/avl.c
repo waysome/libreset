@@ -58,6 +58,16 @@ rotate_right(
 );
 
 /**
+ * Cut node with lowest key from subtree
+ *
+ * @return node with lowest key
+ */
+static struct avl_el*
+cut_lowest(
+    struct avl_el** root //!< Pointer to the root of the affected subtree
+);
+
+/**
  * Regenerate a node's height and node_cnt
  *
  * @return void
@@ -311,6 +321,31 @@ rotate_right(
 
     // return new root node
     return new_root;
+}
+
+static struct avl_el*
+cut_lowest(
+    struct avl_el** root
+) {
+    if (!root || !*root) {
+        return NULL;
+    }
+
+    // recurse
+    struct avl_el* retval = cut_lowest(&(*root)->l);
+
+    // if the recursion solved the problem already, we can return
+    if (retval) {
+        regen_metadata(*root);
+        return retval;
+    }
+
+    // else the lowest element is the one at hand
+    retval = *root;
+
+    // all that is left to do is cutting the element loose
+    *root = retval->r;
+    return retval;
 }
 
 static void
