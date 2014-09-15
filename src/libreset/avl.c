@@ -58,6 +58,17 @@ rotate_right(
 );
 
 /**
+ * Isolate the root node of a given subtree
+ *
+ * @return the new root node for the tree of which the old one was the root
+ * @warning This function will crash when being passed NULL.
+ */
+static struct avl_el*
+isolate_root_node(
+    struct avl_el* node //!< node to remove
+);
+
+/**
  * Cut node with lowest key from subtree
  *
  * @return node with lowest key
@@ -320,6 +331,31 @@ rotate_right(
     regen_metadata(new_root);
 
     // return new root node
+    return new_root;
+}
+
+static struct avl_el*
+isolate_root_node(
+    struct avl_el* node
+) {
+    // if the node has no left child, we may use the right one
+    if (!node->l) {
+        return node->r;
+    }
+
+    // assume that a suitable replacement exists in the right subtree
+    struct avl_el* new_root = cut_lowest(&node->r);
+
+    // seems like a replacement does not exist. The right subtree must be empty
+    if (!new_root) {
+        return node->l;
+    }
+
+    // insert the new node
+    new_root->l = node->l;
+    new_root->r = node->r;
+    regen_metadata(new_root);
+
     return new_root;
 }
 
