@@ -60,12 +60,12 @@ rotate_right(
 /**
  * Isolate the root node of a given subtree
  *
- * @return the new root node for the tree of which the old one was the root
+ * @return the new root node of the subtree
  * @warning This function will crash when being passed NULL.
  */
 static struct avl_el*
 isolate_root_node(
-    struct avl_el* node //!< node to remove
+    struct avl_el* node //!< node to isolate
 );
 
 /**
