@@ -69,9 +69,13 @@ isolate_root_node(
 );
 
 /**
- * Cut node with lowest key from subtree
+ * Isolate node with lowest key from subtree
  *
- * @return node with lowest key
+ * This function will isolate the node with the lowest key from the rest of the
+ * given subtree. The lowest key, in this implementation, is the leftmost node.
+ * The isolated node will be returned.
+ *
+ * @return node with lowest key, or NULL
  */
 static struct avl_el*
 isolate_lowest(
