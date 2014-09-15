@@ -74,7 +74,7 @@ isolate_root_node(
  * @return node with lowest key
  */
 static struct avl_el*
-cut_lowest(
+isolate_lowest(
     struct avl_el** root //!< Pointer to the root of the affected subtree
 );
 
@@ -344,7 +344,7 @@ isolate_root_node(
     }
 
     // assume that a suitable replacement exists in the right subtree
-    struct avl_el* new_root = cut_lowest(&node->r);
+    struct avl_el* new_root = isolate_lowest(&node->r);
 
     // seems like a replacement does not exist. The right subtree must be empty
     if (!new_root) {
@@ -360,7 +360,7 @@ isolate_root_node(
 }
 
 static struct avl_el*
-cut_lowest(
+isolate_lowest(
     struct avl_el** root
 ) {
     if (!root || !*root) {
@@ -368,7 +368,7 @@ cut_lowest(
     }
 
     // recurse
-    struct avl_el* retval = cut_lowest(&(*root)->l);
+    struct avl_el* retval = isolate_lowest(&(*root)->l);
 
     // if the recursion solved the problem already, we can return
     if (retval) {
