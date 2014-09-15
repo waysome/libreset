@@ -29,6 +29,26 @@ START_TEST (test_ll_delete_data) {
 }
 END_TEST
 
+START_TEST (test_ll_insert_multiple) {
+    struct ll* ll = malloc(sizeof(*ll));
+    int i;
+    int data[] = {
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+    };
+
+    for (i = 0; i < 10; i++) {
+        ck_assert_ptr_eq(ll_insert_data(ll, &(data[i])), ll);
+        ck_assert_ptr_eq(ll->head->data, &(data[i]));
+    }
+
+    while (ll->head) {
+        ck_assert_ptr_eq(ll_delete(ll, ll->head), ll);
+    }
+
+    ll_destroy(ll);
+}
+END_TEST
+
 Suite*
 suite_ll_create(void) {
     Suite* s;
@@ -40,6 +60,7 @@ suite_ll_create(void) {
     case_insert = tcase_create("Inserting");
     tcase_add_test(case_insert, test_ll_insert_data);
     tcase_add_test(case_insert, test_ll_delete_data);
+    tcase_add_test(case_insert, test_ll_insert_multiple);
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_insert);
