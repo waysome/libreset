@@ -7,6 +7,8 @@
 
 typedef Suite* (*suite_creator_f)(void);
 
+#define LENOF(x) (sizeof(x) / sizeof((x)[0]))
+
 int
 main(void) {
     int nfailed = 0;
@@ -14,18 +16,16 @@ main(void) {
     Suite* s;
     SRunner* sr;
 
-    suite_creator_f iter;
-
     /*
      * Insert suite creator functions here
      */
     suite_creator_f suite_funcs[] = {
-
-        NULL
+        suite_ll_create,
     };
 
-    for (iter = suite_funcs[0]; *iter; iter++) {
-        s = iter();
+    unsigned long i = 0;
+    for (i = 0; i < LENOF(suite_funcs); i++) {
+        s = suite_funcs[i]();
         sr = srunner_create(s);
         srunner_run_all(sr, CK_NORMAL);
         nfailed += srunner_ntests_failed(sr);
