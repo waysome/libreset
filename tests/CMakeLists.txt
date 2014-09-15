@@ -20,6 +20,8 @@ target_link_libraries(check_tests
     ${PROJECT_SOURCE_DIR}/src/libreset.so)
 
 
+add_dependencies(check_tests reset)
+
 #
 # Ultimately, the test
 #
