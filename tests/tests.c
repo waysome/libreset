@@ -1,4 +1,5 @@
 #include <check.h>
+#include <stdlib.h>
 
 /*
  * Include test files below
@@ -20,10 +21,10 @@ main(void) {
      */
     suite_creator_f suite_funcs[] = {
 
-        NULL;
+        NULL
     };
 
-    for (iter = suite_funcs[0]; *iter, iter++) {
+    for (iter = suite_funcs[0]; *iter; iter++) {
         s = iter();
         sr = srunner_create(s);
         srunner_run_all(sr, CK_NORMAL);

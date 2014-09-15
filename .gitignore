@@ -30,8 +30,12 @@
 CMakeCache.txt
 CMakeFiles
 Makefile
-*.cmake
+CTestTestfile.cmake
+cmake_install.cmake
 *.stamp
+
+# Test related stuff
+Testing
 
 #
 # Directory where the gentle programmer can put her/his utility snippets when

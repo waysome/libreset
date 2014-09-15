@@ -9,6 +9,7 @@ before_install:
 
 install:
     - sudo apt-get install -q
+        check
         gcc-4.8
         texlive-metapost
         texlive-latex-base
@@ -21,3 +22,4 @@ script:
     - cmake -DHARD_MODE=ON .
     - make
     - make paper
+    - ctest -VV .
