@@ -342,7 +342,7 @@ static struct avl_el*
 isolate_root_node(
     struct avl_el* node
 ) {
-    // if the node has no left child, we may use the right one
+    // if the node has no left child, we may use the right one as new root node
     if (!node->l) {
         return node->r;
     }
