@@ -73,7 +73,8 @@ avl_alloc(void);
  */
 int
 avl_destroy(
-    struct avl* avl //!< The avl tree
+    struct avl* avl, //!< The avl tree
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**

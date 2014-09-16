@@ -20,7 +20,8 @@
 
 static void
 destroy_subtree(
-    struct avl_el* node //!< A node to destroy
+    struct avl_el* node, //!< A node to destroy
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**
@@ -136,10 +137,11 @@ avl_alloc(void) {
 
 int
 avl_destroy(
-    struct avl* avl //!< The avl tree
+    struct avl* avl, //!< The avl tree
+    struct r_set_cfg* cfg
 ) {
     if (avl && avl->root) {
-        destroy_subtree(avl->root);
+        destroy_subtree(avl->root, cfg);
     }
     return 1;
 }
@@ -236,15 +238,17 @@ insert_element_into_tree(
 
 static void
 destroy_subtree(
-    struct avl_el* node //!< A node to destroy
+    struct avl_el* node, //!< A node to destroy
+    struct r_set_cfg* cfg
 ) {
     if (node->l) {
-        destroy_subtree(node->l);
+        destroy_subtree(node->l, cfg);
     }
     if (node->r) {
-        destroy_subtree(node->r);
+        destroy_subtree(node->r, cfg);
     }
 
+    // TODO: clear linked list
     free(node);
 }
 
