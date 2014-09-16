@@ -33,8 +33,8 @@ START_TEST (test_avl_add) {
     struct avl_el* element = avl_add(avl, hash, &data, NULL);
 
     ck_assert(element != NULL);
-    ck_assert(element->l != NULL);
-    ck_assert(element->r != NULL);
+    ck_assert(element->l == NULL);
+    ck_assert(element->r == NULL);
 
     ck_assert_int_eq(element->node_cnt, 0);
     ck_assert_int_eq(element->hash, hash);
