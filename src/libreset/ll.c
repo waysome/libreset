@@ -25,13 +25,15 @@
 
 void
 ll_destroy(
-    struct ll* ll
+    struct ll* ll,
+    struct r_set_cfg* cfg
 ) {
     struct ll_element* iter = ll->head;
     struct ll_element* next;
 
     while (iter) {
         next = iter->next;
+        cfg->freef(iter->data);
         free(iter);
         iter = next;
     }

@@ -32,6 +32,8 @@
 #ifndef __LL_H__
 #define __LL_H__
 
+#include "libreset/set.h"
+
 /**
  * Linked list element type
  *
@@ -61,10 +63,13 @@ struct ll {
  *
  * Removes the linked list from the memory but does not remove the referenced
  * elements.
+ *
+ * @warning the function may crash if either of the arguments is NULL
  */
 void
 ll_destroy(
-    struct ll* ll /**< Ptr to the struct ll object */
+    struct ll* ll, //!< Ptr to the struct ll object
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**
