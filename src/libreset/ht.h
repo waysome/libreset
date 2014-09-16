@@ -33,6 +33,8 @@
 #define __HT_H__
 
 #include "libreset/hash.h"
+#include "libreset/set.h"
+
 #include "avl.h"
 #include "util/macros.h"
 
