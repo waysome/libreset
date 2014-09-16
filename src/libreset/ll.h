@@ -77,10 +77,10 @@ ll_destroy(
  *
  * @memberof ll
  *
- * @return the struct ll object which was passed or NULL on failure
- * @warning the function crashes when being passed NULL for either argument
+ * @warning the function may crash when being passed NULL for either argument
+ * @return 1 if the insertion was successful, 0 on failure
  */
-struct ll*
+int
 ll_insert(
     struct ll* ll, /**< Ptr to the linked list object */
     void* data, /**< Ptr to the data to insert */

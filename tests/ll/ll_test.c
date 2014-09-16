@@ -35,11 +35,13 @@ START_TEST (test_ll_delete_data) {
     struct ll* ll = malloc(sizeof(*ll));
     int data = 7;
 
-    ll_insert(ll, &data, &cfg);
+    ck_assert(ll_insert(ll, &data, &cfg));
     ck_assert(ll->head->data == &data);
 
-    ll_delete(ll, ll->head, &cfg);
+    ck_assert(ll_delete(ll, &data, &cfg));
     ck_assert(ll->head == NULL);
+
+    ck_assert(!ll_delete(ll, ll->head, &cfg));
 
     free(ll);
 }
@@ -53,12 +55,11 @@ START_TEST (test_ll_insert_multiple) {
     };
 
     for (i = 0; i < 10; i++) {
-        ck_assert(ll_insert(ll, &(data[i]), &cfg) == ll);
-        ck_assert(ll->head->data == &(data[i]));
+        ck_assert(ll_insert(ll, &(data[i]), &cfg));
     }
 
-    while (ll->head) {
-        ck_assert(ll_delete(ll, ll->head, &cfg) == ll);
+    for (i = 0; i < 10; i++) {
+        ck_assert(ll_delete(ll, &(data[i]), &cfg));
     }
 
     ll_destroy(ll, &cfg);

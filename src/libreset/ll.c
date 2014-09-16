@@ -41,30 +41,32 @@ ll_destroy(
     }
 }
 
-struct ll*
+int
 ll_insert(
     struct ll* ll,
     void* data,
     struct r_set_cfg* cfg
 ) {
     // check whether the lement is present or not
-    struct ll_element** it=&ll->head;
+    struct ll_element** it = &ll->head;
     while (*it) {
         if (cfg->cmpf((*it)->data, data)) {
-            return NULL;
+            return 0;
         }
+
+        it = &(*it)->next;
     }
 
     // insert the new element
     struct ll_element* el = calloc(1, sizeof(struct ll_element));
     if (!el) {
-        return NULL;
+        return 0;
     }
 
     el->data = data;
-    *it=el;
+    *it = el;
 
-    return ll;
+    return 1;
 }
 
 struct ll*
