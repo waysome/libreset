@@ -104,16 +104,15 @@ avl_add(
 typedef int (*rs_predicate_function)(void* const, void*);
 
 /**
- * Delete an element from the avl tree
+ * Delete elements from the avl tree
  *
- * The element of the delete operation is returned, so we do not have a dangling
- * pointer laying around.
+ * This function will remove all elements from the AVL satisfying a predicate.
  *
  * @memberof avl
  *
- * @return the element on success, else NULL
+ * @return the number of elements removed
  */
-struct avl_el*
+unsigned int
 avl_del(
     struct avl* avl, //!< The avl where to search in
     rs_hash hash, //!< hash value associated with d
