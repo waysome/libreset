@@ -49,6 +49,18 @@ START_TEST (test_avl_add) {
 }
 END_TEST
 
+START_TEST (test_avl_add_destroy) {
+    struct avl* avl = avl_alloc();
+
+    int data = 1;
+    rs_hash hash = 1;
+
+    avl_add(avl, hash, &data, NULL);
+
+    ck_assert_int_eq(1, avl_destroy(avl, NULL));
+}
+END_TEST
+
 Suite*
 suite_avl_create(void) {
     Suite* s;
@@ -66,6 +78,7 @@ suite_avl_create(void) {
     tcase_add_test(case_allocfree, test_avl_alloc_destroy);
 
     tcase_add_test(case_adding, test_avl_add);
+    tcase_add_test(case_adding, test_avl_add_destroy);
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
