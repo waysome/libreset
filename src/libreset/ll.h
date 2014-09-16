@@ -91,11 +91,13 @@ ll_insert(
  * @memberof ll
  *
  * @return the struct ll object which was passed or NULL on failure
+ * @warning the function crashes when being passed NULL for either argument
  */
 struct ll*
 ll_insert_data(
     struct ll* ll, /**< Ptr to the linked list object */
-    void* data /**< Ptr to the data to insert */
+    void* data, /**< Ptr to the data to insert */
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**

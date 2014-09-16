@@ -186,11 +186,11 @@ avl_add(
     struct avl_el* element = find_node(avl, hash);
 
     if (element) {
-        ll_insert_data(&element->ll, d);
+        ll_insert_data(&element->ll, d, cfg);
     } else {
         element = new_avl_el(hash);
         if (element) {
-            ll_insert_data(&element->ll, d);
+            ll_insert_data(&element->ll, d, cfg);
             insert_element_into_tree(element, &avl->root);
             rebalance_subtree(avl->root);
         } else {

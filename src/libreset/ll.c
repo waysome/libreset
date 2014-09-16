@@ -56,10 +56,27 @@ ll_insert(
 struct ll*
 ll_insert_data(
     struct ll* ll,
-    void* data
+    void* data,
+    struct r_set_cfg* cfg
 ) {
-    struct ll_element* el = ll_element_alloc_new(data);
-    return ll_insert(ll, el);
+    // check whether the lement is present or not
+    struct ll_element** it=&ll->head;
+    while (*it) {
+        if (cfg->cmpf((*it)->data, data)) {
+            return NULL;
+        }
+    }
+
+    // insert the new element
+    struct ll_element* el = calloc(1, sizeof(struct ll_element));
+    if (!el) {
+        return NULL;
+    }
+
+    el->data = data;
+    *it=el;
+
+    return ll;
 }
 
 struct ll*
