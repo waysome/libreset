@@ -101,7 +101,6 @@ rs_hash
 ht_insert(
     struct ht* ht, //!< The hashtable object to insert into
     void* data, //!< The data
-    size_t datasize //!< The size of the data in bytes
 );
 
 /**
