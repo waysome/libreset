@@ -40,7 +40,7 @@ ll_destroy(
 }
 
 struct ll*
-ll_insert_data(
+ll_insert(
     struct ll* ll,
     void* data,
     struct r_set_cfg* cfg

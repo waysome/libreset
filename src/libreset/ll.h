@@ -81,7 +81,7 @@ ll_destroy(
  * @warning the function crashes when being passed NULL for either argument
  */
 struct ll*
-ll_insert_data(
+ll_insert(
     struct ll* ll, /**< Ptr to the linked list object */
     void* data, /**< Ptr to the data to insert */
     struct r_set_cfg* cfg //!< type information proveded by the user
