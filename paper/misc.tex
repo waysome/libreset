@@ -5,3 +5,67 @@
     in the library.
 
 
+    \subsection{Bit counting algorithm}
+    \label{sec:misc-bitcount}
+
+        A classical way of counting bits set in an integer is to perform shifts
+        to the right, reading out the single bits and counting up a variable for
+        each bit found set to $1$.
+        This simple algorithm is in $O(n)$, where $n$ is the number of bits in
+        an integer.
+        This section will introduce an algorithm which performs the same task,
+        but is in $O(log(n))$.
+
+        An integer is a series of bits, representing a number. But each bit
+        itself or any sub-group of adjacent bits within the integer may also
+        be interpreted as a number.
+
+        Now imagine each bit of an integer as an virtual integer of it's own,
+        which may be either $0$ or $1$.
+        If we group those bits into pairs, and add up each pair, the result is
+        half the number of integers, which may each take the place of the pair
+        which was used to calculate them.
+        Each of the new integers holds the number of bits set in the original
+        pair.
+        Now imaging those 2bit-wide integers be grouped in pairs and added up.
+        The result will be, again, half the number of integers which are now
+        4bit wide.
+        The step may be continued until only one number remains, which fills up
+        the entire space of the physical integer.
+        This integer now holds the number of bits which were set in the original
+        integer fed to the algorithm.
+        For a visualization of the algorithm, see figure
+        \ref{fig:misc-bitcount-hierarchical_merge}).
+
+        \begin{figure}[!h]
+            \caption{Hierarchical merges}
+            \label{fig:misc-bitcount-hierarchical_merge}
+            \begin{center}
+                \includegraphics{fig/hierarchical-merge.1}
+            \end{center}
+        \end{figure}
+
+        The algorithm is in $O(log(n))$ if we manage to perform each step in
+        constant time, e.g. independently of the number of pairs being merged.
+        This is, indeed, possible using bitwise operations which affect all the
+        pairs in parallel.
+
+        To merge each pair, we have to shift the entire physical integer to the
+        right by the width of one virtual integer.
+        This results in the ``higher'' of the integers in a pair to be on the
+        same ``level'' as the ``lower'' one was before.
+        If we mask both the result of the shifting operation and the original
+        value, we have two clean sets of virtual integers.
+        If we add those physical integers the regular way, the overflows of each
+        pair will end up in the place where the ``higher'' of the virtual
+        integers was before (see fig. \ref{fig:misc-bitcount-single_merge}).
+        Since the overflow may be of one bit at most, this is acceptable.
+
+        \begin{figure}[!h]
+            \caption{A single merge}
+            \label{fig:misc-bitcount-single_merge}
+            \begin{center}
+                \includegraphics{fig/single-merge.1}
+            \end{center}
+        \end{figure}
+
