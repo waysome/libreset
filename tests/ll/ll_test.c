@@ -37,12 +37,12 @@ START_TEST (test_ll_insert_multiple) {
     };
 
     for (i = 0; i < 10; i++) {
-        ck_assert_ptr_eq(ll_insert_data(ll, &(data[i])), ll);
-        ck_assert_ptr_eq(ll->head->data, &(data[i]));
+        ck_assert(ll_insert_data(ll, &(data[i])) == ll);
+        ck_assert(ll->head->data == &(data[i]));
     }
 
     while (ll->head) {
-        ck_assert_ptr_eq(ll_delete(ll, ll->head), ll);
+        ck_assert(ll_delete(ll, ll->head) == ll);
     }
 
     ll_destroy(ll);
@@ -52,9 +52,9 @@ END_TEST
 START_TEST (test_ll_element_alloc) {
     struct ll_element* el = ll_element_alloc();
 
-    ck_assert_ptr_ne(el, NULL);
-    ck_assert_ptr_eq(el->data, NULL);
-    ck_assert_ptr_eq(el->next, NULL);
+    ck_assert(el != NULL);
+    ck_assert(el->data == NULL);
+    ck_assert(el->next == NULL);
 
     free(el);
 }
@@ -64,10 +64,10 @@ START_TEST (test_ll_element_alloc_new) {
     int data = 3;
     struct ll_element* el = ll_element_alloc_new(&data);
 
-    ck_assert_ptr_ne(el, NULL);
-    ck_assert_ptr_eq(el->data, &data);
+    ck_assert(el != NULL);
+    ck_assert(el->data == &data);
     ck_assert_int_eq(*((int*) el->data), data);
-    ck_assert_ptr_eq(el->next, NULL);
+    ck_assert(el->next == NULL);
 
     free(el);
 }
