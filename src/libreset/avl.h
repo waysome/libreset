@@ -93,9 +93,10 @@ avl_add(
 );
 
 /**
- * Delete elements from the avl tree
+ * Delete elements from the avl tree with equivalent hash
  *
- * This function will remove all elements from the AVL satisfying a predicate.
+ * This function will remove all elements from the AVL with the hash `hash` and
+ * satisfying a predicate defined by the user through the configuration `cfg`.
  *
  * @memberof avl
  *
