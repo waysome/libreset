@@ -20,7 +20,8 @@
 
 static void
 destroy_subtree(
-    struct avl_el* node //!< A node to destroy
+    struct avl_el* node, //!< A node to destroy
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**
@@ -121,6 +122,17 @@ insert_element_into_tree(
     struct avl_el** root //!< The root element of the tree where to insert
 );
 
+/**
+ * Find a node by it's key/hash
+ *
+ * @return found node or NULL, if the node does not exist
+ */
+static struct avl_el*
+find_node(
+    struct avl* avl,
+    rs_hash hash
+);
+
 /*
  *
  *
@@ -136,45 +148,42 @@ avl_alloc(void) {
 
 int
 avl_destroy(
-    struct avl* avl //!< The avl tree
+    struct avl* avl, //!< The avl tree
+    struct r_set_cfg* cfg
 ) {
     if (avl && avl->root) {
-        destroy_subtree(avl->root);
+        destroy_subtree(avl->root, cfg);
     }
     return 1;
 }
 
-struct avl_el*
+void*
 avl_find(
     struct avl* avl,
-    rs_hash hash
+    rs_hash hash,
+    void* const d,
+    struct r_set_cfg* cfg
 ) {
-    struct avl_el* iter = avl->root;
-    bloom filter = bloom_from_hash(hash);
+    struct avl_el* node=find_node(avl, hash);
 
-    while (iter && iter->hash != hash) {
-        //check whether the element _can_ be in the subtree
-        if (!bloom_may_contain(filter, iter->filter)) {
-            return NULL;
-        }
-
-        if (iter->hash > hash) {
-            iter = iter->l;
-        } else {
-            iter = iter->r;
+    // TODO: exchange with ll_find as soon as it's present
+    ll_foreach(it, &node->ll) {
+        if (cfg->cmpf(it->data, d)) {
+            return it->data;
         }
     }
 
-    return iter;
+    return NULL;
 }
 
 struct avl_el*
 avl_add(
     struct avl* avl, //!< The avl tree where to insert
+    rs_hash hash,
     void* const d, //!< The data element
-    rs_hash hash //!< The hash for the data element
+    struct r_set_cfg* cfg
 ) {
-    struct avl_el* element = avl_find(avl, hash);
+    struct avl_el* element = find_node(avl, hash);
 
     if (element) {
         ll_insert_data(&element->ll, d);
@@ -236,15 +245,17 @@ insert_element_into_tree(
 
 static void
 destroy_subtree(
-    struct avl_el* node //!< A node to destroy
+    struct avl_el* node, //!< A node to destroy
+    struct r_set_cfg* cfg
 ) {
     if (node->l) {
-        destroy_subtree(node->l);
+        destroy_subtree(node->l, cfg);
     }
     if (node->r) {
-        destroy_subtree(node->r);
+        destroy_subtree(node->r, cfg);
     }
 
+    // TODO: clear linked list
     free(node);
 }
 
@@ -402,3 +413,28 @@ regen_metadata(
     node->filter = bloom_from_hash(node->hash) |
                    node->l->filter | node->r->filter;
 }
+
+static struct avl_el*
+find_node(
+    struct avl* avl,
+    rs_hash hash
+) {
+    struct avl_el* iter = avl->root;
+    bloom filter = bloom_from_hash(hash);
+
+    while (iter && iter->hash != hash) {
+        //check whether the element _can_ be in the subtree
+        if (!bloom_may_contain(filter, iter->filter)) {
+            return NULL;
+        }
+
+        if (iter->hash > hash) {
+            iter = iter->l;
+        } else {
+            iter = iter->r;
+        }
+    }
+
+    return iter;
+}
+

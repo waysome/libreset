@@ -26,6 +26,7 @@
 #include "ll.h"
 #include "util/attributes.h"
 #include "libreset/hash.h"
+#include "libreset/set.h"
 
 /**
  * AVL Tree type
@@ -72,7 +73,8 @@ avl_alloc(void);
  */
 int
 avl_destroy(
-    struct avl* avl //!< The avl tree
+    struct avl* avl, //!< The avl tree
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**
@@ -85,8 +87,9 @@ avl_destroy(
 struct avl_el*
 avl_add(
     struct avl* avl, //!< The avl tree where to insert
+    rs_hash hash, //!< hash value associated with d
     void* const d, //!< The data element
-    rs_hash hash //!< The hash for the data element
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**
@@ -101,33 +104,36 @@ avl_add(
 typedef int (*rs_predicate_function)(void* const, void*);
 
 /**
- * Delete an element from the avl tree
+ * Delete elements from the avl tree
  *
- * The element of the delete operation is returned, so we do not have a dangling
- * pointer laying around.
+ * This function will remove all elements from the AVL satisfying a predicate.
  *
  * @memberof avl
  *
- * @return the element on success, else NULL
+ * @return the number of elements removed
  */
-struct avl_el*
+unsigned int
 avl_del(
     struct avl* avl, //!< The avl where to search in
+    rs_hash hash, //!< hash value associated with d
     rs_predicate_function pred, //!< the predicate function
-    void* etc //!< an additional parameter to the predicate function
+    void* etc, //!< an additional parameter to the predicate function
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**
- * Find a node in a avl tree which has the passed hash
+ * Find an element in the node which compares to the element to find
  *
  * @memberof avl
  *
  * @return The found node or NULL if there was nothing found
  */
-struct avl_el*
+void*
 avl_find(
     struct avl* avl, //!< The avl where to search in
-    rs_hash hash //!< The hash of the element to find
+    rs_hash hash, //!< The hash value associated with d
+    void* const d, //!< The data element to compare to
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**

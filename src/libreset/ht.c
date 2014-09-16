@@ -23,7 +23,8 @@ ht_destroy(
     if (ht) {
         size_t i = ht_nbuckets(ht);
         while (i--) {
-            avl_destroy(&ht->buckets[i].avl);
+            // TODO: add cfg
+            avl_destroy(&ht->buckets[i].avl, NULL);
         }
         free(ht->buckets);
         free(ht);
