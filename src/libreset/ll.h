@@ -114,7 +114,7 @@ ll_delete(
  * the second parameter is the linked list to iterate through.
  */
 #define ll_foreach(it,ll) \
-    for (struct ll_element* it = ll->head; it; it = it->next)
+    for (struct ll_element* it = (ll)->head; it; it = it->next)
 
 /**
  * Allocate an struct ll_element object
