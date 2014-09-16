@@ -69,7 +69,7 @@ ll_insert(
     return 1;
 }
 
-struct ll*
+int
 ll_delete(
     struct ll* ll,
     void* del,
@@ -81,19 +81,21 @@ ll_delete(
     while (*iter) {
         // check whther we have found the element to remove
         if (cfg->cmpf((*iter)->data, del)) {
+            struct ll_element* to_del = (*iter);
+
             // free, relink and return
             if (cfg->freef) {
-                cfg->freef((*iter)->data);
+                cfg->freef(to_del->data);
             }
-            free(*iter);
-            *iter = (*iter)->next;
-            return ll;
+            *iter = to_del->next;
+            free(to_del);
+            return 1;
         }
 
         // iterate further
         iter = &(*iter)->next;
     }
 
-    return ll;
+    return 0;
 }
 

@@ -92,10 +92,10 @@ ll_insert(
  *
  * @memberof ll
  *
- * @return the struct ll object which was passed
+ * @return 1 if the deletion was successful, 0 on failure
  * @warning the function may crash if either of the arguments is NULL
  */
-struct ll*
+int
 ll_delete(
     struct ll* ll, //! Ptr to the linked list object
     void* del, //!< Comparable to object to be removed
