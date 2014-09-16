@@ -4,6 +4,13 @@
 #include "ht.h"
 
 START_TEST (test_ht_insert_data) {
+    struct ht* ht = malloc(sizeof(*ht));
+    ht_init(ht, 4);
+    int data = 5;
+    ck_assert(ht_insert(ht, &data, sizeof(data)));
+
+    free(ht->buckets);
+    free(ht);
 }
 END_TEST
 
