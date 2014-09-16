@@ -33,7 +33,9 @@ ll_destroy(
 
     while (iter) {
         next = iter->next;
-        cfg->freef(iter->data);
+        if (cfg->freef) {
+            cfg->freef(iter->data);
+        }
         free(iter);
         iter = next;
     }
@@ -78,7 +80,9 @@ ll_delete(
         // check whther we have found the element to remove
         if (cfg->cmpf((*iter)->data, del)) {
             // free, relink and return
-            cfg->freef((*iter)->data);
+            if (cfg->freef) {
+                cfg->freef((*iter)->data);
+            }
             free(*iter);
             *iter = (*iter)->next;
             return ll;
