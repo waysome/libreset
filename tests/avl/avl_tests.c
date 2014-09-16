@@ -134,17 +134,33 @@ START_TEST (test_avl_add_collisions) {
 }
 END_TEST
 
+START_TEST (test_avl_find_single) {
+    struct avl* avl = avl_alloc();
+    int data        = 1;
+    rs_hash hash    = 1;
+    struct avl_el* found;
+
+    avl_add(avl, hash, &data, NULL);
+    found = avl_find(avl, hash, NULL, NULL);
+
+    ck_assert(found == avl->root);
+    ck_assert_int_eq(1, avl_destroy(avl, NULL));
+}
+END_TEST
+
 Suite*
 suite_avl_create(void) {
     Suite* s;
     TCase* case_allocfree;
     TCase* case_adding;
+    TCase* case_finding;
 
     s = suite_create("AVL");
 
     /* Test case creation */
     case_allocfree  = tcase_create("Allocating and deleting");
     case_adding     = tcase_create("Adding");
+    case_finding    = tcase_create("Finding");
 
     /* test adding to test cases */
     tcase_add_test(case_allocfree, test_avl_alloc);
@@ -156,9 +172,12 @@ suite_avl_create(void) {
     tcase_add_test(case_adding, test_avl_add_multiple_destroy);
     tcase_add_test(case_adding, test_avl_add_collisions);
 
+    tcase_add_test(case_finding, test_avl_find_single);
+
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
     suite_add_tcase(s, case_adding);
+    suite_add_tcase(s, case_finding);
 
     return s;
 }
