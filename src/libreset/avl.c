@@ -58,6 +58,31 @@ rotate_right(
 );
 
 /**
+ * Isolate the root node of a given subtree
+ *
+ * @return the new root node of the subtree
+ * @warning This function will crash when being passed NULL.
+ */
+static struct avl_el*
+isolate_root_node(
+    struct avl_el* node //!< node to isolate
+);
+
+/**
+ * Isolate node with lowest key from subtree
+ *
+ * This function will isolate the node with the lowest key from the rest of the
+ * given subtree. The lowest key, in this implementation, is the leftmost node.
+ * The isolated node will be returned.
+ *
+ * @return node with lowest key, or NULL
+ */
+static struct avl_el*
+isolate_leftmost(
+    struct avl_el** root //!< Pointer to the root of the affected subtree
+);
+
+/**
  * Regenerate a node's height and node_cnt
  *
  * @return void
@@ -311,6 +336,56 @@ rotate_right(
 
     // return new root node
     return new_root;
+}
+
+static struct avl_el*
+isolate_root_node(
+    struct avl_el* node
+) {
+    // if the node has no left child, we may use the right one as new root node
+    if (!node->l) {
+        return node->r;
+    }
+
+    // assume that a suitable replacement exists in the right subtree
+    struct avl_el* new_root = isolate_leftmost(&node->r);
+
+    // seems like a replacement does not exist. The right subtree must be empty
+    if (!new_root) {
+        return node->l;
+    }
+
+    // insert the new node
+    new_root->l = node->l;
+    new_root->r = node->r;
+    regen_metadata(new_root);
+
+    return new_root;
+}
+
+static struct avl_el*
+isolate_leftmost(
+    struct avl_el** root
+) {
+    if (!root || !*root) {
+        return NULL;
+    }
+
+    // recurse
+    struct avl_el* retval = isolate_leftmost(&(*root)->l);
+
+    // if the recursion solved the problem already, we can return
+    if (retval) {
+        regen_metadata(*root);
+        return retval;
+    }
+
+    // else the lowest element is the one at hand
+    retval = *root;
+
+    // all that is left to do is cutting the element loose
+    *root = retval->r;
+    return retval;
 }
 
 static void
