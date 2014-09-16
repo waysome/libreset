@@ -23,6 +23,7 @@ main(void) {
      */
     suite_creator_f suite_funcs[] = {
         suite_ll_create,
+        suite_ht_create,
     };
 
     unsigned long i = 0;
