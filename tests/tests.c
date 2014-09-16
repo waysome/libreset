@@ -5,6 +5,7 @@
  * Include test files below
  */
 #include "ll/ll_test.c"
+#include "ht/ht_test.c"
 
 typedef Suite* (*suite_creator_f)(void);
 
