@@ -132,7 +132,9 @@ avl_del(
 struct avl_el*
 avl_find(
     struct avl* avl, //!< The avl where to search in
-    rs_hash hash //!< The hash of the element to find
+    rs_hash hash, //!< The hash value associated with d
+    void* const d, //!< The data element to compare to
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**
