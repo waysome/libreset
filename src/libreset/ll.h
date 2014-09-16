@@ -73,19 +73,6 @@ ll_destroy(
 );
 
 /**
- * Insert a struct ll_element into a struct ll
- *
- * @memberof ll
- *
- * @return the struct ll object which was passed or NULL on failure
- */
-struct ll*
-ll_insert(
-    struct ll* ll, /**< Ptr to the linked list object */
-    struct ll_element* e /**< Ptr to the element to insert */
-);
-
-/**
  * Insert a element from the actual void* which references the data
  *
  * @memberof ll
@@ -122,29 +109,6 @@ ll_delete(
  */
 #define ll_foreach(it,ll) \
     for (struct ll_element* it = (ll)->head; it; it = it->next)
-
-/**
- * Allocate an struct ll_element object
- *
- * @memberof ll_element
- * @static
- *
- * @return Ptr to the new struct ll_element object or NULL on failure
- */
-struct ll_element*
-ll_element_alloc(void);
-
-/**
- * Allocate an struct ll_element object with data
- *
- * @memberof ll_element
- *
- * @return Ptr to the new struct ll_element object or NULL on failure
- */
-struct ll_element*
-ll_element_alloc_new(
-    void* data /**< The data ptr for the new object */
-);
 
 /**
  * Destroy an struct ll_element object

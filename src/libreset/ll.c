@@ -40,20 +40,6 @@ ll_destroy(
 }
 
 struct ll*
-ll_insert(
-    struct ll* ll,
-    struct ll_element* e
-) {
-    if (!ll || !e) {
-        return NULL;
-    }
-
-    e->next = ll->head;
-    ll->head = e;
-    return ll;
-}
-
-struct ll*
 ll_insert_data(
     struct ll* ll,
     void* data,
@@ -105,22 +91,6 @@ ll_delete(
     }
 
     return ll;
-}
-
-struct ll_element*
-ll_element_alloc(void) {
-    return calloc(1, sizeof(struct ll_element));
-}
-
-struct ll_element*
-ll_element_alloc_new(
-    void* data
-) {
-    struct ll_element* el = ll_element_alloc();
-    if (el) {
-        el->data = data;
-    }
-    return el;
 }
 
 void
