@@ -76,7 +76,7 @@ r_set_insert(
  *
  * @return The removed object or NULL on failure/not found
  */
-void* const
+void*
 r_set_remove(
     struct r_set* set, //!< the set
     void const* cmp //!< object equal to the one you want to delete
@@ -88,7 +88,7 @@ r_set_remove(
  *
  * @return The object if it is in the set, else NULL
  */
-void* const
+void*
 r_set_contains(
     struct r_set const* set, //!< the set
     void const* cmp //!< element to check for
