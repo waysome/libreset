@@ -123,13 +123,13 @@ avl_del(
 );
 
 /**
- * Find a node in a avl tree which has the passed hash
+ * Find an element in the node which compares to the element to find
  *
  * @memberof avl
  *
  * @return The found node or NULL if there was nothing found
  */
-struct avl_el*
+void*
 avl_find(
     struct avl* avl, //!< The avl where to search in
     rs_hash hash, //!< The hash value associated with d
