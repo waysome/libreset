@@ -108,6 +108,32 @@ START_TEST (test_avl_add_multiple_destroy) {
 }
 END_TEST
 
+START_TEST (test_avl_add_collisions) {
+    struct avl* avl = avl_alloc();
+
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    rs_hash hash = 0;
+    struct avl_el* element = NULL;
+    struct avl_el* cmp = NULL;
+
+    int i;
+    for (i = 0; i < 10; i++) {
+        if (element == NULL) {
+            element = avl_add(avl, hash, &data[i], NULL);
+        } else {
+            cmp = avl_add(avl, hash, &data[i], NULL);
+            ck_assert(cmp == element); /* collisions */
+        }
+    }
+
+    ck_assert(avl->root != NULL);
+    ck_assert(avl->root->l == NULL);
+    ck_assert(avl->root->r == NULL);
+
+    ck_assert_int_eq(1, avl_destroy(avl, NULL));
+}
+END_TEST
+
 Suite*
 suite_avl_create(void) {
     Suite* s;
@@ -128,6 +154,7 @@ suite_avl_create(void) {
     tcase_add_test(case_adding, test_avl_add_destroy);
     tcase_add_test(case_adding, test_avl_add_multiple);
     tcase_add_test(case_adding, test_avl_add_multiple_destroy);
+    tcase_add_test(case_adding, test_avl_add_collisions);
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
