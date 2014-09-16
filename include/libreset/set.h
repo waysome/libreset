@@ -104,7 +104,7 @@ int
 r_set_union(
     struct r_set* dest, //!< destination of the result
     struct r_set const* set_a, //!< first argument of the binary operation
-    struct r_set const* set_b, //!< second argument of the binary operation
+    struct r_set const* set_b //!< second argument of the binary operation
 );
 
 
@@ -117,7 +117,7 @@ int
 r_set_intersection(
     struct r_set* dest, //!< destination of the result
     struct r_set const* set_a, //!< first argument of the binary operation
-    struct r_set const* set_b, //!< second argument of the binary operation
+    struct r_set const* set_b //!< second argument of the binary operation
 );
 
 
@@ -130,7 +130,7 @@ int
 r_set_xor(
     struct r_set* dest, //!< destination of the result
     struct r_set const* set_a, //!< first argument of the binary operation
-    struct r_set const* set_b, //!< second argument of the binary operation
+    struct r_set const* set_b //!< second argument of the binary operation
 );
 
 
@@ -143,7 +143,7 @@ int
 r_set_exclude(
     struct r_set* dest, //!< destination of the result
     struct r_set const* set_a, //!< first argument of the binary operation
-    struct r_set const* set_b, //!< second argument of the binary operation
+    struct r_set const* set_b //!< second argument of the binary operation
 );
 
 
@@ -155,7 +155,7 @@ r_set_exclude(
 int
 r_set_is_subset(
     struct r_set const* set_a, //!< first argument of the binary operation
-    struct r_set const* set_b, //!< second argument of the binary operation
+    struct r_set const* set_b //!< second argument of the binary operation
 );
 
 
@@ -172,7 +172,7 @@ r_set_is_subset(
 int
 r_set_equal(
     struct r_set const* set_a, //!< first argument of the binary operation
-    struct r_set const* set_b, //!< second argument of the binary operation
+    struct r_set const* set_b //!< second argument of the binary operation
 );
 
 
