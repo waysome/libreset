@@ -112,10 +112,12 @@ ht_insert(
  *
  * @return the deleted element or NULL if not found
  */
-struct element*
+void*
 ht_del(
     struct ht* ht, //!< The hashtable object to delete from
-    rs_hash hash
+    rs_hash hash, //!< The hash of the element to delete
+    void* cmp, //!< Element to compare against
+    struct r_set_cfg* cfg //!< type information provided by user
 );
 
 /**
