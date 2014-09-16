@@ -61,6 +61,38 @@ START_TEST (test_avl_add_destroy) {
 }
 END_TEST
 
+START_TEST (test_avl_add_multiple) {
+    struct avl* avl = avl_alloc();
+
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    rs_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    struct avl_el* elements[10];
+
+    int i;
+    for (i = 0; i < 10; i++) {
+        struct avl_el* element = avl_add(avl, hash[i], &data[i], NULL);
+
+        ck_assert(element != NULL);
+
+        ck_assert_int_eq(element->hash, hash[i]);
+
+        ck_assert(element->ll.head != NULL);
+        ck_assert(element->ll.head->next == NULL); /* No similar hashes */
+        ck_assert(element->ll.head->data != NULL);
+        ck_assert(*(int*) element->ll.head->data == data[i]);
+
+        elements[i] = element;
+    }
+
+    for (i = 0; i < 10; i++) {
+        free(elements[i]);
+    }
+
+    free(avl);
+}
+END_TEST
+
 Suite*
 suite_avl_create(void) {
     Suite* s;
@@ -79,6 +111,7 @@ suite_avl_create(void) {
 
     tcase_add_test(case_adding, test_avl_add);
     tcase_add_test(case_adding, test_avl_add_destroy);
+    tcase_add_test(case_adding, test_avl_add_multiple);
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
