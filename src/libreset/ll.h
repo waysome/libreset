@@ -113,20 +113,6 @@ ll_delete(
     for (struct ll_element* it = (ll)->head; it; it = it->next)
 
 /**
- * Destroy an struct ll_element object
- *
- * @memberof ll_element
- *
- * @warning The ptr to the next element will be lost, if not saved beforehand
- * @warning The ptr to the data of the element will be lost, if not saved
- * beforehand.
- */
-void
-ll_element_destroy(
-    struct ll_element* /**< Ptr to the element to destroy */
-);
-
-/**
  * @}
  */
 
