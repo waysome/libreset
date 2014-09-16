@@ -88,16 +88,18 @@ ll_insert(
 );
 
 /**
- * Delete a struct ll_element from the linked list
+ * Delete an item from the list
  *
  * @memberof ll
  *
- * @return the struct ll object which was passed or NULL on failure
+ * @return the struct ll object which was passed
+ * @warning the function may crash if either of the arguments is NULL
  */
 struct ll*
 ll_delete(
-    struct ll* ll, /**< Ptr to the linked list object */
-    struct ll_element* del /**< Ptr to element to delete */
+    struct ll* ll, //! Ptr to the linked list object
+    void* del, //!< Comparable to object to be removed
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**

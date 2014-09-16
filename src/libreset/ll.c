@@ -68,26 +68,24 @@ ll_insert(
 struct ll*
 ll_delete(
     struct ll* ll,
-    struct ll_element* del
+    void* del,
+    struct r_set_cfg* cfg
 ) {
-    struct ll_element* iter;
-    struct ll_element* last;
+    struct ll_element** iter = &ll->head;
 
-    if (del == ll->head) {
-        iter = ll->head;
-        ll->head = ll->head->next;
-        free(iter);
-        return ll;
-    }
-
-    for (iter = ll->head; iter; iter = iter->next) {
-        if (iter == del) {
-            last->next = iter->next;
-            free(iter);
-            break;
+    // iterate over all the elements
+    while (*iter) {
+        // check whther we have found the element to remove
+        if (cfg->cmpf((*iter)->data, del)) {
+            // free, relink and return
+            cfg->freef((*iter)->data);
+            free(*iter);
+            *iter = (*iter)->next;
+            return ll;
         }
 
-        last = iter;
+        // iterate further
+        iter = &(*iter)->next;
     }
 
     return ll;
