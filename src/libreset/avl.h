@@ -106,7 +106,7 @@ unsigned int
 avl_del(
     struct avl* avl, //!< The avl where to search in
     rs_hash hash, //!< hash value associated with d
-    struct r_set_cfg* cfg //!< type information proveded by the user
+    struct r_set_cfg* cfg //!< type information provided by the user
 );
 
 /**
