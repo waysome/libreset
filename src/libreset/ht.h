@@ -84,7 +84,7 @@ ht_destroy(
  *
  * @return the found element or NULL on failure
  */
-struct ht_bucket*
+void*
 ht_find(
     struct ht* ht, //!< The hashtable object to search in
     rs_hash hash, //!< The hash of the element to find
