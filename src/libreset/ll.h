@@ -32,6 +32,8 @@
 #ifndef __LL_H__
 #define __LL_H__
 
+#include <stddef.h>
+
 /**
  * Linked list element type
  *
@@ -114,7 +116,7 @@ ll_delete(
  * the second parameter is the linked list to iterate through.
  */
 #define ll_foreach(it,ll) \
-    for (struct ll_element* it = ll->head; it; it = it->next)
+    for (struct ll_element* it = (ll)->head; it; it = it->next)
 
 /**
  * Allocate an struct ll_element object
@@ -152,6 +154,27 @@ void
 ll_element_destroy(
     struct ll_element* /**< Ptr to the element to destroy */
 );
+
+/*
+ * Check if the `struct ll` object is empty
+ */
+static int
+ll_is_empty(
+    struct ll* //!< The linked list object to test for emptyness
+);
+
+/*
+ *
+ * static inline implementations
+ *
+ */
+
+static inline int
+ll_is_empty(
+    struct ll* ll
+) {
+    return (ll == NULL || ll->head == NULL);
+}
 
 /**
  * @}
