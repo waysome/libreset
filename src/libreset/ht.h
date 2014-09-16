@@ -103,6 +103,7 @@ rs_hash
 ht_insert(
     struct ht* ht, //!< The hashtable object to insert into
     void* data, //!< The data
+    struct r_set_cfg* cfg //!< type information provided by user
 );
 
 /**
