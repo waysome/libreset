@@ -122,6 +122,22 @@ avl_del(
 );
 
 /**
+ * Delete elements from the avl tree by predicate
+ *
+ * This function will remove elements from the avl tree which match the
+ * predicate defined in the configuration `cfg`.
+ *
+ * @memberof avl
+ *
+ * @reutrn the number of removed elements
+ */
+unsigned int
+avl_ndel(
+    struct avl* el, //!< The avl where to search in
+    struct r_set_cfg* cfg //!< type information provided by the user
+);
+
+/**
  * Find an element in the node which compares to the element to find
  *
  * @memberof avl
