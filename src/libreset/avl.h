@@ -26,6 +26,7 @@
 #include "ll.h"
 #include "util/attributes.h"
 #include "libreset/hash.h"
+#include "libreset/set.h"
 
 /**
  * AVL Tree type
