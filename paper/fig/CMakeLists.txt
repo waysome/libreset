@@ -1,5 +1,6 @@
 
 set(MP_FILES
+    hirarchical-merge.mp
     right-rot.mp
 )
 
