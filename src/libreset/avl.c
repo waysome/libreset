@@ -173,10 +173,11 @@ avl_find(
 struct avl_el*
 avl_add(
     struct avl* avl, //!< The avl tree where to insert
+    rs_hash hash,
     void* const d, //!< The data element
-    rs_hash hash //!< The hash for the data element
+    struct r_set_cfg* cfg
 ) {
-    struct avl_el* element = avl_find(avl, hash);
+    struct avl_el* element = find_node(avl, hash);
 
     if (element) {
         ll_insert_data(&element->ll, d);
