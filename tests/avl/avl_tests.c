@@ -148,6 +148,36 @@ START_TEST (test_avl_find_single) {
 }
 END_TEST
 
+
+START_TEST (test_avl_find_multiple) {
+    struct avl* avl = avl_alloc();
+    int data[]      = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    rs_hash hash[]  = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    struct avl_el* found[10] = { NULL };
+
+    int i;
+    int j;
+
+    for (i = 0; i < 10; i++) {
+        avl_add(avl, hash[i], &data[i], NULL);
+    }
+
+    for (i = 0; i < 10; i++) {
+        found[i] = avl_find(avl, hash[i], NULL, NULL);
+    }
+
+    for (i = 0; i < 10; i++) {
+        for (j = 0; j < 10; j++) {
+            if (i != j) {
+                ck_assert(found[i] != found[j]);
+            }
+        }
+    }
+
+    avl_destroy(avl, NULL);
+}
+END_TEST
+
 Suite*
 suite_avl_create(void) {
     Suite* s;
@@ -173,6 +203,7 @@ suite_avl_create(void) {
     tcase_add_test(case_adding, test_avl_add_collisions);
 
     tcase_add_test(case_finding, test_avl_find_single);
+    tcase_add_test(case_finding, test_avl_find_multiple);
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
