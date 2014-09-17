@@ -76,7 +76,8 @@ ht_init(
  */
 void
 ht_destroy(
-    struct ht* ht //!< The hashtable object to destory
+    struct ht* ht, //!< The hashtable object to destory
+    struct r_set_cfg* cfg //!< type information provided by user
 );
 
 /**
