@@ -5,6 +5,7 @@ find_package(Check)
 include_directories(
     ${PROJECT_SOURCE_DIR}/include
     ${PROJECT_SOURCE_DIR}/src/libreset
+    ${PROJECT_SOURCE_DIR}/tests
 )
 
 
@@ -13,6 +14,7 @@ include_directories(
 #
 add_executable(check_tests EXCLUDE_FROM_ALL
     tests.c
+    set_cfg.c
 )
 
 target_link_libraries(check_tests
