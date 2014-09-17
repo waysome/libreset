@@ -86,10 +86,12 @@ ht_destroy(
  *
  * @return the found element or NULL on failure
  */
-struct ht_bucket*
+void*
 ht_find(
     struct ht* ht, //!< The hashtable object to search in
-    rs_hash hash //!< The hash of the element to find
+    rs_hash hash, //!< The hash of the element to find
+    void* cmp, //!< Element to compare against
+    struct r_set_cfg* cfg //!< type information provided by user
 );
 
 /**
@@ -97,13 +99,13 @@ ht_find(
  *
  * @memberof ht
  *
- * @return 1 on success, else zero
+ * @return 1 on success or 0 (zero) on failure
  */
 int
 ht_insert(
     struct ht* ht, //!< The hashtable object to insert into
     void* data, //!< The data
-    size_t datasize //!< The size of the data in bytes
+    struct r_set_cfg* cfg //!< type information provided by user
 );
 
 /**
@@ -111,12 +113,14 @@ ht_insert(
  *
  * @memberof ht
  *
- * @return the deleted element or NULL if not found
+ * @return number of removed elements
  */
-struct element*
+unsigned int
 ht_del(
     struct ht* ht, //!< The hashtable object to delete from
-    rs_hash hash
+    rs_hash hash, //!< The hash of the element to delete
+    void* cmp, //!< Element to compare against
+    struct r_set_cfg* cfg //!< type information provided by user
 );
 
 /**

@@ -24,6 +24,8 @@
 
 #include <stddef.h>
 
+#include "libreset/hash.h"
+
 /**
  * The set type
  */
@@ -34,7 +36,7 @@ struct r_set;
  * Set configuration type
  */
 struct r_set_cfg {
-    size_t          (*hashf)(void const*); //!< hash function
+    rs_hash         (*hashf)(void* data); //!< hash function
     int             (*cmpf)(void const*, void const*); //!< compare function
     void const*     (*copyf)(void const*); //!< copy function
     void            (*freef)(void*); //!< function for removal/freeing of an item
