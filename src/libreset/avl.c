@@ -214,6 +214,18 @@ avl_add(
     return element;
 }
 
+int
+avl_del(
+    struct avl* avl,
+    rs_hash hash,
+    void* cmp,
+    struct r_set_cfg* cfg
+) {
+    int retval = remove_element(&avl->root, hash, cmp, cfg);
+    avl->root = rebalance_subtree(avl->root);
+    return retval;
+}
+
 /*
  *
  *
