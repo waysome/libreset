@@ -24,6 +24,8 @@
 
 #include <stddef.h>
 
+#include "libreset/hash.h"
+
 /**
  * The set type
  */
