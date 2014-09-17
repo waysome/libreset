@@ -3,10 +3,26 @@
 #include <stdlib.h>
 #include "ll.h"
 
+int
+cmp_int(
+    const void* a,
+    const void* b
+) {
+    return *((const int*) a) == *((const int*) b);
+}
+
+struct r_set_cfg cfg = {
+    NULL,
+    cmp_int,
+    NULL,
+    NULL
+};
+
+
 START_TEST (test_ll_insert_data) {
     struct ll* ll = malloc(sizeof(*ll));
     int data = 5;
-    ll_insert_data(ll, &data);
+    ll_insert(ll, &data, &cfg);
 
     ck_assert(ll->head->data == &data);
 
@@ -19,11 +35,13 @@ START_TEST (test_ll_delete_data) {
     struct ll* ll = malloc(sizeof(*ll));
     int data = 7;
 
-    ll_insert_data(ll, &data);
+    ck_assert(ll_insert(ll, &data, &cfg));
     ck_assert(ll->head->data == &data);
 
-    ll_delete(ll, ll->head);
+    ck_assert(ll_delete(ll, &data, &cfg));
     ck_assert(ll->head == NULL);
+
+    ck_assert(!ll_delete(ll, ll->head, &cfg));
 
     free(ll);
 }
@@ -37,39 +55,14 @@ START_TEST (test_ll_insert_multiple) {
     };
 
     for (i = 0; i < 10; i++) {
-        ck_assert(ll_insert_data(ll, &(data[i])) == ll);
-        ck_assert(ll->head->data == &(data[i]));
+        ck_assert(ll_insert(ll, &(data[i]), &cfg));
     }
 
-    while (ll->head) {
-        ck_assert(ll_delete(ll, ll->head) == ll);
+    for (i = 0; i < 10; i++) {
+        ck_assert(ll_delete(ll, &(data[i]), &cfg));
     }
 
-    ll_destroy(ll);
-}
-END_TEST
-
-START_TEST (test_ll_element_alloc) {
-    struct ll_element* el = ll_element_alloc();
-
-    ck_assert(el != NULL);
-    ck_assert(el->data == NULL);
-    ck_assert(el->next == NULL);
-
-    free(el);
-}
-END_TEST
-
-START_TEST (test_ll_element_alloc_new) {
-    int data = 3;
-    struct ll_element* el = ll_element_alloc_new(&data);
-
-    ck_assert(el != NULL);
-    ck_assert(el->data == &data);
-    ck_assert_int_eq(*((int*) el->data), data);
-    ck_assert(el->next == NULL);
-
-    free(el);
+    ll_destroy(ll, &cfg);
 }
 END_TEST
 
@@ -85,7 +78,6 @@ suite_ll_create(void) {
     /* Test case creation */
     case_insert         = tcase_create("Inserting");
     case_delete         = tcase_create("Deleting");
-    case_element_alloc  = tcase_create("Element allocation");
 
     /* test adding */
     tcase_add_test(case_insert, test_ll_insert_data);
@@ -93,13 +85,9 @@ suite_ll_create(void) {
     tcase_add_test(case_insert, test_ll_insert_multiple);
     tcase_add_test(case_delete, test_ll_delete_data);
 
-    tcase_add_test(case_element_alloc, test_ll_element_alloc);
-    tcase_add_test(case_element_alloc, test_ll_element_alloc_new);
-
     /* Adding test cases to suite */
     suite_add_tcase(s, case_insert);
     suite_add_tcase(s, case_delete);
-    suite_add_tcase(s, case_element_alloc);
 
     return s;
 }

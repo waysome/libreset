@@ -32,6 +32,8 @@
 #ifndef __LL_H__
 #define __LL_H__
 
+#include "libreset/set.h"
+
 /**
  * Linked list element type
  *
@@ -61,23 +63,13 @@ struct ll {
  *
  * Removes the linked list from the memory but does not remove the referenced
  * elements.
+ *
+ * @warning the function may crash if either of the arguments is NULL
  */
 void
 ll_destroy(
-    struct ll* ll /**< Ptr to the struct ll object */
-);
-
-/**
- * Insert a struct ll_element into a struct ll
- *
- * @memberof ll
- *
- * @return the struct ll object which was passed or NULL on failure
- */
-struct ll*
-ll_insert(
-    struct ll* ll, /**< Ptr to the linked list object */
-    struct ll_element* e /**< Ptr to the element to insert */
+    struct ll* ll, //!< Ptr to the struct ll object
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**
@@ -85,25 +77,29 @@ ll_insert(
  *
  * @memberof ll
  *
- * @return the struct ll object which was passed or NULL on failure
+ * @warning the function may crash when being passed NULL for either argument
+ * @return 1 if the insertion was successful, 0 on failure
  */
-struct ll*
-ll_insert_data(
+int
+ll_insert(
     struct ll* ll, /**< Ptr to the linked list object */
-    void* data /**< Ptr to the data to insert */
+    void* data, /**< Ptr to the data to insert */
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**
- * Delete a struct ll_element from the linked list
+ * Delete an item from the list
  *
  * @memberof ll
  *
- * @return the struct ll object which was passed or NULL on failure
+ * @return 1 if the deletion was successful, 0 on failure
+ * @warning the function may crash if either of the arguments is NULL
  */
-struct ll*
+int
 ll_delete(
-    struct ll* ll, /**< Ptr to the linked list object */
-    struct ll_element* del /**< Ptr to element to delete */
+    struct ll* ll, //! Ptr to the linked list object
+    void* del, //!< Comparable to object to be removed
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**
@@ -115,43 +111,6 @@ ll_delete(
  */
 #define ll_foreach(it,ll) \
     for (struct ll_element* it = (ll)->head; it; it = it->next)
-
-/**
- * Allocate an struct ll_element object
- *
- * @memberof ll_element
- * @static
- *
- * @return Ptr to the new struct ll_element object or NULL on failure
- */
-struct ll_element*
-ll_element_alloc(void);
-
-/**
- * Allocate an struct ll_element object with data
- *
- * @memberof ll_element
- *
- * @return Ptr to the new struct ll_element object or NULL on failure
- */
-struct ll_element*
-ll_element_alloc_new(
-    void* data /**< The data ptr for the new object */
-);
-
-/**
- * Destroy an struct ll_element object
- *
- * @memberof ll_element
- *
- * @warning The ptr to the next element will be lost, if not saved beforehand
- * @warning The ptr to the data of the element will be lost, if not saved
- * beforehand.
- */
-void
-ll_element_destroy(
-    struct ll_element* /**< Ptr to the element to destroy */
-);
 
 /**
  * @}

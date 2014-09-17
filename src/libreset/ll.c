@@ -25,89 +25,77 @@
 
 void
 ll_destroy(
-    struct ll* ll
+    struct ll* ll,
+    struct r_set_cfg* cfg
 ) {
     struct ll_element* iter = ll->head;
     struct ll_element* next;
 
     while (iter) {
         next = iter->next;
+        if (cfg->freef) {
+            cfg->freef(iter->data);
+        }
         free(iter);
         iter = next;
     }
 }
 
-struct ll*
+int
 ll_insert(
     struct ll* ll,
-    struct ll_element* e
+    void* data,
+    struct r_set_cfg* cfg
 ) {
-    if (!ll || !e) {
-        return NULL;
-    }
-
-    e->next = ll->head;
-    ll->head = e;
-    return ll;
-}
-
-struct ll*
-ll_insert_data(
-    struct ll* ll,
-    void* data
-) {
-    struct ll_element* el = ll_element_alloc_new(data);
-    return ll_insert(ll, el);
-}
-
-struct ll*
-ll_delete(
-    struct ll* ll,
-    struct ll_element* del
-) {
-    struct ll_element* iter;
-    struct ll_element* last;
-
-    if (del == ll->head) {
-        iter = ll->head;
-        ll->head = ll->head->next;
-        free(iter);
-        return ll;
-    }
-
-    for (iter = ll->head; iter; iter = iter->next) {
-        if (iter == del) {
-            last->next = iter->next;
-            free(iter);
-            break;
+    // check whether the lement is present or not
+    struct ll_element** it = &ll->head;
+    while (*it) {
+        if (cfg->cmpf((*it)->data, data)) {
+            return 0;
         }
 
-        last = iter;
+        it = &(*it)->next;
     }
 
-    return ll;
-}
-
-struct ll_element*
-ll_element_alloc(void) {
-    return calloc(1, sizeof(struct ll_element));
-}
-
-struct ll_element*
-ll_element_alloc_new(
-    void* data
-) {
-    struct ll_element* el = ll_element_alloc();
-    if (el) {
-        el->data = data;
+    // insert the new element
+    struct ll_element* el = calloc(1, sizeof(struct ll_element));
+    if (!el) {
+        return 0;
     }
-    return el;
+
+    el->data = data;
+    *it = el;
+
+    return 1;
 }
 
-void
-ll_element_destroy(
-    struct ll_element* el
+int
+ll_delete(
+    struct ll* ll,
+    void* del,
+    struct r_set_cfg* cfg
 ) {
-    free(el);
+    struct ll_element** iter = &ll->head;
+
+    // iterate over all the elements
+    while (*iter) {
+        // check whther we have found the element to remove
+        if (cfg->cmpf((*iter)->data, del)) {
+            struct ll_element* to_del = (*iter);
+
+            // free, relink and return
+            if (cfg->freef) {
+                cfg->freef(to_del->data);
+            }
+            *iter = to_del->next;
+            free(to_del);
+            return 1;
+        }
+
+        // iterate further
+        iter = &(*iter)->next;
+    }
+
+    return 0;
 }
 
