@@ -42,6 +42,17 @@ struct r_set_cfg {
 
 
 /**
+ * Predicate function type
+ *
+ * Use this function to express a predicate. The first parameter will be the
+ * item to select from the set for an operation, the second parameter may be
+ * used for any purpose. A predicate function selects an item by returning 1
+ * and deselects an item by returning 0.
+ */
+typedef int (*r_predf)(void const*, void*);
+
+
+/**
  * Allocate and initialize set object
  *
  * @return A pointer to the set object or NULL on failure
