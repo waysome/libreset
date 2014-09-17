@@ -198,7 +198,10 @@ inline static unsigned int
 avl_height(
     struct avl_el* root //!< The root element
 ) {
-    return root == NULL ? 0 : root->height;
+    if (root == NULL) {
+        return 0;
+    }
+    return root->height;
 }
 
 inline static unsigned int
