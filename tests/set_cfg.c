@@ -3,7 +3,7 @@
 #include "libreset/hash.h"
 
 
-static rs_hash hashf(void const*);
+static rs_hash hashf(void*);
 static int cmpf(void const*, void const*);
 void const* copyf(void const*);
 
@@ -16,7 +16,7 @@ struct r_set_cfg cfg_int = {
 };
 
 
-static rs_hash hashf(void const* d) {
+static rs_hash hashf(void* d) {
     return *((int*) d);
 }
 
