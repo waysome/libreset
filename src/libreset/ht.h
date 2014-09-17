@@ -116,9 +116,9 @@ ht_insert(
  *
  * @memberof ht
  *
- * @return number of removed elements
+ * @return 1 if the insertion was successfull, else 0 (zero)
  */
-unsigned int
+int
 ht_del(
     struct ht* ht, //!< The hashtable object to delete from
     rs_hash hash, //!< The hash of the element to delete
