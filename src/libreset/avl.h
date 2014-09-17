@@ -93,20 +93,10 @@ avl_add(
 );
 
 /**
- * Predicate function type
+ * Delete elements from the avl tree with equivalent hash
  *
- * This is the predicate function type for selecting nodes of the avl in an
- * algorithm by predicate.
- *
- * The function gets an additional parameter (void*), which can be used to pass
- * data to the function.
- */
-typedef int (*rs_predicate_function)(void* const, void*);
-
-/**
- * Delete elements from the avl tree
- *
- * This function will remove all elements from the AVL satisfying a predicate.
+ * This function will remove all elements from the AVL with the hash `hash` and
+ * satisfying a predicate defined by the user through the configuration `cfg`.
  *
  * @memberof avl
  *
@@ -116,9 +106,8 @@ unsigned int
 avl_del(
     struct avl* avl, //!< The avl where to search in
     rs_hash hash, //!< hash value associated with d
-    rs_predicate_function pred, //!< the predicate function
-    void* etc, //!< an additional parameter to the predicate function
-    struct r_set_cfg* cfg //!< type information proveded by the user
+    void* cmp, //!< element to compare against
+    struct r_set_cfg* cfg //!< type information provided by the user
 );
 
 /**
