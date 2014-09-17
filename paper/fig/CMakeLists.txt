@@ -1,6 +1,8 @@
 
 set(MP_FILES
+    hierarchical-merge.mp
     right-rot.mp
+    single-merge.mp
 )
 
 set(mp_figs)
