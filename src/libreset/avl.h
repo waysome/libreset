@@ -129,7 +129,7 @@ avl_ndel(
 );
 
 /**
- * Find an element in the node which compares to the element to find
+ * Find an element by hash `hash` satisfying the compare function in `cfg`
  *
  * @memberof avl
  *
