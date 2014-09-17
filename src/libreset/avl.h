@@ -93,19 +93,19 @@ avl_add(
 );
 
 /**
- * Delete elements from the avl tree with equivalent hash
+ * Deletes one element from the avl tree which has an equivalent hash
  *
- * This function will remove all elements from the AVL with the hash `hash` and
+ * This function will remove one element from the AVL with the hash `hash` and
  * satisfying a predicate defined by the user through the configuration `cfg`.
  *
  * @memberof avl
  *
- * @return 1 if an element was removed, 0 otherwise
+ * @return 1 if the element was removed, 0 otherwise
  */
 int
 avl_del(
     struct avl* avl, //!< The avl where to search in
-    rs_hash hash, //!< hash value associated with d
+    rs_hash hash, //!< hash value
     void* cmp, //!< element to compare against
     struct r_set_cfg* cfg //!< type information provided by the user
 );
