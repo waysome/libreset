@@ -59,6 +59,19 @@ rotate_right(
 );
 
 /**
+ * Remove an element
+ *
+ * @return 1 if an element was removed, 0 otherwise
+ */
+static int
+remove_element(
+    struct avl_el** root, //!< The avl where to search in
+    rs_hash hash, //!< hash value associated with d
+    void* cmp, //!< element to compare against
+    struct r_set_cfg* cfg //!< type information provided by the user
+);
+
+/**
  * Isolate the root node of a given subtree
  *
  * @return the new root node of the subtree
@@ -199,6 +212,18 @@ avl_add(
     }
 
     return element;
+}
+
+int
+avl_del(
+    struct avl* avl,
+    rs_hash hash,
+    void* cmp,
+    struct r_set_cfg* cfg
+) {
+    int retval = remove_element(&avl->root, hash, cmp, cfg);
+    avl->root = rebalance_subtree(avl->root);
+    return retval;
 }
 
 /*
@@ -347,6 +372,49 @@ rotate_right(
 
     // return new root node
     return new_root;
+}
+
+static int
+remove_element(
+    struct avl_el** root,
+    rs_hash hash,
+    void* cmp,
+    struct r_set_cfg* cfg
+) {
+    // check whether the subtree is empty
+    if (!*root) {
+        return 0;
+    }
+
+    int retval;
+
+    // iterate into subnodes if neccessary
+    if (hash < (*root)->hash) {
+        retval = remove_element(&(*root)->l, hash, cmp, cfg);
+        regen_metadata(*root);
+        return retval;
+    }
+
+    if (hash > (*root)->hash) {
+        retval = remove_element(&(*root)->r, hash, cmp, cfg);
+        regen_metadata(*root);
+        return retval;
+    }
+
+    // remove element from linked list
+    retval = ll_delete(&(*root)->ll, cmp, cfg);
+
+    // remove the node if neccessary
+    if (!(*root)->ll.head) {
+        // isolate the node
+        struct avl_el* to_del = *root;
+        *root = isolate_root_node(to_del);
+        regen_metadata(*root);
+
+        // delete the node
+        free(to_del);
+    }
+    return retval;
 }
 
 static struct avl_el*
