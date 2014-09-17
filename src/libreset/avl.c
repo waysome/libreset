@@ -164,7 +164,7 @@ avl_find(
     void* const d,
     struct r_set_cfg* cfg
 ) {
-    struct avl_el* node=find_node(avl, hash);
+    struct avl_el* node = find_node(avl, hash);
 
     // TODO: exchange with ll_find as soon as it's present
     ll_foreach(it, &node->ll) {
