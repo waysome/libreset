@@ -111,7 +111,8 @@ ht_insert(
 );
 
 /**
- * Delete something from the hashtable by hash
+ * Delete one element from the hashtable by hash and the predicate provided by
+ * `cfg`
  *
  * @memberof ht
  *
