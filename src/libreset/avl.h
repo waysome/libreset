@@ -123,6 +123,8 @@ avl_del(
 unsigned int
 avl_ndel(
     struct avl* el, //!< The avl where to search in
+    r_predf pred, //!< A predicate selecting what to remove
+    void* etc, //!< User-data to pass to the predicate
     struct r_set_cfg* cfg //!< type information provided by the user
 );
 
