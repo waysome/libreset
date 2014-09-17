@@ -100,9 +100,9 @@ avl_add(
  *
  * @memberof avl
  *
- * @return the number of elements removed
+ * @return 1 if an element was removed, 0 otherwise
  */
-unsigned int
+int
 avl_del(
     struct avl* avl, //!< The avl where to search in
     rs_hash hash, //!< hash value associated with d
