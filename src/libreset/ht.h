@@ -99,9 +99,9 @@ ht_find(
  *
  * @memberof ht
  *
- * @return the hash of the inserted element
+ * @return 1 on success or 0 (zero) on failure
  */
-rs_hash
+int
 ht_insert(
     struct ht* ht, //!< The hashtable object to insert into
     void* data, //!< The data
