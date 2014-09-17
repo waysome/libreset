@@ -33,6 +33,8 @@
 #define __HT_H__
 
 #include "libreset/hash.h"
+#include "libreset/set.h"
+
 #include "avl.h"
 #include "util/macros.h"
 
@@ -115,6 +117,21 @@ struct element*
 ht_del(
     struct ht* ht, //!< The hashtable object to delete from
     rs_hash hash
+);
+
+/**
+ * Deleting n elements from the hashtable by predicate
+ *
+ * @memberof ht
+ *
+ * @return the number of removed elements.
+ */
+unsigned int
+ht_ndel(
+    struct ht* ht, //!< The hashtable object to delete from
+    r_predf pred, //!< predicate function
+    void* etc, //!< element to compare against
+    struct r_set_cfg* cfg //!< type information provided by the user
 );
 
 /**
