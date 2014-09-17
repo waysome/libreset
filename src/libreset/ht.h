@@ -70,7 +70,7 @@ ht_init(
 );
 
 /**
- * Destroy a struct ht object
+ * Destroy a struct ht object but don't free it
  *
  * @memberof ht
  */
