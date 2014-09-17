@@ -48,11 +48,8 @@
  *
  * @note Provides compile-time type checking by using temp variables before
  * doing the comparison.
- *
- * @note Opens own scope, so the temp variables do not show up outside of the
- * macro.
  */
-#define MAX(x,y)                                    \
+#define MAX(x,y)                                \
     ((__typeof__(x)) x > (__typeof__(x)) y ?    \
      (__typeof__(x)) x : (__typeof__(x)) y)
 
@@ -61,11 +58,8 @@
  *
  * @note Provides compile-time type checking by using temp variables before
  * doing the comparison.
- *
- * @note Opens own scope, so the temp variables do not show up outside of the
- * macro.
  */
-#define MIN(x,y)                                    \
+#define MIN(x,y)                                \
     ((__typeof__(x)) x > (__typeof__(x)) y ?    \
      (__typeof__(x)) y : (__typeof__(x)) x)
 
