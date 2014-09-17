@@ -81,7 +81,8 @@ ht_destroy(
 );
 
 /**
- * Find an element inside the hashtable by its hash
+ * Find an element inside the hashtable by its hash and the predicate provided
+ * by `cfg`
  *
  * @memberof ht
  *
