@@ -266,6 +266,7 @@ insert_element_into_tree(
     if (!root || !el) {
         return NULL;
     }
+    avl_dbg("Inserting element %p", el);
     if (*root == NULL) {
         *root = el;
         return *root;
