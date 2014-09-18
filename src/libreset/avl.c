@@ -303,6 +303,7 @@ static struct avl_el*
 rebalance_subtree(
     struct avl_el* root
 ) {
+    avl_dbg("Rebalance subtree for %p", root);
     // check whether the root node is NULL
     if (!root) {
         return NULL;
@@ -311,6 +312,7 @@ rebalance_subtree(
     // check whether the subtrees is already balanced (see paper)
     if (avl_node_cnt(root) >
         (unsigned int) (1 << (avl_height(root) - 1) ) - 1) {
+        avl_dbg("Subtree already balanced for %p", root);
         return root;
     }
 
