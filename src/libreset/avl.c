@@ -123,7 +123,9 @@ __attribute__((nonnull (1)))
 static void
 regen_metadata(
     struct avl_el* node //!< The node to regenerate
-);
+)
+__attribute__((nonnull (1)))
+;
 
 /**
  * Create a new struct avl_el object
