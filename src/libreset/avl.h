@@ -62,7 +62,9 @@ struct avl_el {
  * @return A pointer to a new avl_el object or NULL on failure
  */
 struct avl*
-avl_alloc(void);
+avl_alloc(void)
+__warn_unused_result__
+;
 
 /**
  * Destroy an avl tree
@@ -75,7 +77,9 @@ int
 avl_destroy(
     struct avl* avl, //!< The avl tree
     struct r_set_cfg* cfg //!< type information proveded by the user
-);
+)
+__attribute__((nonnull (1, 2)))
+;
 
 /**
  * Add an entry in an avl tree
@@ -90,7 +94,9 @@ avl_add(
     rs_hash hash, //!< hash value associated with d
     void* const d, //!< The data element
     struct r_set_cfg* cfg //!< type information provided by the user
-);
+)
+__attribute__((nonnull (1, 3, 4)))
+;
 
 /**
  * Deletes one element from the avl tree which has an equivalent hash
@@ -108,7 +114,9 @@ avl_del(
     rs_hash hash, //!< hash value
     void* cmp, //!< element to compare against
     struct r_set_cfg* cfg //!< type information provided by the user
-);
+)
+__attribute__((nonnull (1, 3, 4)))
+;
 
 /**
  * Delete elements from the avl tree by predicate
@@ -126,7 +134,9 @@ avl_ndel(
     r_predf pred, //!< A predicate selecting what to remove
     void* etc, //!< User-data to pass to the predicate
     struct r_set_cfg* cfg //!< type information provided by the user
-);
+)
+__attribute__((nonnull (1, 3, 4)))
+;
 
 /**
  * Find an element by hash `hash` satisfying the compare function in `cfg`
@@ -141,7 +151,10 @@ avl_find(
     rs_hash hash, //!< The hash value associated with d
     void* const d, //!< The data element to compare to
     struct r_set_cfg* cfg //!< type information proveded by the user
-);
+)
+__attribute__((nonnull (1, 3, 4)))
+__warn_unused_result__
+;
 
 /**
  * Get the hash value of an element
@@ -153,7 +166,9 @@ avl_find(
 static inline rs_hash
 avl_get_hash(
     struct avl_el* el //!< The element to get the hash for
-);
+)
+__deprecated__
+;
 
 /**
  * Get the height of the avl sub tree

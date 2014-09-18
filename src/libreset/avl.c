@@ -22,7 +22,9 @@ static void
 destroy_subtree(
     struct avl_el* node, //!< A node to destroy
     struct r_set_cfg* cfg //!< type information proveded by the user
-);
+)
+__attribute__((nonnull (1, 2)))
+;
 
 /**
  * Rebalance a subtree
@@ -36,7 +38,9 @@ destroy_subtree(
 static struct avl_el*
 rebalance_subtree(
     struct avl_el* root //!< The root of the subtree to rebalance
-);
+)
+__attribute__((nonnull (1)))
+;
 
 /**
  * Rotate a node counter-clockwise
@@ -46,7 +50,9 @@ rebalance_subtree(
 static struct avl_el*
 rotate_left(
     struct avl_el* node //!< The node to rotate
-);
+)
+__attribute__((nonnull (1)))
+;
 
 /**
  * Rotate a node clockwise
@@ -56,7 +62,9 @@ rotate_left(
 static struct avl_el*
 rotate_right(
     struct avl_el* node //!< The node to rotate
-);
+)
+__attribute__((nonnull (1)))
+;
 
 /**
  * Remove an element
@@ -69,7 +77,9 @@ remove_element(
     rs_hash hash, //!< hash value associated with d
     void* cmp, //!< element to compare against
     struct r_set_cfg* cfg //!< type information provided by the user
-);
+)
+__attribute__((nonnull (1, 3, 4)))
+;
 
 /**
  * Isolate the root node of a given subtree
@@ -80,7 +90,9 @@ remove_element(
 static struct avl_el*
 isolate_root_node(
     struct avl_el* node //!< node to isolate
-);
+)
+__attribute__((nonnull (1)))
+;
 
 /**
  * Isolate node with lowest key from subtree
@@ -94,7 +106,9 @@ isolate_root_node(
 static struct avl_el*
 isolate_leftmost(
     struct avl_el** root //!< Pointer to the root of the affected subtree
-);
+)
+__attribute__((nonnull (1)))
+;
 
 /**
  * Regenerate a node's height and node_cnt
@@ -109,7 +123,9 @@ isolate_leftmost(
 static void
 regen_metadata(
     struct avl_el* node //!< The node to regenerate
-);
+)
+__attribute__((nonnull (1)))
+;
 
 /**
  * Create a new struct avl_el object
@@ -133,7 +149,9 @@ static struct avl_el*
 insert_element_into_tree(
     struct avl_el* el, //!< The element to insert
     struct avl_el** root //!< The root element of the tree where to insert
-);
+)
+__attribute__((nonnull (1, 2)))
+;
 
 /**
  * Find a node by it's key/hash
@@ -144,7 +162,9 @@ static struct avl_el*
 find_node(
     struct avl* avl,
     rs_hash hash
-);
+)
+__attribute__((nonnull (1)))
+;
 
 /*
  *
