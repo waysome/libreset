@@ -110,6 +110,23 @@ __nonnull__(1, 2, 3)
 ;
 
 /**
+ * Delete items from the list by predicate
+ *
+ * @memberof ll
+ *
+ * @return Number of deleted elements.
+ */
+unsigned int
+ll_ndel(
+    struct ll* ll, //!< Ptr to the linked list object
+    r_predf pred, //!< Predicate for deleting elements
+    void* etc, //!< User data for the predicate function
+    struct r_set_cfg* cfg //!< type information proveded by the user
+)
+__nonnull__(1, 4)
+;
+
+/**
  * Check whether a linked list is empty or not.
  *
  * @memberof ll
