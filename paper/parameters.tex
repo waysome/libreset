@@ -1,3 +1,16 @@
 \section{Choice of parameters}
 \label{sec:parameters}
 
+    Along the description of algorithms the previous sections also contain
+    estimates of the runtime the algorithms take to be performed.
+    In most cases, the runtime depends on the number of elements involved.
+    Since the set implementation described in this document consists of
+    a hierarchy of data structures, the number of subdivisions in a layer
+    can be influenced to optimize the overall runtime expected for an
+    operation.
+
+    The most interesting data structures in this respect are the hash table
+    and the AVL tree.
+    The fact that the AVL tree incorporates bloom filters for each subtree has
+    a positive impact on the runtime complexity of many operations.
+
