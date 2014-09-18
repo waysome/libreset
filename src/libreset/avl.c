@@ -372,6 +372,7 @@ static struct avl_el*
 rotate_right(
     struct avl_el* node
 ) {
+    avl_dbg("Rotate right around %p", node);
     if (!node || !node->l) {
         return NULL;
     }
