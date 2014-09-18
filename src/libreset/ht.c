@@ -18,7 +18,8 @@ ht_init(
 
 void
 ht_destroy(
-    struct ht* ht
+    struct ht* ht,
+    struct r_set_cfg* cfg
 ) {
     if (ht) {
         size_t i = ht_nbuckets(ht);
