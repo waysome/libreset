@@ -38,7 +38,9 @@ __attribute__((nonnull (1, 2)))
 static struct avl_el*
 rebalance_subtree(
     struct avl_el* root //!< The root of the subtree to rebalance
-);
+)
+__attribute__((nonnull (1)))
+;
 
 /**
  * Rotate a node counter-clockwise
