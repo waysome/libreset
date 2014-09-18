@@ -120,7 +120,7 @@ avl_ndel(
  *
  * @memberof avl
  *
- * @return The found node or NULL if there was nothing found
+ * @return The found data or NULL if there was nothing found
  */
 void*
 avl_find(
