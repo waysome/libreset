@@ -205,11 +205,14 @@ avl_add(
     void* const d, //!< The data element
     struct r_set_cfg* cfg
 ) {
+    avl_dbg("Adding element %p with hash: 0x%x", d, hash);
     struct avl_el* element = find_node(avl, hash);
 
     if (element) {
+        avl_dbg("Inserting element %p with hash: 0x%x", d, hash);
         ll_insert(&element->ll, d, cfg);
     } else {
+        avl_dbg("Allocating node for element %p with hash: 0x%x", d, hash);
         element = new_avl_el(hash);
         if (element) {
             ll_insert(&element->ll, d, cfg);
