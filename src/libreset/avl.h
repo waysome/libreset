@@ -94,7 +94,9 @@ avl_add(
     rs_hash hash, //!< hash value associated with d
     void* const d, //!< The data element
     struct r_set_cfg* cfg //!< type information provided by the user
-);
+)
+__attribute__((nonnull (1, 3, 4)))
+;
 
 /**
  * Deletes one element from the avl tree which has an equivalent hash
