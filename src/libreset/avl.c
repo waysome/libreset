@@ -287,6 +287,7 @@ destroy_subtree(
     struct avl_el* node, //!< A node to destroy
     struct r_set_cfg* cfg
 ) {
+    avl_dbg("Destroying subtree from node %p", node);
     if (node->l) {
         destroy_subtree(node->l, cfg);
     }
