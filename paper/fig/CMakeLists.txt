@@ -2,6 +2,7 @@
 set(MP_FILES
     hierarchical-merge.mp
     right-rot.mp
+    runtime-find.mp
     single-merge.mp
 )
 
