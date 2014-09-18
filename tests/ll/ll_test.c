@@ -130,7 +130,6 @@ suite_ll_create(void) {
     TCase* case_insert;
     TCase* case_delete;
     TCase* case_empty;
-    TCase* case_element_alloc;
 
     s = suite_create("Linkedlist");
 
