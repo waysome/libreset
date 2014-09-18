@@ -400,6 +400,8 @@ remove_element(
     void* cmp,
     struct r_set_cfg* cfg
 ) {
+    avl_dbg("Remove element with hash: 0x%x", hash);
+
     // check whether the subtree is empty
     if (!*root) {
         return 0;
@@ -425,6 +427,7 @@ remove_element(
 
     // remove the node if neccessary
     if (ll_is_empty(&(*root)->ll)) {
+        avl_dbg("Remove node from tree: %p", *root);
         // isolate the node
         struct avl_el* to_del = *root;
         *root = isolate_root_node(to_del);
