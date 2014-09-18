@@ -50,7 +50,9 @@ __attribute__((nonnull (1)))
 static struct avl_el*
 rotate_left(
     struct avl_el* node //!< The node to rotate
-);
+)
+__attribute__((nonnull (1)))
+;
 
 /**
  * Rotate a node clockwise
@@ -60,7 +62,9 @@ rotate_left(
 static struct avl_el*
 rotate_right(
     struct avl_el* node //!< The node to rotate
-);
+)
+__attribute__((nonnull (1)))
+;
 
 /**
  * Remove an element
