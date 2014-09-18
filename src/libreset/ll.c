@@ -24,6 +24,16 @@
 
 #include "ll.h"
 
+#include "util/debug.h"
+
+/**
+ * Debug print helper for linkedlist implementation code
+ *
+ * @note No #ifdef DEBUG here, because if dbg() evaluates to nothing, this code
+ * gets removed by the compiler anyways.
+ */
+#define ll_dbg(fmt,...) do { dbg("[ll]: "fmt, __VA_ARGS); } while (0)
+
 void
 ll_destroy(
     struct ll* ll,
