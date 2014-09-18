@@ -83,7 +83,6 @@ END_TEST
 
 START_TEST (test_ll_insert_multiple_same) {
     struct ll* ll = calloc(1, sizeof(*ll));
-    int i;
     int data[] = {
         0, 0
     };
