@@ -114,7 +114,9 @@ avl_del(
     rs_hash hash, //!< hash value
     void* cmp, //!< element to compare against
     struct r_set_cfg* cfg //!< type information provided by the user
-);
+)
+__attribute__((nonnull (1, 3, 4)))
+;
 
 /**
  * Delete elements from the avl tree by predicate
