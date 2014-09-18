@@ -100,6 +100,41 @@ ll_delete(
     return 0;
 }
 
+unsigned int
+ll_ndel(
+    struct ll* ll,
+    r_predf pred,
+    void* etc,
+    struct r_set_cfg* cfg
+) {
+    unsigned int cnt = 0;
+
+    struct ll_element** p_next = &ll->head;
+    struct ll_element* iter = ll->head;
+    struct ll_element* next;
+
+    while (iter) {
+        next = iter->next;
+        if (pred(iter->data, etc)) {
+            *p_next = next;
+
+            if (cfg->freef) {
+                cfg->freef(iter->data);
+            }
+
+            free(iter);
+            cnt++;
+
+        } else {
+            p_next = &iter->next;
+        }
+
+        iter = next;
+    }
+
+    return cnt;
+}
+
 int
 ll_is_empty(
     struct ll* ll
