@@ -41,12 +41,14 @@ ll_destroy(
 ) {
     struct ll_element* iter = ll->head;
     struct ll_element* next;
+    ll_dbg("Destroying: %p", ll);
 
     while (iter) {
         next = iter->next;
         if (cfg->freef) {
             cfg->freef(iter->data);
         }
+        ll_dbg("Removing: %p", iter);
         free(iter);
         iter = next;
     }
