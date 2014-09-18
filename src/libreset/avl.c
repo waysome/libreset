@@ -90,7 +90,9 @@ __attribute__((nonnull (1, 3, 4)))
 static struct avl_el*
 isolate_root_node(
     struct avl_el* node //!< node to isolate
-);
+)
+__attribute__((nonnull (1)))
+;
 
 /**
  * Isolate node with lowest key from subtree
@@ -104,7 +106,9 @@ isolate_root_node(
 static struct avl_el*
 isolate_leftmost(
     struct avl_el** root //!< Pointer to the root of the affected subtree
-);
+)
+__attribute__((nonnull (1)))
+;
 
 /**
  * Regenerate a node's height and node_cnt
