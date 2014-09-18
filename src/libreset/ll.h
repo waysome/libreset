@@ -71,7 +71,9 @@ void
 ll_destroy(
     struct ll* ll, //!< Ptr to the struct ll object
     struct r_set_cfg* cfg //!< type information proveded by the user
-);
+)
+__nonnull__(1, 2)
+;
 
 /**
  * Insert a element from the actual void* which references the data
@@ -86,7 +88,9 @@ ll_insert(
     struct ll* ll, /**< Ptr to the linked list object */
     void* data, /**< Ptr to the data to insert */
     struct r_set_cfg* cfg //!< type information proveded by the user
-);
+)
+__nonnull__(1, 2, 3)
+;
 
 /**
  * Delete an item from the list
@@ -101,7 +105,9 @@ ll_delete(
     struct ll* ll, //! Ptr to the linked list object
     void* del, //!< Comparable to object to be removed
     struct r_set_cfg* cfg //!< type information proveded by the user
-);
+)
+__nonnull__(1, 2, 3)
+;
 
 /**
  * Loop through an linked list
