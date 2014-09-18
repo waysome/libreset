@@ -64,6 +64,7 @@
 #define __format__(x,y,z)       __attribute__((format(x,y,z)))
 #define __format_arg__(n)       __attribute__((format_arg(n)))
 #define __malloc__              __attribute__((malloc))
+#define __nonnull__(...)        __attribute__((nonnull (__VA_ARGS__)))
 #define __returns_nonnull__     __attribute__((returns_nonnull))
 #define __noreturn__            __attribute__((noreturn))
 #define __unused__              __attribute__((unused))
@@ -93,6 +94,7 @@
 #define __format__(x,y,z)
 #define __format_arg__(n)
 #define __malloc__
+#define __nonnull__(...)
 #define __returns_nonnull__
 #define __noreturn__
 #define __unused__
