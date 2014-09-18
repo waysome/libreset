@@ -151,7 +151,10 @@ avl_find(
     rs_hash hash, //!< The hash value associated with d
     void* const d, //!< The data element to compare to
     struct r_set_cfg* cfg //!< type information proveded by the user
-);
+)
+__attribute__((nonnull (1, 3, 4)))
+__warn_unused_result__
+;
 
 /**
  * Get the hash value of an element
