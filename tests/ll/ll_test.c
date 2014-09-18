@@ -105,11 +105,31 @@ START_TEST (test_ll_delete_by_predicate) {
 }
 END_TEST
 
+START_TEST (test_ll_is_empty_after_insertion_and_deletion) {
+    struct ll* ll = malloc(sizeof(*ll));
+    int data[] = { 0, 1 };
+
+    ll_insert(ll, &(data[0]), &cfg_int);
+    ll_insert(ll, &(data[1]), &cfg_int);
+
+    struct ll_element* old_head = ll->head;
+    ll_delete(ll, &(data[0]), &cfg_int);
+    ck_assert(old_head != ll->head);
+
+    ll_delete(ll, &(data[1]), &cfg_int);
+
+    ck_assert(ll_is_empty(ll));
+
+    ll_destroy(ll, &cfg_int);
+}
+END_TEST
+
 Suite*
 suite_ll_create(void) {
     Suite* s;
     TCase* case_insert;
     TCase* case_delete;
+    TCase* case_empty;
     TCase* case_element_alloc;
 
     s = suite_create("Linkedlist");
@@ -117,6 +137,7 @@ suite_ll_create(void) {
     /* Test case creation */
     case_insert         = tcase_create("Inserting");
     case_delete         = tcase_create("Deleting");
+    case_empty          = tcase_create("Emptyness");
 
     /* test adding */
     tcase_add_test(case_insert, test_ll_insert_data);
@@ -126,9 +147,12 @@ suite_ll_create(void) {
     tcase_add_test(case_delete, test_ll_delete_data);
     tcase_add_test(case_delete, test_ll_delete_by_predicate);
 
+    tcase_add_test(case_empty, test_ll_is_empty_after_insertion_and_deletion);
+
     /* Adding test cases to suite */
     suite_add_tcase(s, case_insert);
     suite_add_tcase(s, case_delete);
+    suite_add_tcase(s, case_empty);
 
     return s;
 }
