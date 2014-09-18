@@ -14,3 +14,65 @@
     The fact that the AVL tree incorporates bloom filters for each subtree has
     a positive impact on the runtime complexity of many operations.
 
+    \subsection{Runtime complexity of AVL insertion with bloom}
+    \label{sec:parameters-AVL_insert_bloom}
+
+        If we search a regular AVL for a specific element, the complexity class
+        is $O(log(n))$ where $n$ is the number of nodes in the AVL.
+        In our AVL, however, the element has to pass a bloom filter for each
+        node the algorithm traverses.
+        If the element is in the set represented by an AVL, nothing changes in
+        terms of runtime complexity.
+        However, if the element is \emph{not} in the set, the test may fail at
+        some point, causing the search to terminate possibly much earlier.
+
+        The probability of the bloom filter not denying than an element may be
+        in a set, when it really is not in the set, may be approximated by:
+        %TODO: ref
+
+        \begin{equation}
+            p_\mathrm{pos} =
+            \left(1 - \left(1 - \frac{1}{m}\right)^{kn}\right)^k
+            \label{eq:parameters-AVL_bloom-false_pos}
+        \end{equation}
+
+        Where $m$ is the width of the bloom filter and $k$ is the number of hash
+        functions used for the bloom filter.
+        The probability of this check to, correctly, cause the algorithms to
+        terminate early on one level $l$, implies that the algorithm traversed
+        $l$ nodes:
+
+        \begin{equation}
+            p_\mathrm{level} = \prod_{i<l} p_\mathrm{pos}(i) =
+            \prod_{i<l} \left(1 - \left(1 - \frac{1}{m}\right)^{kn(i)}\right)^k
+        \end{equation}
+
+        The runtime complexity may now be given by the summing up the costs of
+        passing one level ($1$), weighted by the probability of passing the
+        levels up to that one:
+
+        \begin{equation}
+            T_{\in} = \sum_l p_\mathrm{level} =
+            \sum_l \prod_{i<l}
+            \left(1 - \left(1 - \frac{1}{m}\right)^{kn(i)}\right)^k
+            \label{eq:parameters-AVL_find-T}
+        \end{equation}
+
+        The ``find'' operation is expected to be effectively faster using the
+        bloom filter.
+        Figure \ref{fig:parameters-AVL_bloom-runtime_find} on page
+        \ref{fig:parameters-AVL_bloom-runtime_find} visualizes the expected
+        runtime for a range of heights.
+        It also shows that the effect variates only a little for a small range
+        of possible $k$, which will prove interesting in the following section.
+
+        \begin{figure}[!h]
+            \caption{Runtime complexity of ``find''-operation}
+            \label{fig:parameters-AVL_bloom-runtime_find}
+            \begin{center}
+                \includegraphics{fig/runtime-avl.1}
+
+                with $m=64$
+            \end{center}
+        \end{figure}
+
