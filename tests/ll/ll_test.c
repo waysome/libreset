@@ -74,6 +74,8 @@ START_TEST (test_ll_insert_multiple) {
         }
     }
 
+    ck_assert(ll->head == NULL);
+
     ll_destroy(ll, &cfg_int);
     free(ll);
 }
