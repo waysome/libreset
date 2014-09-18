@@ -154,11 +154,6 @@ find_node(
  *
  */
 
-struct avl*
-avl_alloc(void) {
-    return calloc(1, sizeof(struct avl));
-}
-
 int
 avl_destroy(
     struct avl* avl, //!< The avl tree
