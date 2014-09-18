@@ -162,7 +162,9 @@ static struct avl_el*
 find_node(
     struct avl* avl,
     rs_hash hash
-);
+)
+__attribute__((nonnull (1)))
+;
 
 /*
  *
