@@ -100,3 +100,10 @@ ll_delete(
     return 0;
 }
 
+int
+ll_is_empty(
+    struct ll* ll
+) {
+    return !ll->head;
+}
+

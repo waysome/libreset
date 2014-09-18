@@ -405,7 +405,7 @@ remove_element(
     retval = ll_delete(&(*root)->ll, cmp, cfg);
 
     // remove the node if neccessary
-    if (!(*root)->ll.head) {
+    if (ll_is_empty(&(*root)->ll)) {
         // isolate the node
         struct avl_el* to_del = *root;
         *root = isolate_root_node(to_del);

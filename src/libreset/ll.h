@@ -110,6 +110,20 @@ __nonnull__(1, 2, 3)
 ;
 
 /**
+ * Check whether a linked list is empty or not.
+ *
+ * @memberof ll
+ *
+ * @return 1 if the list is empy, 0 otherwise
+ */
+int
+ll_is_empty(
+    struct ll* ll //!< Ptr to the linked list object
+)
+__nonnull__(1)
+;
+
+/**
  * Loop through an linked list
  *
  * Helper macro for looping through an linked list.
