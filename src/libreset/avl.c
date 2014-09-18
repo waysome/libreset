@@ -185,6 +185,7 @@ avl_find(
     void* const d,
     struct r_set_cfg* cfg
 ) {
+    avl_dbg("Finding element for hash: 0x%x", hash);
     struct avl_el* node = find_node(avl, hash);
 
     // TODO: exchange with ll_find as soon as it's present
