@@ -70,6 +70,24 @@ ll_insert(
     return 1;
 }
 
+void*
+ll_find(
+    struct ll* ll,
+    void* const d,
+    struct r_set_cfg* cfg
+) {
+    struct ll_element* iter = ll->head;
+
+    while (iter) {
+        if (cfg->cmpf(iter->data, d)) {
+            return iter->data;
+        }
+        iter = iter->next;
+    }
+
+    return NULL;
+}
+
 int
 ll_delete(
     struct ll* ll,
