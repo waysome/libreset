@@ -22,7 +22,9 @@ static void
 destroy_subtree(
     struct avl_el* node, //!< A node to destroy
     struct r_set_cfg* cfg //!< type information proveded by the user
-);
+)
+__attribute__((nonnull (1, 2)))
+;
 
 /**
  * Rebalance a subtree
