@@ -77,7 +77,9 @@ remove_element(
     rs_hash hash, //!< hash value associated with d
     void* cmp, //!< element to compare against
     struct r_set_cfg* cfg //!< type information provided by the user
-);
+)
+__attribute__((nonnull (1, 3, 4)))
+;
 
 /**
  * Isolate the root node of a given subtree
