@@ -24,9 +24,9 @@
 
 #include "bloom.h"
 #include "ll.h"
-#include "util/attributes.h"
 #include "libreset/hash.h"
 #include "libreset/set.h"
+#include "util/attributes.h"
 
 /**
  * AVL Tree type
@@ -78,7 +78,7 @@ avl_destroy(
     struct avl* avl, //!< The avl tree
     struct r_set_cfg* cfg //!< type information proveded by the user
 )
-__attribute__((nonnull (1, 2)))
+__nonnull__(1, 2)
 ;
 
 /**
@@ -95,7 +95,7 @@ avl_add(
     void* const d, //!< The data element
     struct r_set_cfg* cfg //!< type information provided by the user
 )
-__attribute__((nonnull (1, 3, 4)))
+__nonnull__(1, 3, 4)
 ;
 
 /**
@@ -115,7 +115,7 @@ avl_del(
     void* cmp, //!< element to compare against
     struct r_set_cfg* cfg //!< type information provided by the user
 )
-__attribute__((nonnull (1, 3, 4)))
+__nonnull__(1, 3, 4)
 ;
 
 /**
@@ -135,7 +135,7 @@ avl_ndel(
     void* etc, //!< User-data to pass to the predicate
     struct r_set_cfg* cfg //!< type information provided by the user
 )
-__attribute__((nonnull (1, 3, 4)))
+__nonnull__(1, 3, 4)
 ;
 
 /**
@@ -152,7 +152,7 @@ avl_find(
     void* const d, //!< The data element to compare to
     struct r_set_cfg* cfg //!< type information proveded by the user
 )
-__attribute__((nonnull (1, 3, 4)))
+__nonnull__(1, 3, 4)
 __warn_unused_result__
 ;
 

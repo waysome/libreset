@@ -6,8 +6,8 @@
 #include "util/macros.h"
 
 #include "ll.h"
-#include "avl.h"
 #include "util/macros.h"
+#include "avl.h"
 
 
 /*
@@ -23,7 +23,7 @@ destroy_subtree(
     struct avl_el* node, //!< A node to destroy
     struct r_set_cfg* cfg //!< type information proveded by the user
 )
-__attribute__((nonnull (1, 2)))
+__nonnull__(1, 2)
 ;
 
 /**
@@ -39,7 +39,7 @@ static struct avl_el*
 rebalance_subtree(
     struct avl_el* root //!< The root of the subtree to rebalance
 )
-__attribute__((nonnull (1)))
+__nonnull__(1)
 ;
 
 /**
@@ -51,7 +51,7 @@ static struct avl_el*
 rotate_left(
     struct avl_el* node //!< The node to rotate
 )
-__attribute__((nonnull (1)))
+__nonnull__(1)
 ;
 
 /**
@@ -63,7 +63,7 @@ static struct avl_el*
 rotate_right(
     struct avl_el* node //!< The node to rotate
 )
-__attribute__((nonnull (1)))
+__nonnull__(1)
 ;
 
 /**
@@ -78,7 +78,7 @@ remove_element(
     void* cmp, //!< element to compare against
     struct r_set_cfg* cfg //!< type information provided by the user
 )
-__attribute__((nonnull (1, 3, 4)))
+__nonnull__(1, 3, 4)
 ;
 
 /**
@@ -91,7 +91,7 @@ static struct avl_el*
 isolate_root_node(
     struct avl_el* node //!< node to isolate
 )
-__attribute__((nonnull (1)))
+__nonnull__(1)
 ;
 
 /**
@@ -107,7 +107,7 @@ static struct avl_el*
 isolate_leftmost(
     struct avl_el** root //!< Pointer to the root of the affected subtree
 )
-__attribute__((nonnull (1)))
+__nonnull__(1)
 ;
 
 /**
@@ -124,7 +124,7 @@ static void
 regen_metadata(
     struct avl_el* node //!< The node to regenerate
 )
-__attribute__((nonnull (1)))
+__nonnull__(1)
 ;
 
 /**
@@ -150,7 +150,7 @@ insert_element_into_tree(
     struct avl_el* el, //!< The element to insert
     struct avl_el** root //!< The root element of the tree where to insert
 )
-__attribute__((nonnull (1, 2)))
+__nonnull__(1, 2)
 ;
 
 /**
@@ -163,7 +163,7 @@ find_node(
     struct avl* avl,
     rs_hash hash
 )
-__attribute__((nonnull (1)))
+__nonnull__(1)
 ;
 
 /*
