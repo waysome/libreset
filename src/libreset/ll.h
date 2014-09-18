@@ -93,6 +93,22 @@ __nonnull__(1, 2, 3)
 ;
 
 /**
+ * Find an element from the linked list by predicate
+ *
+ * @memberof ll
+ *
+ * @return pointer to the data element or NULL on failure
+ */
+void*
+ll_find(
+    struct ll* ll, //!< The linked list to search in
+    void* const d, //!< Data element to compare to
+    struct r_set_cfg* cfg //!< Type information provided by the user
+)
+__nonnull__(1, 2, 3)
+;
+
+/**
  * Delete an item from the list
  *
  * @memberof ll
