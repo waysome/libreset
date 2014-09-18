@@ -166,7 +166,9 @@ __warn_unused_result__
 static inline rs_hash
 avl_get_hash(
     struct avl_el* el //!< The element to get the hash for
-);
+)
+__deprecated__
+;
 
 /**
  * Get the height of the avl sub tree
