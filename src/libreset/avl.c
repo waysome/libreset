@@ -154,6 +154,20 @@ find_node(
     rs_hash hash
 );
 
+/**
+ * Delete all elements in the tree under `root` for which the predicate `pred`
+ * evaluates true.
+ *
+ * @return Number of removed elements.
+ */
+static unsigned int
+delete_elements_by_predicate(
+    struct avl_el** root,
+    r_predf pred,
+    void* etc,
+    struct r_set_cfg* cfg
+);
+
 /*
  *
  *
@@ -232,6 +246,16 @@ avl_del(
     int retval = remove_element(&avl->root, hash, cmp, cfg);
     avl->root = rebalance_subtree(avl->root);
     return retval;
+}
+
+unsigned int
+avl_ndel(
+    struct avl* el,
+    r_predf pred,
+    void* etc,
+    struct r_set_cfg* cfg
+) {
+    return delete_elements_by_predicate(&el->root, pred, etc, cfg);
 }
 
 /*
