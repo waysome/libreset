@@ -179,6 +179,10 @@ avl_find(
 ) {
     struct avl_el* node = find_node(avl, hash);
 
+    if (!node) {
+        return NULL;
+    }
+
     // TODO: exchange with ll_find as soon as it's present
     ll_foreach(it, &node->ll) {
         if (cfg->cmpf(it->data, d)) {
