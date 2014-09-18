@@ -473,6 +473,7 @@ isolate_leftmost(
     if (!root || !*root) {
         return NULL;
     }
+    avl_dbg("Isolate leftmost node for tree %p", *root);
 
     // recurse
     struct avl_el* retval = isolate_leftmost(&(*root)->l);
