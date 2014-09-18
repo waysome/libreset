@@ -52,6 +52,22 @@ START_TEST (test_ll_insert_multiple) {
 }
 END_TEST
 
+START_TEST (test_ll_insert_multiple_same) {
+    struct ll* ll = malloc(sizeof(*ll));
+    int i;
+    int data[] = {
+        0, 0
+    };
+
+    ck_assert(ll_insert(ll, &(data[0]), &cfg_int));
+    ck_assert(!ll_insert(ll, &(data[1]), &cfg_int));
+
+    ck_assert(ll_delete(ll, &(data[0]), &cfg_int));
+
+    ll_destroy(ll, &cfg_int);
+}
+END_TEST
+
 Suite*
 suite_ll_create(void) {
     Suite* s;
@@ -69,6 +85,7 @@ suite_ll_create(void) {
     tcase_add_test(case_insert, test_ll_insert_data);
 
     tcase_add_test(case_insert, test_ll_insert_multiple);
+    tcase_add_test(case_insert, test_ll_insert_multiple_same);
     tcase_add_test(case_delete, test_ll_delete_data);
 
     /* Adding test cases to suite */
