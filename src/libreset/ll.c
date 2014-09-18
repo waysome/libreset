@@ -94,11 +94,13 @@ ll_delete(
     struct r_set_cfg* cfg
 ) {
     struct ll_element** iter = &ll->head;
+    ll_dbg("Deleting from %p", ll);
 
     // iterate over all the elements
     while (*iter) {
         // check whther we have found the element to remove
         if (cfg->cmpf((*iter)->data, del)) {
+            ll_dbg("Deleting element found: %p", *iter);
             struct ll_element* to_del = (*iter);
 
             // free, relink and return
