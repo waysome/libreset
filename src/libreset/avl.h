@@ -134,7 +134,9 @@ avl_ndel(
     r_predf pred, //!< A predicate selecting what to remove
     void* etc, //!< User-data to pass to the predicate
     struct r_set_cfg* cfg //!< type information provided by the user
-);
+)
+__attribute__((nonnull (1, 3, 4)))
+;
 
 /**
  * Find an element by hash `hash` satisfying the compare function in `cfg`
