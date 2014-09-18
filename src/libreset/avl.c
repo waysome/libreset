@@ -149,7 +149,9 @@ static struct avl_el*
 insert_element_into_tree(
     struct avl_el* el, //!< The element to insert
     struct avl_el** root //!< The root element of the tree where to insert
-);
+)
+__attribute__((nonnull (1, 2)))
+;
 
 /**
  * Find a node by it's key/hash
