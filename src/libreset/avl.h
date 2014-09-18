@@ -75,7 +75,9 @@ int
 avl_destroy(
     struct avl* avl, //!< The avl tree
     struct r_set_cfg* cfg //!< type information proveded by the user
-);
+)
+__attribute__((nonnull (1, 2)))
+;
 
 /**
  * Add an entry in an avl tree
