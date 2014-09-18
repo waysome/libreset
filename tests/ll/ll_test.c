@@ -52,10 +52,26 @@ START_TEST (test_ll_insert_multiple) {
 
     for (i = 0; i < 10; i++) {
         ck_assert(ll_insert(ll, &(data[i]), &cfg_int));
+
+        /* Check if the last element in the LL has the data we just inserted */
+        struct ll_element* inserted = ll->head;
+        while (inserted->next) {
+            inserted = inserted->next;
+        }
+        ck_assert_int_eq(*(int*)inserted->data, data[i]);
     }
 
     for (i = 0; i < 10; i++) {
         ck_assert(ll_delete(ll, &(data[i]), &cfg_int));
+
+        /*
+         * check that none of the elements in the LL holds the data we just
+         * removed
+         */
+        struct ll_element* iter;
+        for (iter = ll->head; iter; iter = iter->next) {
+            ck_assert_int_ne(*(int*)iter->data, data[i]);
+        }
     }
 
     ll_destroy(ll, &cfg_int);
