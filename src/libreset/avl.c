@@ -233,6 +233,7 @@ avl_del(
     void* cmp,
     struct r_set_cfg* cfg
 ) {
+    avl_dbg("Deleting element with hash: 0x%x", hash);
     int retval = remove_element(&avl->root, hash, cmp, cfg);
     avl->root = rebalance_subtree(avl->root);
     return retval;
