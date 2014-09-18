@@ -496,6 +496,8 @@ static void
 regen_metadata(
     struct avl_el* node //!< The node to regenerate
 ) {
+    avl_dbg("Regenerate metadata for node %p", node);
+
     // regenerate the height
     node->height = 1 + MAX(avl_height(node->l), avl_height(node->r));
 
