@@ -62,8 +62,12 @@ ll_insert(
 ) {
     // check whether the lement is present or not
     struct ll_element** it = &ll->head;
+
+    ll_dbg("Inserting: %p", data);
+
     while (*it) {
         if (cfg->cmpf((*it)->data, data)) {
+            ll_dbg("already in ll: %p", data);
             return 0;
         }
 
@@ -73,6 +77,7 @@ ll_insert(
     // insert the new element
     struct ll_element* el = calloc(1, sizeof(struct ll_element));
     if (!el) {
+        ll_dbg("Inserting into %p aborted (allocation failed)", ll);
         return 0;
     }
 
