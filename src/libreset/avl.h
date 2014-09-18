@@ -62,7 +62,9 @@ struct avl_el {
  * @return A pointer to a new avl_el object or NULL on failure
  */
 struct avl*
-avl_alloc(void);
+avl_alloc(void)
+__warn_unused_result__
+;
 
 /**
  * Destroy an avl tree
