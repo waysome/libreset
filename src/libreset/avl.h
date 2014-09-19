@@ -72,7 +72,7 @@ avl_destroy(
  * @return The new added element or NULL on failure
  */
 struct avl_el*
-avl_add(
+avl_insert(
     struct avl* avl, //!< The avl tree where to insert
     rs_hash hash, //!< hash value associated with d
     void* const d, //!< The data element
