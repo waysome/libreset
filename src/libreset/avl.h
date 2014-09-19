@@ -52,19 +52,6 @@ struct avl_el {
 };
 
 /**
- * Allocate a new avl tree
- *
- * @note Alias for avl_add(NULL, NULL);
- *
- * @memberof avl
- * @static
- *
- * @return A pointer to a new avl_el object or NULL on failure
- */
-struct avl*
-avl_alloc(void);
-
-/**
  * Destroy an avl tree
  *
  * @memberof avl
@@ -89,23 +76,23 @@ avl_add(
     struct avl* avl, //!< The avl tree where to insert
     rs_hash hash, //!< hash value associated with d
     void* const d, //!< The data element
-    struct r_set_cfg* cfg //!< type information proveded by the user
+    struct r_set_cfg* cfg //!< type information provided by the user
 );
 
 /**
- * Delete elements from the avl tree with equivalent hash
+ * Deletes one element from the avl tree which has an equivalent hash
  *
- * This function will remove all elements from the AVL with the hash `hash` and
+ * This function will remove one element from the AVL with the hash `hash` and
  * satisfying a predicate defined by the user through the configuration `cfg`.
  *
  * @memberof avl
  *
- * @return 1 if an element was removed, 0 otherwise
+ * @return 1 if the element was removed, 0 otherwise
  */
 int
 avl_del(
     struct avl* avl, //!< The avl where to search in
-    rs_hash hash, //!< hash value associated with d
+    rs_hash hash, //!< hash value
     void* cmp, //!< element to compare against
     struct r_set_cfg* cfg //!< type information provided by the user
 );
@@ -129,7 +116,7 @@ avl_ndel(
 );
 
 /**
- * Find an element in the node which compares to the element to find
+ * Find an element by hash `hash` satisfying the compare function in `cfg`
  *
  * @memberof avl
  *
@@ -198,14 +185,20 @@ inline static unsigned int
 avl_height(
     struct avl_el* root //!< The root element
 ) {
-    return root == NULL ? 0 : root->height;
+    if (root == NULL) {
+        return 0;
+    }
+    return root->height;
 }
 
 inline static unsigned int
 avl_node_cnt(
     struct avl_el* root //!< The root element
 ) {
-    return (root == NULL) ? 0 : (root->node_cnt);
+    if (root) {
+        return 0;
+    }
+    return root->node_cnt;
 }
 
 /** @} */

@@ -18,7 +18,8 @@ ht_init(
 
 void
 ht_destroy(
-    struct ht* ht
+    struct ht* ht,
+    struct r_set_cfg* cfg
 ) {
     if (ht) {
         size_t i = ht_nbuckets(ht);
@@ -27,7 +28,16 @@ ht_destroy(
             avl_destroy(&ht->buckets[i].avl, NULL);
         }
         free(ht->buckets);
-        free(ht);
     }
 }
 
+int
+ht_del(
+    struct ht* ht,
+    rs_hash hash,
+    void* cmp,
+    struct r_set_cfg* cfg
+) {
+    size_t i = hash >> (sizeof(rs_hash) - ht->sizeexp);
+    return avl_del(&ht->buckets[i].avl, hash, cmp, cfg);
+}

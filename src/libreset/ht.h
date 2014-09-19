@@ -70,17 +70,19 @@ ht_init(
 );
 
 /**
- * Destroy a struct ht object
+ * Destroy a struct ht object but don't free it
  *
  * @memberof ht
  */
 void
 ht_destroy(
-    struct ht* ht //!< The hashtable object to destory
+    struct ht* ht, //!< The hashtable object to destory
+    struct r_set_cfg* cfg //!< type information provided by user
 );
 
 /**
- * Find an element inside the hashtable by its hash
+ * Find an element inside the hashtable by its hash and the predicate provided
+ * by `cfg`
  *
  * @memberof ht
  *
@@ -109,13 +111,14 @@ ht_insert(
 );
 
 /**
- * Delete something from the hashtable by hash
+ * Delete one element from the hashtable by hash and the predicate provided by
+ * `cfg`
  *
  * @memberof ht
  *
- * @return number of removed elements
+ * @return 1 if the insertion was successfull, else 0 (zero)
  */
-unsigned int
+int
 ht_del(
     struct ht* ht, //!< The hashtable object to delete from
     rs_hash hash, //!< The hash of the element to delete
