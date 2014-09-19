@@ -107,29 +107,28 @@ ll_ndel(
     void* etc,
     struct r_set_cfg* cfg
 ) {
+    struct ll_element** iter = &ll->head;
     unsigned int cnt = 0;
 
-    struct ll_element** p_next = &ll->head;
-    struct ll_element* iter = ll->head;
-    struct ll_element* next;
-
-    while (iter) {
-        next = iter->next;
-        if (pred(iter->data, etc)) {
-            *p_next = next;
-
-            if (cfg->freef) {
-                cfg->freef(iter->data);
-            }
-
-            free(iter);
-            cnt++;
-
-        } else {
-            p_next = &iter->next;
+    // iterate over all the elements
+    while (*iter) {
+        // check whther we have found an element to remove
+        if (!pred((*iter)->data, etc)) {
+            // keep this element -> iterate
+            iter = &(*iter)->next;
+            continue;
         }
 
-        iter = next;
+        // remove this element
+        struct ll_element* to_del = (*iter);
+
+        // free, relink and increment the counter
+        if (cfg->freef) {
+            cfg->freef(to_del->data);
+        }
+        *iter = to_del->next;
+        free(to_del);
+        ++cnt;
     }
 
     return cnt;
