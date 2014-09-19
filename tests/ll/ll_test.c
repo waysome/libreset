@@ -102,11 +102,12 @@ START_TEST (test_ll_delete_by_predicate) {
     /* We delete 0-4, which are 5 numbers */
     ck_assert_int_eq(ndel, 5);
 
-    struct ll_element* iter = ll->head;
-    while (iter) {
-        int cmp = *(int*) iter->data;
-        ck_assert(cmp >= 5);
-        iter = iter->next;
+    for (i = 0; i < 5; i++) {
+        ck_assert(NULL == ll_find(ll, &i, &cfg_int));
+    }
+    for (i = 5; i < 10; i++) {
+        ck_assert(NULL != ll_find(ll, &i, &cfg_int));
+        ck_assert(&i != ll_find(ll, &i, &cfg_int));
     }
 
     ll_destroy(ll, &cfg_int);
