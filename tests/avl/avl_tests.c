@@ -21,7 +21,7 @@ START_TEST (test_avl_alloc_destroy) {
     ck_assert(avl != NULL);
     ck_assert(avl->root == NULL);
 
-    ck_assert_int_eq(1, avl_destroy(avl, NULL));
+    ck_assert_int_eq(1, avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
@@ -31,19 +31,10 @@ START_TEST (test_avl_add) {
     int data = 1;
     rs_hash hash = 1;
 
-    struct avl_el* element = avl_add(avl, hash, &data, NULL);
+    struct avl_el* element = avl_add(avl, hash, &data, &cfg_int);
 
-    ck_assert(element != NULL);
-    ck_assert(element->l == NULL);
-    ck_assert(element->r == NULL);
-
-    ck_assert_int_eq(element->node_cnt, 0);
-    ck_assert_int_eq(element->hash, hash);
-
-    ck_assert(element->ll.head != NULL);
-    ck_assert(element->ll.head->next == NULL);
-    ck_assert(element->ll.head->data != NULL);
-    ck_assert(*(int*) element->ll.head->data == data);
+    ck_assert(NULL != avl_find(avl, hash, &data, &cfg_int));
+    ck_assert(&data == avl_find(avl, hash, &data, &cfg_int));
 
     free(element);
     free(avl);
@@ -58,7 +49,7 @@ START_TEST (test_avl_add_destroy) {
 
     avl_add(avl, hash, &data, &cfg_int);
 
-    ck_assert_int_eq(1, avl_destroy(avl, NULL));
+    ck_assert_int_eq(1, avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
@@ -77,14 +68,8 @@ START_TEST (test_avl_add_multiple) {
         ck_assert(element != NULL);
 
         ck_assert_int_eq(element->hash, hash[i]);
-
-        ck_assert(element->ll.head != NULL);
-        ck_assert(element->ll.head->next == NULL); /* No similar hashes */
-        ck_assert(element->ll.head->data != NULL);
-        ck_assert(*(int*) element->ll.head->data == data[i]);
-
-        elements[i] = element;
     }
+    ck_assert_int_eq(avl_node_cnt(avl), 10);
 
     for (i = 0; i < 10; i++) {
         free(elements[i]);
@@ -105,7 +90,7 @@ START_TEST (test_avl_add_multiple_destroy) {
         avl_add(avl, hash[i], &data[i], &cfg_int);
     }
 
-    ck_assert_int_eq(1, avl_destroy(avl, NULL));
+    ck_assert_int_eq(1, avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
@@ -131,7 +116,7 @@ START_TEST (test_avl_add_collisions) {
     ck_assert(avl->root->l == NULL);
     ck_assert(avl->root->r == NULL);
 
-    ck_assert_int_eq(1, avl_destroy(avl, NULL));
+    ck_assert_int_eq(1, avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
