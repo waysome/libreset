@@ -255,7 +255,9 @@ avl_ndel(
     void* etc,
     struct r_set_cfg* cfg
 ) {
-    return delete_elements_by_predicate(&el->root, pred, etc, cfg);
+    unsigned int retval = delete_elements_by_predicate(&el->root, pred, etc, cfg);
+    el->root = rebalance_subtree(el->root);
+    return retval;
 }
 
 /*
