@@ -6,7 +6,7 @@
 #include "set_cfg.h"
 
 START_TEST (test_avl_alloc) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
 
     ck_assert(avl != NULL);
     ck_assert(avl->root == NULL);
@@ -16,7 +16,7 @@ START_TEST (test_avl_alloc) {
 END_TEST
 
 START_TEST (test_avl_alloc_destroy) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
 
     ck_assert(avl != NULL);
     ck_assert(avl->root == NULL);
@@ -26,7 +26,7 @@ START_TEST (test_avl_alloc_destroy) {
 END_TEST
 
 START_TEST (test_avl_add) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
 
     int data = 1;
     rs_hash hash = 1;
@@ -51,7 +51,7 @@ START_TEST (test_avl_add) {
 END_TEST
 
 START_TEST (test_avl_add_destroy) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
 
     int data = 1;
     rs_hash hash = 1;
@@ -63,7 +63,7 @@ START_TEST (test_avl_add_destroy) {
 END_TEST
 
 START_TEST (test_avl_add_multiple) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     rs_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -95,7 +95,7 @@ START_TEST (test_avl_add_multiple) {
 END_TEST
 
 START_TEST (test_avl_add_multiple_destroy) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     rs_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -110,7 +110,7 @@ START_TEST (test_avl_add_multiple_destroy) {
 END_TEST
 
 START_TEST (test_avl_add_collisions) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     rs_hash hash = 0;
@@ -136,7 +136,7 @@ START_TEST (test_avl_add_collisions) {
 END_TEST
 
 START_TEST (test_avl_find_single) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
     int data        = 1;
     rs_hash hash    = 1;
     int* found;
@@ -151,7 +151,7 @@ END_TEST
 
 
 START_TEST (test_avl_find_multiple) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
     int data[]      = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     rs_hash hash[]  = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     int* found[10] = { NULL };
