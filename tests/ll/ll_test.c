@@ -18,10 +18,9 @@ START_TEST (test_ll_insert_data) {
     int data = 5;
     ll_insert(ll, &data, &cfg_int);
 
-    ck_assert(ll->head->next == NULL);
-    ck_assert(ll->head->data == &data);
+    ck_assert_int_eq(1, ll_delete(ll, &data, &cfg_int));
+    ck_assert_int_eq(0, ll_delete(ll, &data, &cfg_int));
 
-    free(ll->head);
     free(ll);
 }
 END_TEST
