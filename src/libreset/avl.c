@@ -575,7 +575,7 @@ delete_elements_by_predicate(
         return 0;
     }
 
-    unsigned int retval=0;
+    unsigned int retval = 0;
 
     // iterate into subnodes
     retval += delete_elements_by_predicate(&(*root)->l, pred, etc, cfg);
