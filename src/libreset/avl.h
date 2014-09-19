@@ -195,7 +195,7 @@ inline static unsigned int
 avl_node_cnt(
     struct avl_el* root //!< The root element
 ) {
-    if (root) {
+    if (root == NULL) {
         return 0;
     }
     return root->node_cnt;
