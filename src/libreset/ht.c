@@ -28,7 +28,6 @@ ht_destroy(
             avl_destroy(&ht->buckets[i].avl, NULL);
         }
         free(ht->buckets);
-        free(ht);
     }
 }
 

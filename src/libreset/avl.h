@@ -52,19 +52,6 @@ struct avl_el {
 };
 
 /**
- * Allocate a new avl tree
- *
- * @note Alias for avl_add(NULL, NULL);
- *
- * @memberof avl
- * @static
- *
- * @return A pointer to a new avl_el object or NULL on failure
- */
-struct avl*
-avl_alloc(void);
-
-/**
  * Destroy an avl tree
  *
  * @memberof avl
