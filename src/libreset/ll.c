@@ -118,6 +118,40 @@ ll_delete(
     return 0;
 }
 
+unsigned int
+ll_ndel(
+    struct ll* ll,
+    r_predf pred,
+    void* etc,
+    struct r_set_cfg* cfg
+) {
+    struct ll_element** iter = &ll->head;
+    unsigned int cnt = 0;
+
+    // iterate over all the elements
+    while (*iter) {
+        // check whther we have found an element to remove
+        if (!pred((*iter)->data, etc)) {
+            // keep this element -> iterate
+            iter = &(*iter)->next;
+            continue;
+        }
+
+        // remove this element
+        struct ll_element* to_del = (*iter);
+
+        // free, relink and increment the counter
+        if (cfg->freef) {
+            cfg->freef(to_del->data);
+        }
+        *iter = to_del->next;
+        free(to_del);
+        ++cnt;
+    }
+
+    return cnt;
+}
+
 int
 ll_is_empty(
     struct ll* ll
