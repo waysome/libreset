@@ -30,11 +30,10 @@ START_TEST (test_ll_delete_data) {
     int data = 7;
 
     ck_assert(ll_insert(ll, &data, &cfg_int));
-    ck_assert(ll->head->next == NULL);
-    ck_assert(ll->head->data == &data);
+    ck_assert(&data == ll_find(ll, &data, &cfg_int));
 
     ck_assert(ll_delete(ll, &data, &cfg_int));
-    ck_assert(ll->head == NULL);
+    ck_assert(&data != ll_find(ll, &data, &cfg_int));
 
     ck_assert(!ll_delete(ll, ll->head, &cfg_int));
 
