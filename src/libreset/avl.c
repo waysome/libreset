@@ -268,6 +268,7 @@ insert_element_into_tree(
     avl_dbg("Inserting element %p", el);
     if (*root == NULL) {
         *root = el;
+        regen_metadata(*root);
         return *root;
     }
 
