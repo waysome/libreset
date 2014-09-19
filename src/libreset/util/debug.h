@@ -47,6 +47,10 @@
 
 #ifdef DEBUG
 
+/**
+ * debug macro which prints the current file, function and the line as well as
+ * any given string
+ */
 #define dbg(fmt,...) do {                       \
         fprintf(stderr,                         \
                 "[libreset][%s][%s][%s]: "fmt,  \

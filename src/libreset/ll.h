@@ -32,6 +32,7 @@
 #ifndef __LL_H__
 #define __LL_H__
 
+#include "util/attributes.h"
 #include "libreset/set.h"
 
 /**
@@ -70,7 +71,9 @@ void
 ll_destroy(
     struct ll* ll, //!< Ptr to the struct ll object
     struct r_set_cfg* cfg //!< type information proveded by the user
-);
+)
+__nonnull__(1, 2)
+;
 
 /**
  * Insert a element from the actual void* which references the data
@@ -85,7 +88,25 @@ ll_insert(
     struct ll* ll, /**< Ptr to the linked list object */
     void* data, /**< Ptr to the data to insert */
     struct r_set_cfg* cfg //!< type information proveded by the user
-);
+)
+__nonnull__(1, 2, 3)
+;
+
+/**
+ * Find an element from the linked list by predicate
+ *
+ * @memberof ll
+ *
+ * @return pointer to the data element or NULL on failure
+ */
+void*
+ll_find(
+    struct ll* ll, //!< The linked list to search in
+    void* const d, //!< Data element to compare to
+    struct r_set_cfg* cfg //!< Type information provided by the user
+)
+__nonnull__(1, 2, 3)
+;
 
 /**
  * Delete an item from the list
@@ -100,7 +121,40 @@ ll_delete(
     struct ll* ll, //! Ptr to the linked list object
     void* del, //!< Comparable to object to be removed
     struct r_set_cfg* cfg //!< type information proveded by the user
-);
+)
+__nonnull__(1, 2, 3)
+;
+
+/**
+ * Delete items from the list by predicate
+ *
+ * @memberof ll
+ *
+ * @return Number of deleted elements.
+ */
+unsigned int
+ll_ndel(
+    struct ll* ll, //!< Ptr to the linked list object
+    r_predf pred, //!< Predicate for deleting elements
+    void* etc, //!< User data for the predicate function
+    struct r_set_cfg* cfg //!< type information proveded by the user
+)
+__nonnull__(1, 4)
+;
+
+/**
+ * Check whether a linked list is empty or not.
+ *
+ * @memberof ll
+ *
+ * @return 1 if the list is empy, 0 otherwise
+ */
+int
+ll_is_empty(
+    struct ll* ll //!< Ptr to the linked list object
+)
+__nonnull__(1)
+;
 
 /**
  * Loop through an linked list

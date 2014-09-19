@@ -4,11 +4,19 @@
 
 #include "util/likely.h"
 #include "util/macros.h"
+#include "util/debug.h"
 
 #include "ll.h"
 #include "avl.h"
 #include "util/macros.h"
 
+/**
+ * Debug print helper for avl implementation code
+ *
+ * @note No #ifdef DEBUG here, because if dbg() evaluates to nothing, this code
+ * gets removed by the compiler anyways.
+ */
+#define avl_dbg(fmt,...) do { dbg("avl: "fmt, __VA_ARGS__); } while (0)
 
 /*
  *
@@ -154,11 +162,6 @@ find_node(
  *
  */
 
-struct avl*
-avl_alloc(void) {
-    return calloc(1, sizeof(struct avl));
-}
-
 int
 avl_destroy(
     struct avl* avl, //!< The avl tree
@@ -177,7 +180,12 @@ avl_find(
     void* const d,
     struct r_set_cfg* cfg
 ) {
+    avl_dbg("Finding element for hash: 0x%x", hash);
     struct avl_el* node = find_node(avl, hash);
+
+    if (!node) {
+        return NULL;
+    }
 
     // TODO: exchange with ll_find as soon as it's present
     ll_foreach(it, &node->ll) {
@@ -196,11 +204,14 @@ avl_add(
     void* const d, //!< The data element
     struct r_set_cfg* cfg
 ) {
+    avl_dbg("Adding element %p with hash: 0x%x", d, hash);
     struct avl_el* element = find_node(avl, hash);
 
     if (element) {
+        avl_dbg("Inserting element %p with hash: 0x%x", d, hash);
         ll_insert(&element->ll, d, cfg);
     } else {
+        avl_dbg("Allocating node for element %p with hash: 0x%x", d, hash);
         element = new_avl_el(hash);
         if (element) {
             ll_insert(&element->ll, d, cfg);
@@ -221,6 +232,7 @@ avl_del(
     void* cmp,
     struct r_set_cfg* cfg
 ) {
+    avl_dbg("Deleting element with hash: 0x%x", hash);
     int retval = remove_element(&avl->root, hash, cmp, cfg);
     avl->root = rebalance_subtree(avl->root);
     return retval;
@@ -253,8 +265,10 @@ insert_element_into_tree(
     if (!root || !el) {
         return NULL;
     }
+    avl_dbg("Inserting element %p", el);
     if (*root == NULL) {
         *root = el;
+        regen_metadata(*root);
         return *root;
     }
 
@@ -273,6 +287,7 @@ destroy_subtree(
     struct avl_el* node, //!< A node to destroy
     struct r_set_cfg* cfg
 ) {
+    avl_dbg("Destroying subtree from node %p", node);
     if (node->l) {
         destroy_subtree(node->l, cfg);
     }
@@ -288,6 +303,7 @@ static struct avl_el*
 rebalance_subtree(
     struct avl_el* root
 ) {
+    avl_dbg("Rebalance subtree for %p", root);
     // check whether the root node is NULL
     if (!root) {
         return NULL;
@@ -296,6 +312,7 @@ rebalance_subtree(
     // check whether the subtrees is already balanced (see paper)
     if (avl_node_cnt(root) >
         (unsigned int) (1 << (avl_height(root) - 1) ) - 1) {
+        avl_dbg("Subtree already balanced for %p", root);
         return root;
     }
 
@@ -330,6 +347,7 @@ static struct avl_el*
 rotate_left(
     struct avl_el* node
 ) {
+    avl_dbg("Rotate left around %p", node);
     if (!node || !node->r) {
         return NULL;
     }
@@ -354,6 +372,7 @@ static struct avl_el*
 rotate_right(
     struct avl_el* node
 ) {
+    avl_dbg("Rotate right around %p", node);
     if (!node || !node->l) {
         return NULL;
     }
@@ -381,6 +400,8 @@ remove_element(
     void* cmp,
     struct r_set_cfg* cfg
 ) {
+    avl_dbg("Remove element with hash: 0x%x", hash);
+
     // check whether the subtree is empty
     if (!*root) {
         return 0;
@@ -405,7 +426,8 @@ remove_element(
     retval = ll_delete(&(*root)->ll, cmp, cfg);
 
     // remove the node if neccessary
-    if (!(*root)->ll.head) {
+    if (ll_is_empty(&(*root)->ll)) {
+        avl_dbg("Remove node from tree: %p", *root);
         // isolate the node
         struct avl_el* to_del = *root;
         *root = isolate_root_node(to_del);
@@ -421,6 +443,8 @@ static struct avl_el*
 isolate_root_node(
     struct avl_el* node
 ) {
+    avl_dbg("Isolate node from tree: %p", node);
+
     // if the node has no left child, we may use the right one as new root node
     if (!node->l) {
         return node->r;
@@ -449,6 +473,7 @@ isolate_leftmost(
     if (!root || !*root) {
         return NULL;
     }
+    avl_dbg("Isolate leftmost node for tree %p", *root);
 
     // recurse
     struct avl_el* retval = isolate_leftmost(&(*root)->l);
@@ -471,6 +496,8 @@ static void
 regen_metadata(
     struct avl_el* node //!< The node to regenerate
 ) {
+    avl_dbg("Regenerate metadata for node %p", node);
+
     // regenerate the height
     node->height = 1 + MAX(avl_height(node->l), avl_height(node->r));
 
@@ -492,6 +519,8 @@ find_node(
     struct avl* avl,
     rs_hash hash
 ) {
+    avl_dbg("Finding node with hash: 0x%x", hash);
+
     struct avl_el* iter = avl->root;
     bloom filter = bloom_from_hash(hash);
 

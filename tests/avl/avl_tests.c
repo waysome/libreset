@@ -3,9 +3,10 @@
 #include <stdlib.h>
 
 #include "avl.h"
+#include "set_cfg.h"
 
 START_TEST (test_avl_alloc) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
 
     ck_assert(avl != NULL);
     ck_assert(avl->root == NULL);
@@ -15,7 +16,7 @@ START_TEST (test_avl_alloc) {
 END_TEST
 
 START_TEST (test_avl_alloc_destroy) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
 
     ck_assert(avl != NULL);
     ck_assert(avl->root == NULL);
@@ -25,7 +26,7 @@ START_TEST (test_avl_alloc_destroy) {
 END_TEST
 
 START_TEST (test_avl_add) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
 
     int data = 1;
     rs_hash hash = 1;
@@ -50,19 +51,19 @@ START_TEST (test_avl_add) {
 END_TEST
 
 START_TEST (test_avl_add_destroy) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
 
     int data = 1;
     rs_hash hash = 1;
 
-    avl_add(avl, hash, &data, NULL);
+    avl_add(avl, hash, &data, &cfg_int);
 
     ck_assert_int_eq(1, avl_destroy(avl, NULL));
 }
 END_TEST
 
 START_TEST (test_avl_add_multiple) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     rs_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -71,7 +72,7 @@ START_TEST (test_avl_add_multiple) {
 
     int i;
     for (i = 0; i < 10; i++) {
-        struct avl_el* element = avl_add(avl, hash[i], &data[i], NULL);
+        struct avl_el* element = avl_add(avl, hash[i], &data[i], &cfg_int);
 
         ck_assert(element != NULL);
 
@@ -94,14 +95,14 @@ START_TEST (test_avl_add_multiple) {
 END_TEST
 
 START_TEST (test_avl_add_multiple_destroy) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     rs_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
     int i;
     for (i = 0; i < 10; i++) {
-        avl_add(avl, hash[i], &data[i], NULL);
+        avl_add(avl, hash[i], &data[i], &cfg_int);
     }
 
     ck_assert_int_eq(1, avl_destroy(avl, NULL));
@@ -109,7 +110,7 @@ START_TEST (test_avl_add_multiple_destroy) {
 END_TEST
 
 START_TEST (test_avl_add_collisions) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     rs_hash hash = 0;
@@ -119,9 +120,9 @@ START_TEST (test_avl_add_collisions) {
     int i;
     for (i = 0; i < 10; i++) {
         if (element == NULL) {
-            element = avl_add(avl, hash, &data[i], NULL);
+            element = avl_add(avl, hash, &data[i], &cfg_int);
         } else {
-            cmp = avl_add(avl, hash, &data[i], NULL);
+            cmp = avl_add(avl, hash, &data[i], &cfg_int);
             ck_assert(cmp == element); /* collisions */
         }
     }
@@ -135,46 +136,47 @@ START_TEST (test_avl_add_collisions) {
 END_TEST
 
 START_TEST (test_avl_find_single) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
     int data        = 1;
     rs_hash hash    = 1;
-    struct avl_el* found;
+    int* found;
 
-    avl_add(avl, hash, &data, NULL);
-    found = avl_find(avl, hash, NULL, NULL);
+    ck_assert(avl_add(avl, hash, &data, &cfg_int) == avl->root);
+    found = avl_find(avl, hash, &data, &cfg_int);
 
-    ck_assert(found == avl->root);
-    ck_assert_int_eq(1, avl_destroy(avl, NULL));
+    ck_assert(*found == data);
+    ck_assert_int_eq(1, avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
 
 START_TEST (test_avl_find_multiple) {
-    struct avl* avl = avl_alloc();
+    struct avl* avl = malloc(sizeof(*avl));
     int data[]      = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     rs_hash hash[]  = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    struct avl_el* found[10] = { NULL };
+    int* found[10] = { NULL };
 
     int i;
     int j;
 
     for (i = 0; i < 10; i++) {
-        avl_add(avl, hash[i], &data[i], NULL);
+        ck_assert(NULL != avl_add(avl, hash[i], &data[i], &cfg_int));
     }
 
     for (i = 0; i < 10; i++) {
-        found[i] = avl_find(avl, hash[i], NULL, NULL);
+        found[i] = avl_find(avl, hash[i], &data[i], &cfg_int);
+        ck_assert(found[i] != NULL);
     }
 
     for (i = 0; i < 10; i++) {
         for (j = 0; j < 10; j++) {
             if (i != j) {
-                ck_assert(found[i] != found[j]);
+                ck_assert_msg(found[i] != found[j], "Expected %x to not equal %x", found[i], found[j]);
             }
         }
     }
 
-    avl_destroy(avl, NULL);
+    avl_destroy(avl, &cfg_int);
 }
 END_TEST
 
