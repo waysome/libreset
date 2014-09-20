@@ -194,7 +194,7 @@ avl_find(
 }
 
 struct avl_el*
-avl_add(
+avl_insert(
     struct avl* avl, //!< The avl tree where to insert
     rs_hash hash,
     void* const d, //!< The data element
