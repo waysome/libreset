@@ -76,3 +76,86 @@
             \end{center}
         \end{figure}
 
+    \subsection{Runtime complexity of AVL intersection with bloom}
+    \label{sec:parameters-AVL_intersect_bloom}
+
+        Much more interesting is the intersection of two AVLs.
+        As stated in equation \ref{eq:bloom_filter-disjunctive_sets-bitwise_and}
+        on page \pageref{eq:bloom_filter-disjunctive_sets-bitwise_and}, two sets
+        are exclusively disjunctive if the result of a bitwise ``AND''-operation
+        of the two corresponding bloom filters has less than $k$ bits set.
+        For the sets \emph{not} to be disjunctive, $m-k+1$ bits must be set.
+
+        Now consider two exclusively disjunctive sets $A$ and $B$.
+        For the calculation of the probability that those two sets will be found
+        exclusively disjunctive by a comparison of the bloom filters may only
+        be based on the probabilities of both the two bits of the two bloom
+        filters at a position being true.
+        Therefore the probability of two sets $A$ and $B$ represented by two
+        bloom filters $a$ and $b$ may be given as:
+
+        \begin{equation}
+            p_{\mathrm{A \cap B = \emptyset}}(a, b) =
+            \left( 1 - p_{a_i = 1}(a) \cdot p_{b_i = 1}(b) \right)^{m-k+1}
+        \end{equation}
+
+        Or
+
+        \begin{equation}
+            p_{\mathrm{A \cap B = \emptyset}}(a, b) =
+            \left( 1 -
+                \left(1 - \zeta^{kn_a} \right) \cdot
+                \left(1 - \zeta^{kn_b} \right)
+            \right)^{m-k+1}
+            \qquad \zeta = 1 - \frac{1}{m}
+        \end{equation}
+
+        If we assume that, in both sets, the number of bits set is equal
+        ($n = n_a = n_b$), the term may be simplified to:
+
+        \begin{equation}
+            p_{\mathrm{A \cap B = \emptyset}}(n) =
+            \left( \zeta^{2kn} -2\zeta^{kn} \right)^{m-k+1}
+        \end{equation}
+
+        Similar to the ``find`` operation, finding that two sets $A$ and $B$ are
+        exclusively disjunctive may cause an early return, since none of the nodes
+        below the current node have to be processed.
+        Therefore, the probability of a node being processed may be given as:
+
+        \begin{equation}
+            p_\mathrm{level} =
+            \prod_{i<l} p_{\mathrm{A \cap B \neg \emptyset}}(n(i))
+        \end{equation}
+
+        As each node has to be processed, the expected average runtime may be
+        given as the sum of the nodes in each layer, weighted by the probability
+        of reaching that layer.
+
+        \begin{equation}
+            T_{\cap} = \sum_l p_\mathrm{level} =
+            \sum_l 2^l \prod_{i<l} p_{\mathrm{A \cap B \neg \emptyset}}(n(i))
+        \end{equation}
+
+        In conclusion:
+
+        \begin{equation}
+            T_{\cap} = \sum_l p_\mathrm{level} =
+            \sum_l 2^l \prod_{i<l} \left(1 - \left(
+                \zeta^{2kn(i)} -2\zeta^{kn(i)}
+            \right)^{m-k+1} \right)
+        \end{equation}
+
+        If we plot the expected runtime vs. the height of an AVL for a range of
+        $k$, we observe a minimal runtime for $k=3$.
+
+        \begin{figure}[!h]
+            \caption{Runtime complexity of ``$\cap$''-operation}
+            \label{fig:parameters-AVL_bloom-runtime_intersection}
+            \begin{center}
+                \includegraphics{fig/runtime-avl.2}
+
+                with $m=64$
+            \end{center}
+        \end{figure}
+
