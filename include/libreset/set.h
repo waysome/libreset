@@ -73,7 +73,9 @@ r_set_new(
 void
 r_set_destroy(
     struct r_set* set //!< Set to remove
-);
+)
+__nonnull__(1)
+;
 
 
 /**
@@ -85,7 +87,9 @@ int
 r_set_insert(
     struct r_set* set, //!< the set
     void const* value //!< pointer to the value to insert
-);
+)
+__nonnull__(1, 2)
+;
 
 /**
  * Remove an object from the set
@@ -96,7 +100,9 @@ void*
 r_set_remove(
     struct r_set* set, //!< the set
     void const* cmp //!< object equal to the one you want to delete
-);
+)
+__nonnull__(1, 2)
+;
 
 
 /**
@@ -108,7 +114,9 @@ void*
 r_set_contains(
     struct r_set const* set, //!< the set
     void const* cmp //!< element to check for
-);
+)
+__nonnull__(1, 2)
+;
 
 
 /**
@@ -121,7 +129,9 @@ r_set_union(
     struct r_set* dest, //!< destination of the result
     struct r_set const* set_a, //!< first argument of the binary operation
     struct r_set const* set_b //!< second argument of the binary operation
-);
+)
+__nonnull__(1, 2, 3)
+;
 
 
 /**
@@ -134,7 +144,9 @@ r_set_intersection(
     struct r_set* dest, //!< destination of the result
     struct r_set const* set_a, //!< first argument of the binary operation
     struct r_set const* set_b //!< second argument of the binary operation
-);
+)
+__nonnull__(1, 2, 3)
+;
 
 
 /**
@@ -147,7 +159,9 @@ r_set_xor(
     struct r_set* dest, //!< destination of the result
     struct r_set const* set_a, //!< first argument of the binary operation
     struct r_set const* set_b //!< second argument of the binary operation
-);
+)
+__nonnull__(1, 2, 3)
+;
 
 
 /**
@@ -160,7 +174,9 @@ r_set_exclude(
     struct r_set* dest, //!< destination of the result
     struct r_set const* set_a, //!< first argument of the binary operation
     struct r_set const* set_b //!< second argument of the binary operation
-);
+)
+__nonnull__(1, 2, 3)
+;
 
 
 /**
@@ -172,7 +188,9 @@ int
 r_set_is_subset(
     struct r_set const* set_a, //!< first argument of the binary operation
     struct r_set const* set_b //!< second argument of the binary operation
-);
+)
+__nonnull__(1, 2)
+;
 
 
 /**
@@ -189,7 +207,9 @@ int
 r_set_equal(
     struct r_set const* set_a, //!< first argument of the binary operation
     struct r_set const* set_b //!< second argument of the binary operation
-);
+)
+__nonnull__(1, 2)
+;
 
 
 /**
@@ -200,7 +220,9 @@ r_set_equal(
 size_t
 r_set_cardinality(
     struct r_set const* set //!< the set to get the cardinality for
-);
+)
+__nonnull__(1)
+;
 
 
 /**
@@ -218,6 +240,8 @@ r_set_select(
     struct r_set const* src, //!< source set
     r_predf pred, //!< predicate for selection
     void* //!< parameter for the predicate function
-);
+)
+__nonnull__(1, 2)
+;
 
 #endif //__LIBRESET_H__
