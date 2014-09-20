@@ -41,3 +41,14 @@ ht_del(
     size_t i = hash >> (sizeof(rs_hash) - ht->sizeexp);
     return avl_del(&ht->buckets[i].avl, hash, cmp, cfg);
 }
+
+void*
+ht_find(
+    struct ht* ht,
+    rs_hash hash,
+    void* cmp,
+    struct r_set_cfg* cfg
+) {
+    size_t i = hash >> (sizeof(hash) - ht->sizeexp);
+    return avl_find(&ht->buckets[i].avl, hash, cmp, cfg);
+}
