@@ -24,6 +24,16 @@
 
 #include "ll.h"
 
+#include "util/debug.h"
+
+/**
+ * Debug print helper for linkedlist implementation code
+ *
+ * @note No #ifdef DEBUG here, because if dbg() evaluates to nothing, this code
+ * gets removed by the compiler anyways.
+ */
+#define ll_dbg(fmt,...) do { dbg("[ll]: "fmt, __VA_ARGS); } while (0)
+
 void
 ll_destroy(
     struct ll* ll,
@@ -31,12 +41,14 @@ ll_destroy(
 ) {
     struct ll_element* iter = ll->head;
     struct ll_element* next;
+    ll_dbg("Destroying: %p", ll);
 
     while (iter) {
         next = iter->next;
         if (cfg->freef) {
             cfg->freef(iter->data);
         }
+        ll_dbg("Removing: %p", iter);
         free(iter);
         iter = next;
     }
@@ -50,8 +62,12 @@ ll_insert(
 ) {
     // check whether the lement is present or not
     struct ll_element** it = &ll->head;
+
+    ll_dbg("Inserting: %p", data);
+
     while (*it) {
         if (cfg->cmpf((*it)->data, data)) {
+            ll_dbg("already in ll: %p", data);
             return 0;
         }
 
@@ -61,6 +77,7 @@ ll_insert(
     // insert the new element
     struct ll_element* el = calloc(1, sizeof(struct ll_element));
     if (!el) {
+        ll_dbg("Inserting into %p aborted (allocation failed)", ll);
         return 0;
     }
 
@@ -95,11 +112,13 @@ ll_delete(
     struct r_set_cfg* cfg
 ) {
     struct ll_element** iter = &ll->head;
+    ll_dbg("Deleting from %p", ll);
 
     // iterate over all the elements
     while (*iter) {
         // check whther we have found the element to remove
         if (cfg->cmpf((*iter)->data, del)) {
+            ll_dbg("Deleting element found: %p", *iter);
             struct ll_element* to_del = (*iter);
 
             // free, relink and return
