@@ -65,13 +65,13 @@ avl_destroy(
 );
 
 /**
- * Add an entry in an avl tree
+ * Add an element to an avl tree
  *
  * @memberof avl
  *
- * @return The new added element or NULL on failure
+ * @return 1 if the insertion was successful, 0 otherwise
  */
-struct avl_el*
+int
 avl_insert(
     struct avl* avl, //!< The avl tree where to insert
     rs_hash hash, //!< hash value associated with d
