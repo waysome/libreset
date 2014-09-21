@@ -130,17 +130,16 @@ new_avl_el(
 );
 
 /**
- * Insert an struct avl_el object into the avl tree
+ * Insert an element into the subtree denoted by it's root
  *
- * @pre An element with the hash of the to-insert element (`el`) is not in the
- *      tree `root` points to.
- *
- * @return The new root element
+ * @return 1 if the insertion was successful, 0 otherwise
  */
-static struct avl_el*
+int
 insert_element_into_tree(
-    struct avl_el* el, //!< The element to insert
-    struct avl_el** root //!< The root element of the tree where to insert
+    void* el, //!< The element to insert
+    rs_hash hash, //!< hash of the element to insert
+    struct avl_el** root, //!< The root element of the tree where to insert
+    struct r_set_cfg* cfg //!< type information proveded by the user
 );
 
 /**
@@ -193,7 +192,7 @@ avl_find(
     return NULL;
 }
 
-struct avl_el*
+int
 avl_insert(
     struct avl* avl, //!< The avl tree where to insert
     rs_hash hash,
@@ -201,24 +200,11 @@ avl_insert(
     struct r_set_cfg* cfg
 ) {
     avl_dbg("Adding element %p with hash: 0x%x", d, hash);
-    struct avl_el* element = find_node(avl, hash);
 
-    if (element) {
-        avl_dbg("Inserting element %p with hash: 0x%x", d, hash);
-        ll_insert(&element->ll, d, cfg);
-    } else {
-        avl_dbg("Allocating node for element %p with hash: 0x%x", d, hash);
-        element = new_avl_el(hash);
-        if (element) {
-            ll_insert(&element->ll, d, cfg);
-            insert_element_into_tree(element, &avl->root);
-            rebalance_subtree(avl->root);
-        } else {
-            /* Out of memory */
-        }
-    }
+    int retval = insert_element_into_tree(d, hash, &avl->root, cfg);
+    rebalance_subtree(avl->root);
 
-    return element;
+    return retval;
 }
 
 int
@@ -253,28 +239,45 @@ new_avl_el(
     return el;
 }
 
-static struct avl_el*
+int
 insert_element_into_tree(
-    struct avl_el* el,
-    struct avl_el** root
+    void* d,
+    rs_hash hash,
+    struct avl_el** root,
+    struct r_set_cfg* cfg
 ) {
-    if (!root || !el) {
-        return NULL;
-    }
-    avl_dbg("Inserting element %p", el);
+    avl_dbg("Inserting element %p with hash: 0x%x", d, hash);
+    int retval;
+
+    // we reached the bottom of the tree
     if (*root == NULL) {
-        *root = el;
-        return *root;
+        // create new node and insert
+        struct avl_el* node = new_avl_el(hash);
+        if (!node) {
+            // out of memory
+            return 0;
+        }
+        retval = ll_insert(&node->ll, d, cfg);
+
+        *root = node;
+        regen_metadata(*root);
+        return retval;
     }
 
-    if (el->hash < (*root)->hash) {
-        (*root)->l = insert_element_into_tree(el, &(*root)->l);
-    } else {
-        (*root)->r = insert_element_into_tree(el, &(*root)->r);
+    // recurse if neccessary
+    if (hash < (*root)->hash) {
+        retval = insert_element_into_tree(d, hash, &(*root)->l, cfg);
+        regen_metadata(*root);
+        return retval;
+    }
+    if (hash > (*root)->hash) {
+        retval = insert_element_into_tree(d, hash, &(*root)->r, cfg);
+        regen_metadata(*root);
+        return retval;
     }
 
-    regen_metadata(*root);
-    return *root;
+    // insert into this element, not creating new nodes
+    return ll_insert(&(*root)->ll, d, cfg);
 }
 
 static void
