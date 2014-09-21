@@ -23,6 +23,7 @@
 #include <stdlib.h>
 
 #include "libreset/set.h"
+#include "libreset/hash.h"
 
 #include "ht/ht.h"
 #include "util/likely.h"
@@ -70,4 +71,20 @@ r_set_insert(
     void* value
 ) {
     return ht_insert(&set->ht, value, set->cfg);
+}
+
+void*
+r_set_remove(
+    struct r_set* set,
+    void const* cmp
+) {
+    rs_hash hash = set->cfg.hashf(cmp);
+
+    void* data = ht_find(&set->ht, hash, cmp, set->cfg);
+
+    if (data && ht_del(&set->ht, hash, cmp, set->cfg)) {
+        return data;
+    }
+
+    return NULL;
 }
