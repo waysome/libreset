@@ -38,3 +38,11 @@ r_set_destroy(
     ht_destroy(&set->ht, set->cfg);
     free(set);
 }
+
+int
+r_set_insert(
+    struct r_set* set,
+    void const* value
+) {
+    return ht_insert(&set->ht, value, set->cfg);
+}
