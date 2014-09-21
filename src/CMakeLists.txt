@@ -16,6 +16,7 @@ set(SOURCE_FILES
     libreset/ht.c
     libreset/bloom.c
     libreset/ll.c
+    libreset/set.c
 )
 
 #
