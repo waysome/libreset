@@ -28,3 +28,11 @@ struct r_set {
     struct ht ht;
     struct r_set_cfg* cfg;
 };
+
+void
+r_set_destroy(
+    struct r_set* set
+) {
+    ht_destroy(&set->ht, set->cfg);
+    free(set);
+}
