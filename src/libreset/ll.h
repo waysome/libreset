@@ -70,7 +70,7 @@ struct ll {
 void
 ll_destroy(
     struct ll* ll, //!< Ptr to the struct ll object
-    struct r_set_cfg* cfg //!< type information proveded by the user
+    struct r_set_cfg const* cfg //!< type information proveded by the user
 )
 __nonnull__(1, 2)
 ;

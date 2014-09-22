@@ -61,7 +61,7 @@ struct avl_el {
 int
 avl_destroy(
     struct avl* avl, //!< The avl tree
-    struct r_set_cfg* cfg //!< type information proveded by the user
+    struct r_set_cfg const* cfg //!< type information proveded by the user
 );
 
 /**
