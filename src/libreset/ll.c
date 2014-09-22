@@ -173,7 +173,7 @@ ll_ndel(
 
 int
 ll_is_empty(
-    struct ll* ll
+    struct ll const* ll
 ) {
     return !ll->head;
 }
