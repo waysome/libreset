@@ -20,6 +20,8 @@
  * along with libreset. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdlib.h>
+
 #include "libreset/set.h"
 
 #include "ht.h"
@@ -28,3 +30,11 @@ struct r_set {
     struct ht ht;
     struct r_set_cfg* cfg;
 };
+
+void
+r_set_destroy(
+    struct r_set* set
+) {
+    ht_destroy(&set->ht, set->cfg);
+    free(set);
+}
