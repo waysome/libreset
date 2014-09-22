@@ -347,7 +347,7 @@ rotate_left(
 ) {
     avl_dbg("Rotate left around %p", node);
     if (!node || !node->r) {
-        return NULL;
+        return node;
     }
 
     struct avl_el* new_root = node->r;
@@ -372,7 +372,7 @@ rotate_right(
 ) {
     avl_dbg("Rotate right around %p", node);
     if (!node || !node->l) {
-        return NULL;
+        return node;
     }
 
     struct avl_el* new_root = node->l;
