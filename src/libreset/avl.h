@@ -124,10 +124,10 @@ avl_ndel(
  */
 void*
 avl_find(
-    struct avl* avl, //!< The avl where to search in
+    struct avl const* avl, //!< The avl where to search in
     rs_hash hash, //!< The hash value associated with d
-    void* const d, //!< The data element to compare to
-    struct r_set_cfg* cfg //!< type information proveded by the user
+    void const* const d, //!< The data element to compare to
+    struct r_set_cfg const* cfg //!< type information proveded by the user
 );
 
 /**

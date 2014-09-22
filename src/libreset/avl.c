@@ -149,7 +149,7 @@ insert_element_into_tree(
  */
 static struct avl_el*
 find_node(
-    struct avl* avl,
+    struct avl const* avl,
     rs_hash hash
 );
 
@@ -188,10 +188,10 @@ avl_destroy(
 
 void*
 avl_find(
-    struct avl* avl,
+    struct avl const* avl,
     rs_hash hash,
-    void* const d,
-    struct r_set_cfg* cfg
+    void const* const d,
+    struct r_set_cfg const* cfg
 ) {
     avl_dbg("Finding element for hash: 0x%x", hash);
     struct avl_el* node = find_node(avl, hash);
@@ -540,7 +540,7 @@ regen_metadata(
 
 static struct avl_el*
 find_node(
-    struct avl* avl,
+    struct avl const* avl,
     rs_hash hash
 ) {
     avl_dbg("Finding node with hash: 0x%x", hash);
