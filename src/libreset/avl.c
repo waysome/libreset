@@ -178,7 +178,7 @@ delete_elements_by_predicate(
 int
 avl_destroy(
     struct avl* avl, //!< The avl tree
-    struct r_set_cfg* cfg
+    struct r_set_cfg const* cfg
 ) {
     if (avl && avl->root) {
         destroy_subtree(avl->root, cfg);
