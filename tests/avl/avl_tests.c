@@ -58,7 +58,7 @@ START_TEST (test_avl_insert_multiple) {
         ck_assert(&data[i] == avl_find(avl, hash[i], &data[i], &cfg_int));
     }
 
-    free(avl);
+    avl_destroy(avl, &cfg_int);
 }
 END_TEST
 
