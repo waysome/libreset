@@ -137,7 +137,7 @@ ll_ndel(
     struct ll* ll, //!< Ptr to the linked list object
     r_predf pred, //!< Predicate for deleting elements
     void* etc, //!< User data for the predicate function
-    struct r_set_cfg* cfg //!< type information proveded by the user
+    struct r_set_cfg const* cfg //!< type information proveded by the user
 )
 __nonnull__(1, 4)
 ;

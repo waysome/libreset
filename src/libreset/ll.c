@@ -142,7 +142,7 @@ ll_ndel(
     struct ll* ll,
     r_predf pred,
     void* etc,
-    struct r_set_cfg* cfg
+    struct r_set_cfg const* cfg
 ) {
     struct ll_element** iter = &ll->head;
     unsigned int cnt = 0;
