@@ -37,7 +37,7 @@
 void
 ll_destroy(
     struct ll* ll,
-    struct r_set_cfg* cfg
+    struct r_set_cfg const* cfg
 ) {
     struct ll_element* iter = ll->head;
     struct ll_element* next;
