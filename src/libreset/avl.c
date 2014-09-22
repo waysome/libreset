@@ -139,7 +139,7 @@ insert_element_into_tree(
     void* el, //!< The element to insert
     rs_hash hash, //!< hash of the element to insert
     struct avl_el** root, //!< The root element of the tree where to insert
-    struct r_set_cfg* cfg //!< type information proveded by the user
+    struct r_set_cfg const* cfg //!< type information proveded by the user
 );
 
 /**
@@ -270,7 +270,7 @@ insert_element_into_tree(
     void* d,
     rs_hash hash,
     struct avl_el** root,
-    struct r_set_cfg* cfg
+    struct r_set_cfg const* cfg
 ) {
     avl_dbg("Inserting element %p with hash: 0x%x", d, hash);
     int retval;
