@@ -6,7 +6,7 @@
 #include "set_cfg.h"
 
 START_TEST (test_avl_alloc) {
-    struct avl* avl = malloc(sizeof(*avl));
+    struct avl* avl = calloc(1, sizeof(*avl));
 
     ck_assert(avl != NULL);
     ck_assert(avl->root == NULL);
@@ -16,7 +16,7 @@ START_TEST (test_avl_alloc) {
 END_TEST
 
 START_TEST (test_avl_alloc_destroy) {
-    struct avl* avl = malloc(sizeof(*avl));
+    struct avl* avl = calloc(1, sizeof(*avl));
 
     ck_assert(avl != NULL);
     ck_assert(avl->root == NULL);
@@ -26,7 +26,7 @@ START_TEST (test_avl_alloc_destroy) {
 END_TEST
 
 START_TEST (test_avl_insert) {
-    struct avl* avl = malloc(sizeof(*avl));
+    struct avl* avl = calloc(1, sizeof(*avl));
 
     int data = 1;
     rs_hash hash = 1;
@@ -40,7 +40,7 @@ START_TEST (test_avl_insert) {
 END_TEST
 
 START_TEST (test_avl_insert_destroy) {
-    struct avl* avl = malloc(sizeof(*avl));
+    struct avl* avl = calloc(1, sizeof(*avl));
 
     int data = 1;
     rs_hash hash = 1;
@@ -52,7 +52,7 @@ START_TEST (test_avl_insert_destroy) {
 END_TEST
 
 START_TEST (test_avl_insert_multiple) {
-    struct avl* avl = malloc(sizeof(*avl));
+    struct avl* avl = calloc(1, sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     rs_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -75,7 +75,7 @@ START_TEST (test_avl_insert_multiple) {
 END_TEST
 
 START_TEST (test_avl_insert_multiple_destroy) {
-    struct avl* avl = malloc(sizeof(*avl));
+    struct avl* avl = calloc(1, sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     rs_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -109,7 +109,7 @@ START_TEST (test_avl_insert_collisions) {
 END_TEST
 
 START_TEST (test_avl_find_single) {
-    struct avl* avl = malloc(sizeof(*avl));
+    struct avl* avl = calloc(1, sizeof(*avl));
     int data        = 1;
     rs_hash hash    = 1;
     int* found;
@@ -124,7 +124,7 @@ END_TEST
 
 
 START_TEST (test_avl_find_multiple) {
-    struct avl* avl = malloc(sizeof(*avl));
+    struct avl* avl = calloc(1, sizeof(*avl));
     int data[]      = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     rs_hash hash[]  = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     int* found[10] = { NULL };
