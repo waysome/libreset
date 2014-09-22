@@ -164,7 +164,7 @@ delete_elements_by_predicate(
     struct avl_el** root,
     r_predf pred,
     void* etc,
-    struct r_set_cfg* cfg
+    struct r_set_cfg const* cfg
 );
 
 /*
@@ -569,7 +569,7 @@ delete_elements_by_predicate(
     struct avl_el** root,
     r_predf pred,
     void* etc,
-    struct r_set_cfg* cfg
+    struct r_set_cfg const* cfg
 ) {
     // check whether the subtree is empty
     if (!*root) {
