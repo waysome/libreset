@@ -20,6 +20,8 @@
  * along with libreset. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdlib.h>
+
 #include "libreset/set.h"
 
 #include "ht.h"
