@@ -93,8 +93,8 @@ int
 avl_del(
     struct avl* avl, //!< The avl where to search in
     rs_hash hash, //!< hash value
-    void* cmp, //!< element to compare against
-    struct r_set_cfg* cfg //!< type information provided by the user
+    void const* cmp, //!< element to compare against
+    struct r_set_cfg const* cfg //!< type information provided by the user
 );
 
 /**

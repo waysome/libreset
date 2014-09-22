@@ -225,8 +225,8 @@ int
 avl_del(
     struct avl* avl,
     rs_hash hash,
-    void* cmp,
-    struct r_set_cfg* cfg
+    void const* cmp,
+    struct r_set_cfg const* cfg
 ) {
     avl_dbg("Deleting element with hash: 0x%x", hash);
     int retval = remove_element(&avl->root, hash, cmp, cfg);
