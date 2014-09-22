@@ -76,7 +76,7 @@ avl_insert(
     struct avl* avl, //!< The avl tree where to insert
     rs_hash hash, //!< hash value associated with d
     void* const d, //!< The data element
-    struct r_set_cfg* cfg //!< type information provided by the user
+    struct r_set_cfg const* cfg //!< type information provided by the user
 );
 
 /**

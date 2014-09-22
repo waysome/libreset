@@ -211,7 +211,7 @@ avl_insert(
     struct avl* avl, //!< The avl tree where to insert
     rs_hash hash,
     void* const d, //!< The data element
-    struct r_set_cfg* cfg
+    struct r_set_cfg const* cfg
 ) {
     avl_dbg("Adding element %p with hash: 0x%x", d, hash);
 
