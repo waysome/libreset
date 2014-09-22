@@ -144,7 +144,8 @@ START_TEST (test_avl_find_multiple) {
     for (i = 0; i < 10; i++) {
         for (j = 0; j < 10; j++) {
             if (i != j) {
-                ck_assert_msg(found[i] != found[j], "Expected %x to not equal %x", found[i], found[j]);
+                ck_assert_msg(found[i] != found[j], "Expected %x to not equal %x", found[i],
+                              found[j]);
             }
         }
     }
