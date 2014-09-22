@@ -108,8 +108,8 @@ ll_find(
 int
 ll_delete(
     struct ll* ll,
-    void* del,
-    struct r_set_cfg* cfg
+    void const* del,
+    struct r_set_cfg const* cfg
 ) {
     struct ll_element** iter = &ll->head;
     ll_dbg("Deleting from %p", ll);
@@ -142,7 +142,7 @@ ll_ndel(
     struct ll* ll,
     r_predf pred,
     void* etc,
-    struct r_set_cfg* cfg
+    struct r_set_cfg const* cfg
 ) {
     struct ll_element** iter = &ll->head;
     unsigned int cnt = 0;

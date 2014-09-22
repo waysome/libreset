@@ -119,8 +119,8 @@ __nonnull__(1, 2, 3)
 int
 ll_delete(
     struct ll* ll, //! Ptr to the linked list object
-    void* del, //!< Comparable to object to be removed
-    struct r_set_cfg* cfg //!< type information proveded by the user
+    void const* del, //!< Comparable to object to be removed
+    struct r_set_cfg const* cfg //!< type information proveded by the user
 )
 __nonnull__(1, 2, 3)
 ;
@@ -137,7 +137,7 @@ ll_ndel(
     struct ll* ll, //!< Ptr to the linked list object
     r_predf pred, //!< Predicate for deleting elements
     void* etc, //!< User data for the predicate function
-    struct r_set_cfg* cfg //!< type information proveded by the user
+    struct r_set_cfg const* cfg //!< type information proveded by the user
 )
 __nonnull__(1, 4)
 ;

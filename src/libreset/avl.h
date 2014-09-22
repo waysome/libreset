@@ -93,8 +93,8 @@ int
 avl_del(
     struct avl* avl, //!< The avl where to search in
     rs_hash hash, //!< hash value
-    void* cmp, //!< element to compare against
-    struct r_set_cfg* cfg //!< type information provided by the user
+    void const* cmp, //!< element to compare against
+    struct r_set_cfg const* cfg //!< type information provided by the user
 );
 
 /**
@@ -112,7 +112,7 @@ avl_ndel(
     struct avl* el, //!< The avl where to search in
     r_predf pred, //!< A predicate selecting what to remove
     void* etc, //!< User-data to pass to the predicate
-    struct r_set_cfg* cfg //!< type information provided by the user
+    struct r_set_cfg const* cfg //!< type information provided by the user
 );
 
 /**

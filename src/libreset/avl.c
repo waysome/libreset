@@ -75,8 +75,8 @@ static int
 remove_element(
     struct avl_el** root, //!< The avl where to search in
     rs_hash hash, //!< hash value associated with d
-    void* cmp, //!< element to compare against
-    struct r_set_cfg* cfg //!< type information provided by the user
+    void const* cmp, //!< element to compare against
+    struct r_set_cfg const* cfg //!< type information provided by the user
 );
 
 /**
@@ -164,7 +164,7 @@ delete_elements_by_predicate(
     struct avl_el** root,
     r_predf pred,
     void* etc,
-    struct r_set_cfg* cfg
+    struct r_set_cfg const* cfg
 );
 
 /*
@@ -225,8 +225,8 @@ int
 avl_del(
     struct avl* avl,
     rs_hash hash,
-    void* cmp,
-    struct r_set_cfg* cfg
+    void const* cmp,
+    struct r_set_cfg const* cfg
 ) {
     avl_dbg("Deleting element with hash: 0x%x", hash);
     int retval = remove_element(&avl->root, hash, cmp, cfg);
@@ -239,7 +239,7 @@ avl_ndel(
     struct avl* el,
     r_predf pred,
     void* etc,
-    struct r_set_cfg* cfg
+    struct r_set_cfg const* cfg
 ) {
     unsigned int retval = delete_elements_by_predicate(&el->root, pred, etc, cfg);
     el->root = rebalance_subtree(el->root);
@@ -421,8 +421,8 @@ static int
 remove_element(
     struct avl_el** root,
     rs_hash hash,
-    void* cmp,
-    struct r_set_cfg* cfg
+    void const* cmp,
+    struct r_set_cfg const* cfg
 ) {
     avl_dbg("Remove element with hash: 0x%x", hash);
 
@@ -569,7 +569,7 @@ delete_elements_by_predicate(
     struct avl_el** root,
     r_predf pred,
     void* etc,
-    struct r_set_cfg* cfg
+    struct r_set_cfg const* cfg
 ) {
     // check whether the subtree is empty
     if (!*root) {
