@@ -29,7 +29,7 @@
 static void
 destroy_subtree(
     struct avl_el* node, //!< A node to destroy
-    struct r_set_cfg* cfg //!< type information proveded by the user
+    struct r_set_cfg const* cfg //!< type information proveded by the user
 );
 
 /**
@@ -309,7 +309,7 @@ insert_element_into_tree(
 static void
 destroy_subtree(
     struct avl_el* node, //!< A node to destroy
-    struct r_set_cfg* cfg
+    struct r_set_cfg const* cfg
 ) {
     avl_dbg("Destroying subtree from node %p", node);
     if (node->l) {
