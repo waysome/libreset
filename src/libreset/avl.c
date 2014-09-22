@@ -153,6 +153,20 @@ find_node(
     rs_hash hash
 );
 
+/**
+ * Delete all elements in the tree under `root` for which the predicate `pred`
+ * evaluates true.
+ *
+ * @return Number of removed elements.
+ */
+static unsigned int
+delete_elements_by_predicate(
+    struct avl_el** root,
+    r_predf pred,
+    void* etc,
+    struct r_set_cfg* cfg
+);
+
 /*
  *
  *
@@ -217,6 +231,18 @@ avl_del(
     avl_dbg("Deleting element with hash: 0x%x", hash);
     int retval = remove_element(&avl->root, hash, cmp, cfg);
     avl->root = rebalance_subtree(avl->root);
+    return retval;
+}
+
+unsigned int
+avl_ndel(
+    struct avl* el,
+    r_predf pred,
+    void* etc,
+    struct r_set_cfg* cfg
+) {
+    unsigned int retval = delete_elements_by_predicate(&el->root, pred, etc, cfg);
+    el->root = rebalance_subtree(el->root);
     return retval;
 }
 
@@ -536,5 +562,41 @@ find_node(
     }
 
     return iter;
+}
+
+static unsigned int
+delete_elements_by_predicate(
+    struct avl_el** root,
+    r_predf pred,
+    void* etc,
+    struct r_set_cfg* cfg
+) {
+    // check whether the subtree is empty
+    if (!*root) {
+        return 0;
+    }
+
+    unsigned int retval = 0;
+
+    // iterate into subnodes
+    retval += delete_elements_by_predicate(&(*root)->l, pred, etc, cfg);
+    retval += delete_elements_by_predicate(&(*root)->r, pred, etc, cfg);
+
+    // remove elements from this node
+    retval += ll_ndel(&(*root)->ll, pred, etc, cfg);
+
+    // remove the node if neccessary
+    if (ll_is_empty(&(*root)->ll)) {
+        avl_dbg("Remove node from tree: %p", *root);
+        // isolate the node
+        struct avl_el* to_del = *root;
+        *root = isolate_root_node(to_del);
+
+        // delete the node
+        free(to_del);
+    }
+
+    regen_metadata(*root);
+    return retval;
 }
 
