@@ -75,8 +75,8 @@ static int
 remove_element(
     struct avl_el** root, //!< The avl where to search in
     rs_hash hash, //!< hash value associated with d
-    void* cmp, //!< element to compare against
-    struct r_set_cfg* cfg //!< type information provided by the user
+    void const* cmp, //!< element to compare against
+    struct r_set_cfg const* cfg //!< type information provided by the user
 );
 
 /**
@@ -421,8 +421,8 @@ static int
 remove_element(
     struct avl_el** root,
     rs_hash hash,
-    void* cmp,
-    struct r_set_cfg* cfg
+    void const* cmp,
+    struct r_set_cfg const* cfg
 ) {
     avl_dbg("Remove element with hash: 0x%x", hash);
 
