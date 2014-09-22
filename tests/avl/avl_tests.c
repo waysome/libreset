@@ -127,7 +127,7 @@ START_TEST (test_avl_find_multiple) {
     }
 
     for (i = 0; i < 10; i++) {
-        found[i] = avl_find(avl, hash[i], &data[i], &cfg_int);
+        found[i] = (int*) avl_find(avl, hash[i], &data[i], &cfg_int);
         ck_assert(found[i] != NULL);
     }
 
