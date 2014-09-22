@@ -25,35 +25,33 @@ START_TEST (test_avl_alloc_destroy) {
 }
 END_TEST
 
-START_TEST (test_avl_add) {
+START_TEST (test_avl_insert) {
     struct avl* avl = malloc(sizeof(*avl));
 
     int data = 1;
     rs_hash hash = 1;
 
-    struct avl_el* element = avl_add(avl, hash, &data, &cfg_int);
+    avl_insert(avl, hash, &data, &cfg_int);
 
-    ck_assert(NULL != avl_find(avl, hash, &data, &cfg_int));
     ck_assert(&data == avl_find(avl, hash, &data, &cfg_int));
 
-    free(element);
-    free(avl);
+    avl_destroy(avl, &cfg_int);
 }
 END_TEST
 
-START_TEST (test_avl_add_destroy) {
+START_TEST (test_avl_insert_destroy) {
     struct avl* avl = malloc(sizeof(*avl));
 
     int data = 1;
     rs_hash hash = 1;
 
-    avl_add(avl, hash, &data, &cfg_int);
+    avl_insert(avl, hash, &data, &cfg_int);
 
     ck_assert_int_eq(1, avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
-START_TEST (test_avl_add_multiple) {
+START_TEST (test_avl_insert_multiple) {
     struct avl* avl = malloc(sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -63,15 +61,12 @@ START_TEST (test_avl_add_multiple) {
 
     int i;
     for (i = 0; i < 10; i++) {
-        struct avl_el* element = avl_add(avl, hash[i], &data[i], &cfg_int);
-
-        ck_assert(element != NULL);
-
-        ck_assert_int_eq(element->hash, hash[i]);
+        ck_assert_int_eq(1, avl_insert(avl, hash[i], &data[i], &cfg_int));
     }
-    ck_assert_int_eq(avl_node_cnt(avl), 10);
+    ck_assert_int_eq(avl_node_cnt(avl->root), 10);
 
     for (i = 0; i < 10; i++) {
+        ck_assert(&data[i] == avl_find(avl, hash[i], &data[i], &cfg_int));
         free(elements[i]);
     }
 
@@ -79,7 +74,7 @@ START_TEST (test_avl_add_multiple) {
 }
 END_TEST
 
-START_TEST (test_avl_add_multiple_destroy) {
+START_TEST (test_avl_insert_multiple_destroy) {
     struct avl* avl = malloc(sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -87,34 +82,27 @@ START_TEST (test_avl_add_multiple_destroy) {
 
     int i;
     for (i = 0; i < 10; i++) {
-        avl_add(avl, hash[i], &data[i], &cfg_int);
+        avl_insert(avl, hash[i], &data[i], &cfg_int);
     }
 
     ck_assert_int_eq(1, avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
-START_TEST (test_avl_add_collisions) {
+START_TEST (test_avl_insert_collisions) {
     struct avl* avl = malloc(sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     rs_hash hash = 0;
-    struct avl_el* element = NULL;
-    struct avl_el* cmp = NULL;
 
     int i;
     for (i = 0; i < 10; i++) {
-        if (element == NULL) {
-            element = avl_add(avl, hash, &data[i], &cfg_int);
-        } else {
-            cmp = avl_add(avl, hash, &data[i], &cfg_int);
-            ck_assert(cmp == element); /* collisions */
-        }
+        ck_assert_int_eq(1, avl_insert(avl, hash, &data[i], &cfg_int));
     }
 
-    ck_assert(avl->root != NULL);
-    ck_assert(avl->root->l == NULL);
-    ck_assert(avl->root->r == NULL);
+    for (i = 0; i < 10; i++) {
+        ck_assert(&data[i] == avl_find(avl, hash, &data[i], &cfg_int));
+    }
 
     ck_assert_int_eq(1, avl_destroy(avl, &cfg_int));
 }
@@ -126,7 +114,7 @@ START_TEST (test_avl_find_single) {
     rs_hash hash    = 1;
     int* found;
 
-    ck_assert(avl_add(avl, hash, &data, &cfg_int) == avl->root);
+    ck_assert_int_eq(1, avl_insert(avl, hash, &data, &cfg_int));
     found = avl_find(avl, hash, &data, &cfg_int);
 
     ck_assert(*found == data);
@@ -145,7 +133,7 @@ START_TEST (test_avl_find_multiple) {
     int j;
 
     for (i = 0; i < 10; i++) {
-        ck_assert(NULL != avl_add(avl, hash[i], &data[i], &cfg_int));
+        ck_assert_int_eq(1, avl_insert(avl, hash[i], &data[i], &cfg_int));
     }
 
     for (i = 0; i < 10; i++) {
@@ -183,11 +171,11 @@ suite_avl_create(void) {
     tcase_add_test(case_allocfree, test_avl_alloc);
     tcase_add_test(case_allocfree, test_avl_alloc_destroy);
 
-    tcase_add_test(case_adding, test_avl_add);
-    tcase_add_test(case_adding, test_avl_add_destroy);
-    tcase_add_test(case_adding, test_avl_add_multiple);
-    tcase_add_test(case_adding, test_avl_add_multiple_destroy);
-    tcase_add_test(case_adding, test_avl_add_collisions);
+    tcase_add_test(case_adding, test_avl_insert);
+    tcase_add_test(case_adding, test_avl_insert_destroy);
+    tcase_add_test(case_adding, test_avl_insert_multiple);
+    tcase_add_test(case_adding, test_avl_insert_multiple_destroy);
+    tcase_add_test(case_adding, test_avl_insert_collisions);
 
     tcase_add_test(case_finding, test_avl_find_single);
     tcase_add_test(case_finding, test_avl_find_multiple);
