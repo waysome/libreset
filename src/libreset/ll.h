@@ -87,7 +87,7 @@ int
 ll_insert(
     struct ll* ll, /**< Ptr to the linked list object */
     void* data, /**< Ptr to the data to insert */
-    struct r_set_cfg* cfg //!< type information proveded by the user
+    struct r_set_cfg const* cfg //!< type information proveded by the user
 )
 __nonnull__(1, 2, 3)
 ;

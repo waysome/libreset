@@ -58,7 +58,7 @@ int
 ll_insert(
     struct ll* ll,
     void* data,
-    struct r_set_cfg* cfg
+    struct r_set_cfg const* cfg
 ) {
     // check whether the lement is present or not
     struct ll_element** it = &ll->head;

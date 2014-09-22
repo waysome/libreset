@@ -107,7 +107,7 @@ int
 ht_insert(
     struct ht* ht, //!< The hashtable object to insert into
     void* data, //!< The data
-    struct r_set_cfg* cfg //!< type information provided by user
+    struct r_set_cfg const* cfg //!< type information provided by user
 );
 
 /**
