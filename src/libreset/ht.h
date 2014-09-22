@@ -138,7 +138,7 @@ ht_ndel(
     struct ht* ht, //!< The hashtable object to delete from
     r_predf pred, //!< predicate function
     void* etc, //!< element to compare against
-    struct r_set_cfg* cfg //!< type information provided by the user
+    struct r_set_cfg const* cfg //!< type information provided by the user
 );
 
 /**

@@ -58,7 +58,7 @@ ht_ndel(
     struct ht* ht,
     r_predf pred,
     void* etc,
-    struct r_set_cfg* cfg
+    struct r_set_cfg const* cfg
 ) {
     size_t i;
     unsigned int sum = 0;
