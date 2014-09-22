@@ -202,7 +202,7 @@ avl_insert(
     avl_dbg("Adding element %p with hash: 0x%x", d, hash);
 
     int retval = insert_element_into_tree(d, hash, &avl->root, cfg);
-    rebalance_subtree(avl->root);
+    avl->root = rebalance_subtree(avl->root);
 
     return retval;
 }
