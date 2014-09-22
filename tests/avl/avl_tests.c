@@ -90,7 +90,7 @@ START_TEST (test_avl_insert_multiple_destroy) {
 END_TEST
 
 START_TEST (test_avl_insert_collisions) {
-    struct avl* avl = malloc(sizeof(*avl));
+    struct avl* avl = calloc(1, sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     rs_hash hash = 0;
