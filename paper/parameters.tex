@@ -159,3 +159,49 @@
             \end{center}
         \end{figure}
 
+    \subsection{Resizing the hash table optimally}
+    \label{sec:parameters-ht_resize}
+
+        As already shown in the sections above, operations consume more runtime
+        for AVLs of greater height.
+        However, higher AVLs mean a broader hash-table.
+
+        For insertions, finding operations and removals, higher AVLs result in
+        an overall slowdown.
+        However, that slowdown is not effective for a regime of low AVLs (see
+        figure \ref{fig:parameters-AVL_bloom-runtime_find}).
+
+        For intersections, higher AVLs mean a speed-up, since the operation is
+        faster than $O(n)$ in the average case, while no such speedup is
+        possible for the hash table\footnote{Each bucket has to be processed.}.
+
+        The ideal number of elements for a classical bloom filter is given as:
+
+        \begin{equation}
+            n = \frac{m}{k} ln(2)
+        \end{equation}
+
+        Which, with $m=64$ and $k=3$, yields $15$ which corresponds to a height
+        of $4$.
+        A look at figures \ref{fig:parameters-AVL_bloom-runtime_find} and
+        \ref{fig:parameters-AVL_bloom-runtime_intersection} tells us that this
+        height would be an acceptable upper limit for the height of an AVL.
+        This suggests that, for the overall construct to yield optimal
+        performance, the greater part of the elements should reside in AVLs of
+        a height less or equal than $4$, if $m=64$. For optimal performance, we
+        want the height of each AVL be close but not (much) greater than
+        $h_{opt}=4$.
+
+        Consider an instance of the data structure described in this document.
+        The buckets of the hash table can be grouped into three categories by
+        the height of the AVLs of which they consist:
+
+        \begin{itemize}
+            \item $h<h_{opt}$
+            \item $h=h_{opt}$
+            \item $h>h_{opt}$
+        \end{itemize}
+
+        We may now define thresholds for the fraction of buckets in the first
+        and the last categories, which will trigger a resize if exceeded.
+
