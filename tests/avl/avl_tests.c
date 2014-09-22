@@ -47,7 +47,6 @@ START_TEST (test_avl_insert_multiple) {
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     rs_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-    struct avl_el* elements[10];
 
     int i;
     for (i = 0; i < 10; i++) {
@@ -57,7 +56,6 @@ START_TEST (test_avl_insert_multiple) {
 
     for (i = 0; i < 10; i++) {
         ck_assert(&data[i] == avl_find(avl, hash[i], &data[i], &cfg_int));
-        free(elements[i]);
     }
 
     free(avl);
