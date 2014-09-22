@@ -5,16 +5,6 @@
 #include "avl.h"
 #include "set_cfg.h"
 
-START_TEST (test_avl_alloc) {
-    struct avl* avl = calloc(1, sizeof(*avl));
-
-    ck_assert(avl != NULL);
-    ck_assert(avl->root == NULL);
-
-    free(avl);
-}
-END_TEST
-
 START_TEST (test_avl_alloc_destroy) {
     struct avl* avl = calloc(1, sizeof(*avl));
 
@@ -169,7 +159,6 @@ suite_avl_create(void) {
     case_finding    = tcase_create("Finding");
 
     /* test adding to test cases */
-    tcase_add_test(case_allocfree, test_avl_alloc);
     tcase_add_test(case_allocfree, test_avl_alloc_destroy);
 
     tcase_add_test(case_adding, test_avl_insert);
