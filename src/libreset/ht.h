@@ -90,10 +90,10 @@ ht_destroy(
  */
 void*
 ht_find(
-    struct ht* ht, //!< The hashtable object to search in
+    struct ht const* ht, //!< The hashtable object to search in
     rs_hash hash, //!< The hash of the element to find
-    void* cmp, //!< Element to compare against
-    struct r_set_cfg* cfg //!< type information provided by user
+    void const* cmp, //!< Element to compare against
+    struct r_set_cfg const* cfg //!< type information provided by user
 );
 
 /**
