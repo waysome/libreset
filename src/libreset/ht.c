@@ -52,3 +52,20 @@ ht_find(
     size_t i = hash >> (sizeof(hash) - ht->sizeexp);
     return avl_find(&ht->buckets[i].avl, hash, cmp, cfg);
 }
+
+unsigned int
+ht_ndel(
+    struct ht* ht,
+    r_predf pred,
+    void* etc,
+    struct r_set_cfg const* cfg
+) {
+    size_t i;
+    unsigned int sum = 0;
+
+    for (i = 0; i < ht_nbuckets(ht); i++) {
+        sum += avl_ndel(&ht->buckets[i].avl, pred, etc, cfg);
+    }
+
+    return sum;
+}
