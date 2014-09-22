@@ -568,8 +568,6 @@ delete_elements_by_predicate(
     void* etc,
     struct r_set_cfg* cfg
 ) {
-    avl_dbg("Removing elements with predicate", NULL);
-
     // check whether the subtree is empty
     if (!*root) {
         return 0;
