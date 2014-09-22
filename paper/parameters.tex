@@ -1,2 +1,207 @@
 \section{Choice of parameters}
+\label{sec:parameters}
+
+    Along the description of algorithms the previous sections also contain
+    estimates of the runtime the algorithms take to be performed.
+    In most cases, the runtime depends on the number of elements involved.
+    Since the set implementation described in this document consists of
+    a hierarchy of data structures, the number of subdivisions in a layer
+    can be influenced to optimize the overall runtime expected for an
+    operation.
+
+    The most interesting data structures in this respect are the hash table
+    and the AVL tree.
+    The fact that the AVL tree incorporates bloom filters for each subtree has
+    a positive impact on the runtime complexity of many operations.
+
+    \subsection{Runtime complexity of AVL insertion with bloom}
+    \label{sec:parameters-AVL_insert_bloom}
+
+        If we search a regular AVL for a specific element, the complexity class
+        is $O(log(n))$ where $n$ is the number of nodes in the AVL.
+        In our AVL, however, the element has to pass a bloom filter for each
+        node the algorithm traverses.
+        If the element is in the set represented by an AVL, nothing changes in
+        terms of runtime complexity.
+        However, if the element is \emph{not} in the set, the test may fail at
+        some point, causing the search to terminate possibly much earlier.
+
+        The probability of the bloom filter not denying than an element may be
+        in a set, when it really is not in the set, may be approximated by:
+        %TODO: ref
+
+        \begin{equation}
+            p_\mathrm{pos} =
+            \left(1 - \left(1 - \frac{1}{m}\right)^{kn}\right)^k
+            \label{eq:parameters-AVL_bloom-false_pos}
+        \end{equation}
+
+        Where $m$ is the width of the bloom filter and $k$ is the number of hash
+        functions used for the bloom filter.
+        The probability of this check to, correctly, cause the algorithms to
+        terminate early on one level $l$, implies that the algorithm traversed
+        $l$ nodes:
+
+        \begin{equation}
+            p_\mathrm{level} = \prod_{i<l} p_\mathrm{pos}(i) =
+            \prod_{i<l} \left(1 - \left(1 - \frac{1}{m}\right)^{kn(i)}\right)^k
+        \end{equation}
+
+        The runtime complexity may now be given by the summing up the costs of
+        passing one level ($1$), weighted by the probability of passing the
+        levels up to that one:
+
+        \begin{equation}
+            T_{\in} = \sum_l p_\mathrm{level} =
+            \sum_l \prod_{i<l}
+            \left(1 - \left(1 - \frac{1}{m}\right)^{kn(i)}\right)^k
+            \label{eq:parameters-AVL_find-T}
+        \end{equation}
+
+        The ``find'' operation is expected to be effectively faster using the
+        bloom filter.
+        Figure \ref{fig:parameters-AVL_bloom-runtime_find} on page
+        \ref{fig:parameters-AVL_bloom-runtime_find} visualizes the expected
+        runtime for a range of heights.
+        It also shows that the effect variates only a little for a small range
+        of possible $k$, which will prove interesting in the following section.
+
+        \begin{figure}[!h]
+            \caption{Runtime complexity of ``find''-operation}
+            \label{fig:parameters-AVL_bloom-runtime_find}
+            \begin{center}
+                \includegraphics{fig/runtime-avl.1}
+
+                with $m=64$
+            \end{center}
+        \end{figure}
+
+    \subsection{Runtime complexity of AVL intersection with bloom}
+    \label{sec:parameters-AVL_intersect_bloom}
+
+        Much more interesting is the intersection of two AVLs.
+        As stated in equation \ref{eq:bloom_filter-disjunctive_sets-bitwise_and}
+        on page \pageref{eq:bloom_filter-disjunctive_sets-bitwise_and}, two sets
+        are exclusively disjunctive if the result of a bitwise ``AND''-operation
+        of the two corresponding bloom filters has less than $k$ bits set.
+        For the sets \emph{not} to be disjunctive, $m-k+1$ bits must be set.
+
+        Now consider two exclusively disjunctive sets $A$ and $B$.
+        For the calculation of the probability that those two sets will be found
+        exclusively disjunctive by a comparison of the bloom filters may only
+        be based on the probabilities of both the two bits of the two bloom
+        filters at a position being true.
+        Therefore the probability of two sets $A$ and $B$ represented by two
+        bloom filters $a$ and $b$ may be given as:
+
+        \begin{equation}
+            p_{\mathrm{A \cap B = \emptyset}}(a, b) =
+            \left( 1 - p_{a_i = 1}(a) \cdot p_{b_i = 1}(b) \right)^{m-k+1}
+        \end{equation}
+
+        Or
+
+        \begin{equation}
+            p_{\mathrm{A \cap B = \emptyset}}(a, b) =
+            \left( 1 -
+                \left(1 - \zeta^{kn_a} \right) \cdot
+                \left(1 - \zeta^{kn_b} \right)
+            \right)^{m-k+1}
+            \qquad \zeta = 1 - \frac{1}{m}
+        \end{equation}
+
+        If we assume that, in both sets, the number of bits set is equal
+        ($n = n_a = n_b$), the term may be simplified to:
+
+        \begin{equation}
+            p_{\mathrm{A \cap B = \emptyset}}(n) =
+            \left( \zeta^{2kn} -2\zeta^{kn} \right)^{m-k+1}
+        \end{equation}
+
+        Similar to the ``find`` operation, finding that two sets $A$ and $B$ are
+        exclusively disjunctive may cause an early return, since none of the nodes
+        below the current node have to be processed.
+        Therefore, the probability of a node being processed may be given as:
+
+        \begin{equation}
+            p_\mathrm{level} =
+            \prod_{i<l} p_{\mathrm{A \cap B \neg \emptyset}}(n(i))
+        \end{equation}
+
+        As each node has to be processed, the expected average runtime may be
+        given as the sum of the nodes in each layer, weighted by the probability
+        of reaching that layer.
+
+        \begin{equation}
+            T_{\cap} = \sum_l p_\mathrm{level} =
+            \sum_l 2^l \prod_{i<l} p_{\mathrm{A \cap B \neg \emptyset}}(n(i))
+        \end{equation}
+
+        In conclusion:
+
+        \begin{equation}
+            T_{\cap} = \sum_l p_\mathrm{level} =
+            \sum_l 2^l \prod_{i<l} \left(1 - \left(
+                \zeta^{2kn(i)} -2\zeta^{kn(i)}
+            \right)^{m-k+1} \right)
+        \end{equation}
+
+        If we plot the expected runtime vs. the height of an AVL for a range of
+        $k$, we observe a minimal runtime for $k=3$.
+
+        \begin{figure}[!h]
+            \caption{Runtime complexity of ``$\cap$''-operation}
+            \label{fig:parameters-AVL_bloom-runtime_intersection}
+            \begin{center}
+                \includegraphics{fig/runtime-avl.2}
+
+                with $m=64$
+            \end{center}
+        \end{figure}
+
+    \subsection{Resizing the hash table optimally}
+    \label{sec:parameters-ht_resize}
+
+        As already shown in the sections above, operations consume more runtime
+        for AVLs of greater height.
+        However, higher AVLs mean a broader hash-table.
+
+        For insertions, finding operations and removals, higher AVLs result in
+        an overall slowdown.
+        However, that slowdown is not effective for a regime of low AVLs (see
+        figure \ref{fig:parameters-AVL_bloom-runtime_find}).
+
+        For intersections, higher AVLs mean a speed-up, since the operation is
+        faster than $O(n)$ in the average case, while no such speedup is
+        possible for the hash table\footnote{Each bucket has to be processed.}.
+
+        The ideal number of elements for a classical bloom filter is given as:
+
+        \begin{equation}
+            n = \frac{m}{k} ln(2)
+        \end{equation}
+
+        Which, with $m=64$ and $k=3$, yields $15$ which corresponds to a height
+        of $4$.
+        A look at figures \ref{fig:parameters-AVL_bloom-runtime_find} and
+        \ref{fig:parameters-AVL_bloom-runtime_intersection} tells us that this
+        height would be an acceptable upper limit for the height of an AVL.
+        This suggests that, for the overall construct to yield optimal
+        performance, the greater part of the elements should reside in AVLs of
+        a height less or equal than $4$, if $m=64$. For optimal performance, we
+        want the height of each AVL be close but not (much) greater than
+        $h_{opt}=4$.
+
+        Consider an instance of the data structure described in this document.
+        The buckets of the hash table can be grouped into three categories by
+        the height of the AVLs of which they consist:
+
+        \begin{itemize}
+            \item $h<h_{opt}$
+            \item $h=h_{opt}$
+            \item $h>h_{opt}$
+        \end{itemize}
+
+        We may now define thresholds for the fraction of buckets in the first
+        and the last categories, which will trigger a resize if exceeded.
 

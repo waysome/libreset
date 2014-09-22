@@ -2,6 +2,7 @@
 set(MP_FILES
     hierarchical-merge.mp
     right-rot.mp
+    runtime-avl.mp
     single-merge.mp
 )
 
