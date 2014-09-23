@@ -13,10 +13,17 @@ done
 p="$(pwd)"
 cd "$(git rev-parse --show-toplevel)"
 
-Green="\033[32m"
-Red="\033[31m"
-Cyan="\033[0;36m"
-Color_Off="\033[0m"
+if git config --get-colorbool color.ui; then
+    Green="\033[32m"
+    Red="\033[31m"
+    Cyan="\033[0;36m"
+    Color_Off="\033[0m"
+else
+    Green=
+    Red=
+    Cyan=
+    Color_Off=
+fi
 
 echo_green() {
     echo -e "${Cyan}[pre-commit]:${Color_Off} ${Green}$*${Color_Off}"
