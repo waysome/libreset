@@ -13,6 +13,8 @@ done
 p="$(pwd)"
 cd "$(git rev-parse --show-toplevel)"
 
+# This git command tells whether git would print colorful output or not.
+# If git prints colorful outputs we will do so, too.
 if git config --get-colorbool color.ui; then
     Green="\033[32m"
     Red="\033[31m"
