@@ -42,7 +42,7 @@ r_set_destroy(
 int
 r_set_insert(
     struct r_set* set,
-    void const* value
+    void* value
 ) {
     return ht_insert(&set->ht, value, set->cfg);
 }
