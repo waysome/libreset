@@ -8,6 +8,7 @@
 
 #include "ll/ll.h"
 #include "avl.h"
+#include "common.h"
 #include "util/macros.h"
 
 /**
