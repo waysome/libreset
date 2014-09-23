@@ -30,6 +30,11 @@ echo_cyan() {
     echo -e "${Cyan}[pre-commit]: $*${Color_Off}"
 }
 
+die() {
+    echo_red "$*"
+    exit 1
+}
+
 tmpdir=/tmp/git-pre-commit-hook-$$
 
 mkdir -p $tmpdir
