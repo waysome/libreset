@@ -83,10 +83,6 @@ echo_cyan "Check done, rm -rf '$tmpdir'"
 rm -rf $tmpdir
 
 cd "$p"
-if [ $bad -eq 1 ]
-then
-    echo_red "Bad formatted file found. You cannot commit"
-    exit 1
-fi
+[ $bad -eq 1 ] && die "Bad formatted file found. You cannot commit"
 
 exit 0
