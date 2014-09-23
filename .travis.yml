@@ -20,6 +20,6 @@ install:
 
 script:
     - cmake -DHARD_MODE=ON .
-    - make
-    - make paper
+    - make -j3
+    - make -j3 paper
     - ctest -VV .
