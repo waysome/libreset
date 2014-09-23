@@ -25,11 +25,36 @@
 #include "libreset/set.h"
 
 #include "ht.h"
+#include "util/likely.h"
 
 struct r_set {
     struct ht ht;
-    struct r_set_cfg* cfg;
+    const struct r_set_cfg* cfg;
 };
+
+struct r_set*
+r_set_new(
+    struct r_set_cfg const* cfg
+) {
+    /*
+     * magic constant: We initialize the hashtable with 8 buckets, 2^3 == 8, so
+     * we must set `ht_init_power` to 3
+     */
+    const size_t ht_init_power = 3;
+
+    struct r_set* set = calloc(1, sizeof(*set));
+
+    if (likely(set)) {
+        if (!ht_init(&set->ht, ht_init_power)) {
+            free(set);
+            set = NULL;
+        } else {
+            set->cfg = cfg;
+        }
+    }
+
+    return set;
+}
 
 void
 r_set_destroy(
