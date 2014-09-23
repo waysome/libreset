@@ -34,10 +34,10 @@ ht_destroy(
 int
 ht_del(
     struct ht* ht,
-    rs_hash hash,
     void const* cmp,
     struct r_set_cfg const* cfg
 ) {
+    rs_hash hash = cfg->hashf(cmp);
     size_t i = hash >> (sizeof(rs_hash) - ht->sizeexp);
     return avl_del(&ht->buckets[i].avl, hash, cmp, cfg);
 }

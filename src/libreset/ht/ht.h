@@ -120,7 +120,6 @@ ht_insert(
 int
 ht_del(
     struct ht* ht, //!< The hashtable object to delete from
-    rs_hash hash, //!< The hash of the element to delete
     void const* cmp, //!< Element to compare against
     struct r_set_cfg const* cfg //!< type information provided by user
 );
