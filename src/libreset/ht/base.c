@@ -45,10 +45,10 @@ ht_del(
 void*
 ht_find(
     struct ht const* ht,
-    rs_hash hash,
     void const* cmp,
     struct r_set_cfg const* cfg
 ) {
+    rs_hash hash = cfg->hashf(cmp);
     size_t i = hash >> (sizeof(hash) - ht->sizeexp);
     return avl_find(&ht->buckets[i].avl, hash, cmp, cfg);
 }
