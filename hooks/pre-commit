@@ -35,14 +35,21 @@ die() {
     exit 1
 }
 
+echo_cyan "Starting test build"
+
 if [ ! -f ./Makefile ]; then
-    cmake -DHARD_MODE=ON . || die "cmake setup failed"
+    cmake -DHARD_MODE=ON . || die "Cmake setup failed"
 fi
 
-make $MAKEOPTS || die "failed to build library"
-make $MAKEOPTS paper || die "failed to build paper"
+make $MAKEOPTS || die "Failed to build library"
+make $MAKEOPTS paper || die "Failed to build paper"
+
+echo_cyan "Successfully passed build test"
+echo_cyan "Starting checks for the library"
 
 ctest -VV . || die "the checks for the library failed"
+
+echo_cyan "Successfully passed library checks"
 
 tmpdir=/tmp/git-pre-commit-hook-$$
 
