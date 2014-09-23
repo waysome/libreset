@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for i in astyle diff
+for i in astyle cmake ctest diff make
 do
     if ! type $i 2> /dev/null
     then
