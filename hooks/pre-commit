@@ -82,12 +82,11 @@ IFS="$oldifs"
 echo_cyan "Check done, rm -rf '$tmpdir'"
 rm -rf $tmpdir
 
+cd "$p"
 if [ $bad -eq 1 ]
 then
     echo_red "Bad formatted file found. You cannot commit"
-    cd "$p"
     exit 1
 fi
 
-cd "$p"
 exit 0
