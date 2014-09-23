@@ -82,7 +82,7 @@ r_set_destroy(
 int
 r_set_insert(
     struct r_set* set, //!< the set
-    void const* value //!< pointer to the value to insert
+    void* value //!< pointer to the value to insert
 );
 
 /**
