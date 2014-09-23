@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 
-for i in astyle diff
+for i in astyle cmake ctest diff make
 do
     if ! type $i 2> /dev/null
     then
@@ -10,13 +10,22 @@ do
     fi
 done
 
-p=$(pwd)
-cd $(git rev-parse --show-toplevel)
+p="$(pwd)"
+cd "$(git rev-parse --show-toplevel)"
 
-Green="\033[32m"
-Red="\033[31m"
-Cyan="\033[0;36m"
-Color_Off="\033[0m"
+# This git command tells whether git would print colorful output or not.
+# If git prints colorful outputs we will do so, too.
+if git config --get-colorbool color.ui; then
+    Green="\033[32m"
+    Red="\033[31m"
+    Cyan="\033[0;36m"
+    Color_Off="\033[0m"
+else
+    Green=
+    Red=
+    Cyan=
+    Color_Off=
+fi
 
 echo_green() {
     echo -e "${Cyan}[pre-commit]:${Color_Off} ${Green}$*${Color_Off}"
@@ -30,6 +39,27 @@ echo_cyan() {
     echo -e "${Cyan}[pre-commit]: $*${Color_Off}"
 }
 
+die() {
+    echo_red "$*"
+    exit 1
+}
+
+echo_cyan "Starting test build"
+
+if [ ! -f ./Makefile ]; then
+    cmake -DHARD_MODE=ON . || die "Cmake setup failed"
+fi
+
+make $MAKEOPTS || die "Failed to build library"
+make $MAKEOPTS paper || die "Failed to build paper"
+
+echo_cyan "Successfully passed build test"
+echo_cyan "Starting checks for the library"
+
+ctest -VV . || die "the checks for the library failed"
+
+echo_cyan "Successfully passed library checks"
+
 tmpdir=/tmp/git-pre-commit-hook-$$
 
 mkdir -p $tmpdir
@@ -38,19 +68,21 @@ bad=0
 
 echo_cyan "Starting astyle check in '$tmpdir'"
 
+oldifs="$IFS"
+IFS=$'\n'
 for file in $(git diff --name-only HEAD | grep "\.[ch]$")
 do
     echo_cyan "Checking: $file"
-    fpath=$tmpdir/$(basename $file)
-    fpath_formatted=$tmpdir/$(basename $file)-formatted
+    fpath="$tmpdir/$(basename "$file")"
+    fpath_formatted="$tmpdir/$(basename "$file")-formatted"
 
-    cp $file $fpath
+    cp "$file" "$fpath"
 
-    astyle --options=./etc/astylerc < $fpath > $fpath_formatted
+    astyle --options=./etc/astylerc < "$fpath" > "$fpath_formatted"
     # delete last line of $fpath_formatted
-    sed -i '$ d' $fpath_formatted
+    sed -i '$ d' "$fpath_formatted"
 
-    if ! diff $fpath $fpath_formatted > /dev/null
+    if ! diff "$fpath" "$fpath_formatted" > /dev/null
     then
         echo_red "Format bad: $file"
         bad=1
@@ -59,18 +91,14 @@ do
     fi
 
     echo_cyan "Check on $file done, rm '$fpath', '$fpath_formatted'"
-    rm $fpath $fpath_formatted
+    rm "$fpath" "$fpath_formatted"
 done
+IFS="$oldifs"
 
 echo_cyan "Check done, rm -rf '$tmpdir'"
 rm -rf $tmpdir
 
-if [ $bad -eq 1 ]
-then
-    echo_red "Bad formatted file found. You cannot commit"
-    cd $p
-    exit 1
-fi
+cd "$p"
+[ $bad -eq 1 ] && die "Bad formatted file found. You cannot commit"
 
-cd $p
 exit 0
