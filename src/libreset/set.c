@@ -28,7 +28,7 @@
 
 struct r_set {
     struct ht ht;
-    struct r_set_cfg* cfg;
+    const struct r_set_cfg* cfg;
 };
 
 void
