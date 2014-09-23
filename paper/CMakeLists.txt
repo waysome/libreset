@@ -22,8 +22,8 @@ set(TEX_FILES
 #
 add_custom_command(
     OUTPUT main.pdf
-    COMMAND pdflatex main
-    COMMAND pdflatex main
+    COMMAND pdflatex -halt-on-error main
+    COMMAND pdflatex -halt-on-error main
     MAIN_DEPENDENCY main.tex
     DEPENDS figures ${TEX_FILES}
 )
