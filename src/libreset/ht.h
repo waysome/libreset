@@ -35,7 +35,7 @@
 #include "libreset/hash.h"
 #include "libreset/set.h"
 
-#include "avl.h"
+#include "avl/avl.h"
 #include "util/macros.h"
 
 /**
