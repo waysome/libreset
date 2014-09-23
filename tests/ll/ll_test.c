@@ -1,7 +1,7 @@
 #include <check.h>
 
 #include <stdlib.h>
-#include "ll.h"
+#include "ll/ll.h"
 #include "set_cfg.h"
 
 static int
