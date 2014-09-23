@@ -42,6 +42,8 @@ fi
 make $MAKEOPTS || die "failed to build library"
 make $MAKEOPTS paper || die "failed to build paper"
 
+ctest -VV . || die "the checks for the library failed"
+
 tmpdir=/tmp/git-pre-commit-hook-$$
 
 mkdir -p $tmpdir
