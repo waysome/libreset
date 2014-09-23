@@ -35,6 +35,13 @@ die() {
     exit 1
 }
 
+if [ ! -f ./Makefile ]; then
+    cmake -DHARD_MODE=ON . || die "cmake setup failed"
+fi
+
+make $MAKEOPTS || die "failed to build library"
+make $MAKEOPTS paper || die "failed to build paper"
+
 tmpdir=/tmp/git-pre-commit-hook-$$
 
 mkdir -p $tmpdir
