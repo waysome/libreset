@@ -44,7 +44,7 @@ remove_element(
  *
  * @return 1 if the insertion was successful, 0 otherwise
  */
-int
+static int
 insert_element_into_tree(
     void* el, //!< The element to insert
     rs_hash hash, //!< hash of the element to insert
@@ -153,7 +153,7 @@ avl_ndel(
  *
  */
 
-int
+static int
 insert_element_into_tree(
     void* d,
     rs_hash hash,
