@@ -78,11 +78,9 @@ r_set_remove(
     struct r_set* set,
     void const* cmp
 ) {
-    rs_hash hash = set->cfg->hashf(cmp);
+    void* data = ht_find(&set->ht, cmp, set->cfg);
 
-    void* data = ht_find(&set->ht, hash, cmp, set->cfg);
-
-    if (data && ht_del(&set->ht, hash, cmp, set->cfg)) {
+    if (data && ht_del(&set->ht, cmp, set->cfg)) {
         return data;
     }
 
