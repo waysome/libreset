@@ -31,19 +31,28 @@ START_TEST (test_ht_init_big) {
 }
 END_TEST
 
-START_TEST (test_ht_insert_small_table_few_vals) {
-    size_t exp = 2;
+static void
+test_table_insert_values(
+    size_t exp,
+    unsigned int nvals
+) {
     struct ht ht;
     ht_init(&ht, exp);
 
-    int vals[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 }; /* last: 0 for iter stop */
-    int* iter;
+    /* allocating on not-cleared stack, assuming to be random inside */
+    int vals[nvals];
 
-    for (iter = vals; *iter; iter++) {
-        ck_assert(1 == ht_insert(&ht, iter, &cfg_int));
+    unsigned int i;
+    for (i = nvals; i; --i) {
+        vals[i - 1] = i;
+        ck_assert(1 == ht_insert(&ht, vals + i - 1, &cfg_int));
     }
 
     ht_destroy(&ht, &cfg_int);
+}
+
+START_TEST (test_ht_insert_small_table_few_vals) {
+    test_table_insert_values(2, 10);
 }
 END_TEST
 
