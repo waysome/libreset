@@ -40,6 +40,7 @@ ht_destroy(
 ) {
     if (ht) {
         size_t i = ht_nbuckets(ht);
+        ht_dbg("Destroying %p with %zi buckets", (void*) ht, i);
         while (i--) {
             avl_destroy(&ht->buckets[i].avl, cfg);
         }
