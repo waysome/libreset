@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "ht.h"
+#include "ht/ht.h"
 #include "util/macros.h"
 
 struct ht*
