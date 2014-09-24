@@ -27,6 +27,7 @@ ht_init(
     if (ht) {
         ht->buckets = calloc(CONSTPOW_TWO(n), sizeof(*ht->buckets));
         ht->sizeexp = n;
+        ht_dbg("Allocated %zi buckets for %p", CONSTPOW_TWO(n), (void*) ht);
     }
 
     return ht;
