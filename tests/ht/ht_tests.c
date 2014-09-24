@@ -66,6 +66,11 @@ START_TEST (test_ht_insert_small_table_much_vals) {
 }
 END_TEST
 
+START_TEST (test_ht_insert_big_table_much_vals) {
+    test_table_insert_values(10, 1000);
+}
+END_TEST
+
 Suite*
 suite_ht_create(void) {
     Suite* s;
@@ -87,6 +92,7 @@ suite_ht_create(void) {
     tcase_add_test(case_adding, test_ht_insert_small_table_few_vals);
     tcase_add_test(case_adding, test_ht_insert_big_table_few_vals);
     tcase_add_test(case_adding, test_ht_insert_small_table_much_vals);
+    tcase_add_test(case_adding, test_ht_insert_big_table_much_vals);
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
