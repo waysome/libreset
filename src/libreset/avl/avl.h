@@ -131,6 +131,20 @@ avl_find(
 );
 
 /**
+ * Get the cardinality of this avl tree (number of elements, not nodes)
+ *
+ * @memberof avl
+ *
+ * @return The cardinality
+ */
+unsigned int
+avl_cardinality(
+    struct avl const* avl //!< The avl where to count
+)
+__nonnull__(1)
+;
+
+/**
  * Get the hash value of an element
  *
  * @memberof avl_el
