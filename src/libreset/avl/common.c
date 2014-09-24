@@ -59,7 +59,7 @@ rebalance_subtree(
 
     // check whether the subtrees is already balanced (see paper)
     if (avl_node_cnt(root) >
-        (unsigned int) (1 << (avl_height(root) - 1) ) - 1) {
+            (unsigned int) (1 << (avl_height(root) - 1) ) - 1) {
         avl_dbg("Subtree already balanced for %p", root);
         return root;
     }
