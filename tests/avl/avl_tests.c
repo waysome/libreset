@@ -62,6 +62,25 @@ START_TEST (test_avl_insert_multiple) {
 }
 END_TEST
 
+START_TEST (test_avl_insert_many_distinct) {
+    struct avl* avl = calloc(1, sizeof(*avl));
+
+    int data[10000];
+
+    int i;
+    for (i = 0; i < 10000; i++) {
+        data[i] = i;
+        ck_assert(1 == avl_insert(avl, data[i], &data[i], &cfg_int));
+    }
+
+    for (i = 0; i < 10000; i++) {
+        ck_assert(&data[i] == avl_find(avl, data[i], &data[i], &cfg_int));
+    }
+
+    ck_assert(1 == avl_destroy(avl, &cfg_int));
+}
+END_TEST
+
 START_TEST (test_avl_insert_multiple_destroy) {
     struct avl* avl = calloc(1, sizeof(*avl));
 
@@ -162,6 +181,7 @@ suite_avl_create(void) {
     tcase_add_test(case_adding, test_avl_insert);
     tcase_add_test(case_adding, test_avl_insert_destroy);
     tcase_add_test(case_adding, test_avl_insert_multiple);
+    tcase_add_test(case_adding, test_avl_insert_many_distinct);
     tcase_add_test(case_adding, test_avl_insert_multiple_destroy);
     tcase_add_test(case_adding, test_avl_insert_collisions);
 
