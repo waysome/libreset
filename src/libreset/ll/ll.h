@@ -103,7 +103,7 @@ void*
 ll_find(
     struct ll* ll, //!< The linked list to search in
     void const* const d, //!< Data element to compare to
-    struct r_set_cfg* cfg //!< Type information provided by the user
+    struct r_set_cfg const* cfg //!< Type information provided by the user
 )
 __nonnull__(1, 2, 3)
 ;
