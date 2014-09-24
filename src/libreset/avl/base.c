@@ -97,7 +97,7 @@ avl_find(
     avl_dbg("Finding element for hash: 0x%x", hash);
     struct avl_el* node = find_node(avl, hash);
 
-    if(!node) {
+    if (!node) {
         return NULL;
     }
 
