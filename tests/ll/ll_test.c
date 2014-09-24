@@ -18,8 +18,8 @@ START_TEST (test_ll_insert_data) {
     int data = 5;
     ll_insert(ll, &data, &cfg_int);
 
-    ck_assert_int_eq(1, ll_delete(ll, &data, &cfg_int));
-    ck_assert_int_eq(0, ll_delete(ll, &data, &cfg_int));
+    ck_assert(1 == ll_delete(ll, &data, &cfg_int));
+    ck_assert(0 == ll_delete(ll, &data, &cfg_int));
 
     free(ll);
 }
@@ -100,7 +100,7 @@ START_TEST (test_ll_delete_by_predicate) {
     ndel = ll_ndel(ll, predicate_lower_five, NULL, &cfg_int);
 
     /* We delete 0-4, which are 5 numbers */
-    ck_assert_int_eq(ndel, 5);
+    ck_assert(ndel == 5);
 
     for (i = 0; i < 5; i++) {
         ck_assert(NULL == ll_find(ll, &i, &cfg_int));
