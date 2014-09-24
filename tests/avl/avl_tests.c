@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-#include "avl.h"
+#include "avl/avl.h"
 #include "set_cfg.h"
 
 START_TEST (test_avl_alloc_destroy) {
