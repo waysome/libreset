@@ -90,7 +90,7 @@ ll_insert(
 void*
 ll_find(
     struct ll* ll,
-    void* const d,
+    void const* const d,
     struct r_set_cfg* cfg
 ) {
     struct ll_element* iter = ll->head;
