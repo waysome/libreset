@@ -5,6 +5,8 @@
 #include "ht/ht.h"
 #include "set_cfg.h"
 
+#define LEN(x) (sizeof((x)) / sizeof((x)[0]))
+
 START_TEST (test_ht_init) {
     struct ht ht;
     ht_init(&ht, 1); /* allocate 2^1 */
@@ -51,23 +53,18 @@ test_table_insert_values(
     ht_destroy(&ht, &cfg_int);
 }
 
-START_TEST (test_ht_insert_small_table_few_vals) {
-    test_table_insert_values(2, 10);
-}
-END_TEST
+static const struct {
+    size_t exp;
+    unsigned int nvals;
+} map_exp_nvals[] = {
+    { .exp = 2,     .nvals = 10 },
+    { .exp = 10,    .nvals = 10 },
+    { .exp = 2,     .nvals = 1000 },
+    { .exp = 10,    .nvals = 1000 },
+};
 
-START_TEST (test_ht_insert_big_table_few_vals) {
-    test_table_insert_values(10, 10);
-}
-END_TEST
-
-START_TEST (test_ht_insert_small_table_much_vals) {
-    test_table_insert_values(2, 1000);
-}
-END_TEST
-
-START_TEST (test_ht_insert_big_table_much_vals) {
-    test_table_insert_values(10, 1000);
+START_TEST (test_ht_insertion) {
+    test_table_insert_values(map_exp_nvals[_i].exp, map_exp_nvals[_i].nvals);
 }
 END_TEST
 
@@ -89,10 +86,10 @@ suite_ht_create(void) {
     tcase_add_test(case_allocfree, test_ht_init);
     tcase_add_test(case_allocfree, test_ht_init_big);
 
-    tcase_add_test(case_adding, test_ht_insert_small_table_few_vals);
-    tcase_add_test(case_adding, test_ht_insert_big_table_few_vals);
-    tcase_add_test(case_adding, test_ht_insert_small_table_much_vals);
-    tcase_add_test(case_adding, test_ht_insert_big_table_much_vals);
+    tcase_add_loop_test(case_adding,
+                        test_ht_insertion,
+                        0,
+                        LEN(map_exp_nvals));
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
