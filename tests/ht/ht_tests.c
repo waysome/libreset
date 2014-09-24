@@ -31,6 +31,22 @@ START_TEST (test_ht_init_big) {
 }
 END_TEST
 
+START_TEST (test_ht_insert_small_table_few_vals) {
+    size_t exp = 2;
+    struct ht ht;
+    ht_init(&ht, exp);
+
+    int vals[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 }; /* last: 0 for iter stop */
+    int* iter;
+
+    for (iter = vals; *iter; iter++) {
+        ck_assert(1 == ht_insert(&ht, iter, &cfg_int));
+    }
+
+    ht_destroy(&ht, &cfg_int);
+}
+END_TEST
+
 Suite*
 suite_ht_create(void) {
     Suite* s;
@@ -48,6 +64,8 @@ suite_ht_create(void) {
     /* test adding to test cases */
     tcase_add_test(case_allocfree, test_ht_init);
     tcase_add_test(case_allocfree, test_ht_init_big);
+
+    tcase_add_test(case_adding, test_ht_insert_small_table_few_vals);
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
