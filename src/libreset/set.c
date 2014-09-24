@@ -24,7 +24,7 @@
 
 #include "libreset/set.h"
 
-#include "ht.h"
+#include "ht/ht.h"
 #include "util/likely.h"
 
 struct r_set {

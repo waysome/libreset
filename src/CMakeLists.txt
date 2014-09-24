@@ -4,6 +4,7 @@
 
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/src/libreset)
 
 
 #
@@ -12,10 +13,11 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 # files.
 #
 set(SOURCE_FILES
-    libreset/avl.c
-    libreset/ht.c
+    libreset/avl/base.c
+    libreset/avl/common.c
+    libreset/ht/base.c
     libreset/bloom.c
-    libreset/ll.c
+    libreset/ll/base.c
     libreset/set.c
 )
 
