@@ -76,6 +76,6 @@ ht_insert(
     struct r_set_cfg const* cfg
 ) {
     rs_hash hash = cfg->hashf(data);
-    size_t i = hash >> (sizeof(hash) - ht->sizeexp);
+    size_t i = hash >> (BITCOUNT(hash) - ht->sizeexp);
     return avl_insert(&ht->buckets[i].avl, hash, data, cfg);
 }
