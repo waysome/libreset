@@ -1,3 +1,5 @@
 image: neikos/libreset
 script:
-    - echo "Hello World"
+    - cmake -DHARD_MOE=ON .
+    - make
+    - ctest -VV .
