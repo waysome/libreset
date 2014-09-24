@@ -86,3 +86,11 @@ r_set_remove(
 
     return NULL;
 }
+
+void*
+r_set_contains(
+    struct r_set const* set,
+    void const* cmp
+) {
+    return ht_find(&set->ht, cmp, set->cfg);
+}
