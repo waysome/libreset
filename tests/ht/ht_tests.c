@@ -78,7 +78,7 @@ static const struct {
     { .exp = 10,     .nvals = 10000 },
 };
 
-START_TEST (test_ht_insertion) {
+START_TEST (test_ht_insert_distinct_values) {
     size_t exp          = map_exp_nvals[_i].exp;
     unsigned int nvals  = map_exp_nvals[_i].nvals;
 
@@ -117,7 +117,7 @@ suite_ht_create(void) {
     tcase_add_test(case_allocfree, test_ht_init_big);
 
     tcase_add_loop_test(case_adding,
-                        test_ht_insertion,
+                        test_ht_insert_distinct_values,
                         0,
                         LEN(map_exp_nvals));
 
