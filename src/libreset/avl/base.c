@@ -7,8 +7,8 @@
 #include "util/debug.h"
 
 #include "ll/ll.h"
-#include "avl.h"
-#include "common.h"
+#include "avl/avl.h"
+#include "avl/common.h"
 #include "util/macros.h"
 
 /**
