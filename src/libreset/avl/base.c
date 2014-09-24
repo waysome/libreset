@@ -97,14 +97,7 @@ avl_find(
     avl_dbg("Finding element for hash: 0x%x", hash);
     struct avl_el* node = find_node(avl, hash);
 
-    // TODO: exchange with ll_find as soon as it's present
-    ll_foreach(it, &node->ll) {
-        if (cfg->cmpf(it->data, d)) {
-            return it->data;
-        }
-    }
-
-    return NULL;
+    return ll_find(&node->ll, d, cfg);
 }
 
 int
