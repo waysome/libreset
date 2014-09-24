@@ -18,6 +18,7 @@ set(SOURCE_FILES
     libreset/ht/base.c
     libreset/bloom.c
     libreset/ll/base.c
+    libreset/ll/ll_count.c
     libreset/set.c
 )
 
