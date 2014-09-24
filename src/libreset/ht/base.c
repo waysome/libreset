@@ -82,6 +82,8 @@ ht_ndel(
     size_t i;
     unsigned int sum = 0;
 
+    ht_dbg("Delete elements in %zi buckets matching %p", ht_nbuckets(ht), etc);
+
     for (i = 0; i < ht_nbuckets(ht); i++) {
         sum += avl_ndel(&ht->buckets[i].avl, pred, etc, cfg);
     }
