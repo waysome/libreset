@@ -88,6 +88,24 @@ START_TEST (test_ht_insert_distinct_values) {
 }
 END_TEST
 
+START_TEST (test_ht_find_multiple) {
+    struct ht ht;
+    ht_init(&ht, 1); /* allocate 2^1 */
+
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int i;
+    for(i = 0; i < 10; ++i) {
+        ht_insert(&ht, &data[i], &cfg_int);
+    }
+
+    for(i = 0; i < 10; ++i) {
+        ck_assert(&data[i] == ht_find(&ht, &data[i], &cfg_int));
+    }
+
+    ht_destroy(&ht, &cfg_int);
+}
+END_TEST
+
 Suite*
 suite_ht_create(void) {
     Suite* s;
@@ -110,6 +128,7 @@ suite_ht_create(void) {
                         test_ht_insert_distinct_values,
                         0,
                         LEN(map_exp_nvals));
+    tcase_add_test(case_finding, test_ht_find_multiple);
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
