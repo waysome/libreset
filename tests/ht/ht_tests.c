@@ -37,10 +37,45 @@ static const struct {
     size_t exp;
     unsigned int nvals;
 } map_exp_nvals[] = {
-    { .exp = 2,     .nvals = 10 },
-    { .exp = 10,    .nvals = 10 },
-    { .exp = 2,     .nvals = 1000 },
-    { .exp = 10,    .nvals = 1000 },
+    { .exp =  2,     .nvals = 10 },
+    { .exp =  3,     .nvals = 10 },
+    { .exp =  4,     .nvals = 10 },
+    { .exp =  5,     .nvals = 10 },
+    { .exp =  6,     .nvals = 10 },
+    { .exp =  7,     .nvals = 10 },
+    { .exp =  8,     .nvals = 10 },
+    { .exp =  9,     .nvals = 10 },
+    { .exp = 10,     .nvals = 10 },
+
+    { .exp =  2,     .nvals = 100 },
+    { .exp =  3,     .nvals = 100 },
+    { .exp =  4,     .nvals = 100 },
+    { .exp =  5,     .nvals = 100 },
+    { .exp =  6,     .nvals = 100 },
+    { .exp =  7,     .nvals = 100 },
+    { .exp =  8,     .nvals = 100 },
+    { .exp =  9,     .nvals = 100 },
+    { .exp = 10,     .nvals = 100 },
+
+    { .exp =  2,     .nvals = 1000 },
+    { .exp =  3,     .nvals = 1000 },
+    { .exp =  4,     .nvals = 1000 },
+    { .exp =  5,     .nvals = 1000 },
+    { .exp =  6,     .nvals = 1000 },
+    { .exp =  7,     .nvals = 1000 },
+    { .exp =  8,     .nvals = 1000 },
+    { .exp =  9,     .nvals = 1000 },
+    { .exp = 10,     .nvals = 1000 },
+
+    { .exp =  2,     .nvals = 10000 },
+    { .exp =  3,     .nvals = 10000 },
+    { .exp =  4,     .nvals = 10000 },
+    { .exp =  5,     .nvals = 10000 },
+    { .exp =  6,     .nvals = 10000 },
+    { .exp =  7,     .nvals = 10000 },
+    { .exp =  8,     .nvals = 10000 },
+    { .exp =  9,     .nvals = 10000 },
+    { .exp = 10,     .nvals = 10000 },
 };
 
 START_TEST (test_ht_insertion) {
