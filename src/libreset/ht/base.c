@@ -56,6 +56,7 @@ ht_del(
 ) {
     r_hash hash = cfg->hashf(cmp);
     size_t i = bucket_index(ht, hash);
+    ht_dbg("Deleting element with hash %zi in bucket %zi", hash, i);
     return avl_del(&ht->buckets[i].avl, hash, cmp, cfg);
 }
 
