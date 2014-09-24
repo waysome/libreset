@@ -47,7 +47,7 @@ destroy_subtree(
         destroy_subtree(node->r, cfg);
     }
 
-    // TODO: clear linked list
+    ll_destroy(&node->ll, cfg);
     free(node);
 }
 
