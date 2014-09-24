@@ -5,6 +5,7 @@
  * Include test files below
  */
 #include "ll/ll_test.c"
+#include "avl/avl_tests.c"
 
 typedef Suite* (*suite_creator_f)(void);
 
@@ -22,6 +23,7 @@ main(void) {
      */
     suite_creator_f suite_funcs[] = {
         suite_ll_create,
+        suite_avl_create,
     };
 
     unsigned long i = 0;

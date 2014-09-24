@@ -120,7 +120,7 @@ avl_ndel(
  *
  * @memberof avl
  *
- * @return The found node or NULL if there was nothing found
+ * @return The found data or NULL if there was nothing found
  */
 void*
 avl_find(
@@ -195,7 +195,7 @@ inline static unsigned int
 avl_node_cnt(
     struct avl_el* root //!< The root element
 ) {
-    if (root) {
+    if (!root) {
         return 0;
     }
     return root->node_cnt;
