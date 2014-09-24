@@ -60,7 +60,7 @@
 #     foo++;
 # }
 #
---min-conditional-indent=1
+--min-conditional-indent=2
 
 #
 # ... don't really get what this does...
