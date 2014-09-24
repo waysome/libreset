@@ -88,6 +88,7 @@ suite_ht_create(void) {
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
+    suite_add_tcase(s, case_adding);
 
     return s;
 }
