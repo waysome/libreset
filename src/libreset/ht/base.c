@@ -68,6 +68,7 @@ ht_find(
 ) {
     r_hash hash = cfg->hashf(cmp);
     size_t i = bucket_index(ht, hash);
+    ht_dbg("Finding element with hash %zi in bucket %zi", hash, i);
     return avl_find(&ht->buckets[i].avl, hash, cmp, cfg);
 }
 
