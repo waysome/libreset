@@ -1,5 +1,6 @@
-image: neikos/libreset
+image: neikos/libreset_fedora
 script:
     - cmake -DHARD_MODE=ON .
     - make
+    - make paper
     - ctest -VV .
