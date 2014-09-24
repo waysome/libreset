@@ -33,11 +33,20 @@ START_TEST (test_ht_init_big) {
 }
 END_TEST
 
-static void
-test_table_insert_values(
-    size_t exp,
-    unsigned int nvals
-) {
+static const struct {
+    size_t exp;
+    unsigned int nvals;
+} map_exp_nvals[] = {
+    { .exp = 2,     .nvals = 10 },
+    { .exp = 10,    .nvals = 10 },
+    { .exp = 2,     .nvals = 1000 },
+    { .exp = 10,    .nvals = 1000 },
+};
+
+START_TEST (test_ht_insertion) {
+    size_t exp          = map_exp_nvals[_i].exp;
+    unsigned int nvals  = map_exp_nvals[_i].nvals;
+
     struct ht ht;
     ht_init(&ht, exp);
 
@@ -51,20 +60,6 @@ test_table_insert_values(
     }
 
     ht_destroy(&ht, &cfg_int);
-}
-
-static const struct {
-    size_t exp;
-    unsigned int nvals;
-} map_exp_nvals[] = {
-    { .exp = 2,     .nvals = 10 },
-    { .exp = 10,    .nvals = 10 },
-    { .exp = 2,     .nvals = 1000 },
-    { .exp = 10,    .nvals = 1000 },
-};
-
-START_TEST (test_ht_insertion) {
-    test_table_insert_values(map_exp_nvals[_i].exp, map_exp_nvals[_i].nvals);
 }
 END_TEST
 
