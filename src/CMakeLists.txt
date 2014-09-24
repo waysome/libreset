@@ -15,6 +15,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src/libreset)
 set(SOURCE_FILES
     libreset/avl/base.c
     libreset/avl/common.c
+    libreset/avl/avl_cardinality.c
     libreset/ht/base.c
     libreset/bloom.c
     libreset/ll/base.c
