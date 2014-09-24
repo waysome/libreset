@@ -26,6 +26,7 @@
 
         \begin{equation}
             s \in \left\{ 2^n | n \in \mathbb{N} \right\}
+            \label{eq:num_of_buckets}
         \end{equation}
 
         Assume having two hashtables $A$ and $B$, where the number of buckets of
@@ -64,6 +65,12 @@
 
         \begin{equation}
             i \in e(b_n) \qquad j = h(i) \div \frac{2^N}{s}
+        \end{equation}
+
+        Using equation \ref{eq:num_of_buckets}, this can be transformed to:
+
+        \begin{equation}
+            j = h(i) \div \frac{2^N}{2^n} = h(i) \div 2^{N - n}
         \end{equation}
 
         Where $N$ is the number of bits of a hash-value.
