@@ -82,6 +82,7 @@ avl_destroy(
 ) {
     if (avl && avl->root) {
         destroy_subtree(avl->root, cfg);
+        avl->root = NULL;
     }
     return 1;
 }

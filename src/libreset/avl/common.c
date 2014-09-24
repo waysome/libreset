@@ -36,6 +36,10 @@ destroy_subtree(
     struct r_set_cfg const* cfg
 ) {
     avl_dbg("Destroying subtree from node %p", node);
+
+    if (!node)
+        return;
+
     if (node->l) {
         destroy_subtree(node->l, cfg);
     }
