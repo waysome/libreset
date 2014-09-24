@@ -102,5 +102,6 @@ ht_insert(
     // this is equivalent to hash / 2^(BITCOUNT(hash) - ht->sizeexp) due to the
     // right shift
     size_t i = bucket_index(ht, hash);
+    ht_dbg("Adding element %p with hash %zi in bucket %zi", data, hash, i);
     return avl_insert(&ht->buckets[i].avl, hash, data, cfg);
 }
