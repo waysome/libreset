@@ -2,6 +2,7 @@
 
 #include "ht/ht.h"
 #include "util/macros.h"
+#include "ht/common.h"
 
 #include "libreset/hash.h"
 
