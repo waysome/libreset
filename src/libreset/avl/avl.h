@@ -133,6 +133,8 @@ avl_find(
 /**
  * Get the cardinality of this avl tree (number of elements, not nodes)
  *
+ * A cardinality of an object in mathematics is, simply put, the count of
+ * objects in it. It is usually denoted |Object|.
  * @memberof avl
  *
  * @return The cardinality
