@@ -124,6 +124,23 @@ START_TEST (test_ht_del) {
 }
 END_TEST
 
+START_TEST (test_ht_cardinality) {
+    struct ht ht;
+    ht_init(&ht, 1); /* allocate 2^1 */
+
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int i;
+    for(i = 0; i < 10; ++i) {
+        ht_insert(&ht, &data[i], &cfg_int);
+        ck_assert((i + 1) == ht_cardinality(&ht));
+    }
+
+    ht_del(&ht, &data[5], &cfg_int);
+
+    ht_destroy(&ht, &cfg_int);
+}
+END_TEST
+
 Suite*
 suite_ht_create(void) {
     Suite* s;
@@ -131,6 +148,7 @@ suite_ht_create(void) {
     TCase* case_adding;
     TCase* case_finding;
     TCase* case_deleting;
+    TCase* case_cardinality;
 
     s = suite_create("HT");
 
@@ -139,6 +157,7 @@ suite_ht_create(void) {
     case_adding     = tcase_create("Adding");
     case_finding    = tcase_create("Finding");
     case_deleting    = tcase_create("Deleting");
+    case_cardinality = tcase_create("Cardinality");
 
     /* test adding to test cases */
     tcase_add_test(case_allocfree, test_ht_init);
@@ -152,11 +171,14 @@ suite_ht_create(void) {
 
     tcase_add_test(case_deleting, test_ht_del);
 
+    tcase_add_test(case_cardinality, test_ht_cardinality);
+
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
     suite_add_tcase(s, case_adding);
     suite_add_tcase(s, case_finding);
     suite_add_tcase(s, case_deleting);
+    suite_add_tcase(s, case_cardinality);
 
     return s;
 }
