@@ -3,6 +3,21 @@
 #include "ht/ht.h"
 #include "util/macros.h"
 
+#include "libreset/hash.h"
+
+/**
+ * Calculate the bucket index for a hash and a hashtable
+ *
+ * @return The index of the hash `hash` in the hashtable `ht`
+ */
+static inline size_t
+bucket_index(
+    struct ht const* ht,
+    r_hash hash
+) {
+    return hash >> (BITCOUNT(hash) - ht->sizeexp);
+}
+
 struct ht*
 ht_init(
     struct ht* ht,
@@ -37,7 +52,7 @@ ht_del(
     struct r_set_cfg const* cfg
 ) {
     r_hash hash = cfg->hashf(cmp);
-    size_t i = hash >> (sizeof(r_hash) - ht->sizeexp);
+    size_t i = bucket_index(ht, hash);
     return avl_del(&ht->buckets[i].avl, hash, cmp, cfg);
 }
 
@@ -48,7 +63,7 @@ ht_find(
     struct r_set_cfg const* cfg
 ) {
     r_hash hash = cfg->hashf(cmp);
-    size_t i = hash >> (sizeof(hash) - ht->sizeexp);
+    size_t i = bucket_index(ht, hash);
     return avl_find(&ht->buckets[i].avl, hash, cmp, cfg);
 }
 
@@ -79,6 +94,6 @@ ht_insert(
 
     // this is equivalent to hash / 2^(BITCOUNT(hash) - ht->sizeexp) due to the
     // right shift
-    size_t i = hash >> (BITCOUNT(hash) - ht->sizeexp);
+    size_t i = bucket_index(ht, hash);
     return avl_insert(&ht->buckets[i].avl, hash, data, cfg);
 }
