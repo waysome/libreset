@@ -57,6 +57,7 @@ START_TEST (test_ll_insert_multiple) {
     }
 
     ll_destroy(ll, &cfg_int);
+    free(ll);
 }
 END_TEST
 
@@ -73,6 +74,7 @@ START_TEST (test_ll_insert_multiple_same) {
     ck_assert(ll_delete(ll, &(data[0]), &cfg_int));
 
     ll_destroy(ll, &cfg_int);
+    free(ll);
 }
 END_TEST
 
@@ -99,6 +101,7 @@ START_TEST (test_ll_delete_by_predicate) {
     }
 
     ll_destroy(ll, &cfg_int);
+    free(ll);
 }
 END_TEST
 
