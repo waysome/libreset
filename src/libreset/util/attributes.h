@@ -44,7 +44,7 @@
  * Each alias is written in snake_case with two leading and two least
  * underscores, to produce a hint to the __attribute__ macro.
  *
- * We also define some aliases for ourselves in here, such as RS_FORCE_INLINE,
+ * We also define some aliases for ourselves in here, such as R_FORCE_INLINE,
  * which evaluates to 'inline __always_inline__'. As this is not _just_ an alias
  * for an compiler macro, we use the normal naming convention here.
  */
@@ -77,7 +77,7 @@
 
 #define __warn_unused_result__  __attribute__((warn_unused_result))
 
-#define RS_FORCE_INLINE         inline __always_inline__
+#define R_FORCE_INLINE         inline __always_inline__
 
 #else // __GNUC__
 
@@ -107,7 +107,7 @@
 
 #define __warn_unused_result__
 
-#define RS_FORCE_INLINE
+#define R_FORCE_INLINE
 
 #endif // __GNUC__
 
