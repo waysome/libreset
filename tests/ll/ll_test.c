@@ -129,7 +129,20 @@ START_TEST (test_ll_is_empty_after_insertion_and_deletion) {
     ll_delete(ll, &(data[1]), &cfg_int);
 
     ck_assert(ll_is_empty(ll));
+    ll_destroy(ll, &cfg_int);
+}
+END_TEST
 
+START_TEST (test_ll_count) {
+    struct ll* ll = malloc(sizeof(*ll));
+    int i;
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    for (i = 0; i < 10; i++) {
+        ck_assert(ll_insert(ll, &(data[i]), &cfg_int));
+    }
+
+    ck_assert(ll_count(ll) == 10);
     ll_destroy(ll, &cfg_int);
 }
 END_TEST
@@ -157,6 +170,7 @@ suite_ll_create(void) {
     tcase_add_test(case_delete, test_ll_delete_by_predicate);
 
     tcase_add_test(case_empty, test_ll_is_empty_after_insertion_and_deletion);
+    tcase_add_test(case_delete, test_ll_count);
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_insert);
