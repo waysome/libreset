@@ -57,6 +57,8 @@ typedef int (*r_predf)(void const*, void*);
 /**
  * Allocate and initialize set object
  *
+ * @memberof r_set
+ *
  * @return A pointer to the set object or NULL on failure
  */
 struct r_set*
@@ -67,6 +69,8 @@ r_set_new(
 
 /**
  * Remove a set object from memory
+ *
+ * @memberof r_set
  */
 void
 r_set_destroy(
@@ -88,6 +92,8 @@ r_set_insert(
 /**
  * Remove an object from the set
  *
+ * @memberof r_set
+ *
  * @return The removed object or NULL on failure/not found
  */
 void*
@@ -100,6 +106,8 @@ r_set_remove(
 /**
  * Check if a set contains an object
  *
+ * @memberof r_set
+ *
  * @return The object if it is in the set, else NULL
  */
 void*
@@ -111,6 +119,8 @@ r_set_contains(
 
 /**
  * Compute union out of two sets
+ *
+ * @memberof r_set
  *
  * @return zero on success, else error code
  */
@@ -125,6 +135,8 @@ r_set_union(
 /**
  * Compute intersection of two sets
  *
+ * @memberof r_set
+ *
  * @return zero on success, else error code
  */
 int
@@ -137,6 +149,8 @@ r_set_intersection(
 
 /**
  * Compute set with elements which are in only one of the two arguments
+ *
+ * @memberof r_set
  *
  * @return zero on success, else error code
  */
@@ -151,6 +165,8 @@ r_set_xor(
 /**
  * Exclude elements from set_a which are in set_b
  *
+ * @memberof r_set
+ *
  * @return zero on success, else error code
  */
 int
@@ -164,6 +180,8 @@ r_set_exclude(
 /**
  * Check if one set is a subset of another
  *
+ * @memberof r_set
+ *
  * @return 1 if the first set is a subset of the second one, else zero (0)
  */
 int
@@ -175,6 +193,8 @@ r_set_is_subset(
 
 /**
  * Check if two sets are equal
+ *
+ * @memberof r_set
  *
  * @note Checks metainformation of the set objects first (comparator function,
  * hashing function). If they are not equal, the function returns false (zero).
@@ -193,6 +213,8 @@ r_set_equal(
 /**
  * Get the cardinality of a set
  *
+ * @memberof r_set
+ *
  * @return the cardinality of the set
  */
 size_t
@@ -203,6 +225,8 @@ r_set_cardinality(
 
 /**
  * Select entries from a set for a new set
+ *
+ * @memberof r_set
  *
  * The predicate function gets two values passed, the first one is the actual
  * value for the predicate function to check, the second one is the parameter
