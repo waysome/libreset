@@ -125,6 +125,20 @@ ht_del(
 );
 
 /**
+ * Get the cardinality of the hashtable (amount of elements)
+ *
+ * @memberof ht
+ *
+ * @return the cardinality of the hashtable
+ */
+int
+ht_cardinality(
+    struct ht const* ht //!< The hashtable object to delete from
+)
+__nonnull__(1)
+;
+
+/**
  * Deleting n elements from the hashtable by predicate
  *
  * @memberof ht
