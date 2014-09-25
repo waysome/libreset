@@ -202,8 +202,8 @@ ll_select(
     struct ll const* src, //!< The source from where to select
     r_predf pred, //!< The predicate
     void* etc, //!< Additional information for the predicate function
-    int (*insf)(void* elem, void* insetc), //!< Function to insert somewhere
-    void* insetc //!< additional parameter for `insertf`
+    int (*insf)(void* elem, void* ins_etc), //!< Function to insert somewhere
+    void* ins_etc //!< additional parameter for `insertf`
 );
 
 /**
