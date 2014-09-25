@@ -131,7 +131,7 @@ ht_del(
  *
  * @return the cardinality of the hashtable
  */
-int
+size_t
 ht_cardinality(
     struct ht const* ht //!< The hashtable object to delete from
 )

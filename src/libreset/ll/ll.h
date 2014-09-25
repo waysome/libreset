@@ -163,7 +163,7 @@ __r_nonnull__(1)
  *
  * @return the size of the linked list
  */
-unsigned int
+size_t
 ll_count(
     struct ll const* ll //!< Ptr to the linked list object
 )

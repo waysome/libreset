@@ -139,7 +139,7 @@ avl_find(
  *
  * @return The cardinality
  */
-unsigned int
+size_t
 avl_cardinality(
     struct avl const* avl //!< The avl where to count
 )

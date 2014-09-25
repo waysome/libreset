@@ -1,6 +1,6 @@
 #include "ht.h"
 
-int
+size_t
 ht_cardinality(
     struct ht const* ht
 ) {

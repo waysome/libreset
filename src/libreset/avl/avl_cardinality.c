@@ -1,6 +1,6 @@
 #include "avl/avl.h"
 
-static unsigned int
+static size_t
 subtree_cardinality(
     struct avl_el const* subtree
 ) {
@@ -13,7 +13,7 @@ subtree_cardinality(
             ll_count(&subtree->ll);
 }
 
-unsigned int
+size_t
 avl_cardinality(
     struct avl const* avl
 ) {
