@@ -37,7 +37,7 @@ ht_del(
     struct r_set_cfg const* cfg
 ) {
     r_hash hash = cfg->hashf(cmp);
-    size_t i = hash >> (sizeof(r_hash) - ht->sizeexp);
+    size_t i = hash >> (BITCOUNT(hash) - ht->sizeexp);
     return avl_del(&ht->buckets[i].avl, hash, cmp, cfg);
 }
 
@@ -48,7 +48,7 @@ ht_find(
     struct r_set_cfg const* cfg
 ) {
     r_hash hash = cfg->hashf(cmp);
-    size_t i = hash >> (sizeof(hash) - ht->sizeexp);
+    size_t i = hash >> (BITCOUNT(hash) - ht->sizeexp);
     return avl_find(&ht->buckets[i].avl, hash, cmp, cfg);
 }
 
