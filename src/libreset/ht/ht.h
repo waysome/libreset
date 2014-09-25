@@ -165,6 +165,22 @@ ht_ndel(
 );
 
 /**
+ * Select entries from a ht into a new one
+ *
+ * @memberof ht
+ *
+ * @return zero on success, else error code
+ */
+int
+ht_select(
+    struct ht* dest, //!< Destination hashtable object
+    struct ht const* src, //!< Source hashtable object
+    r_predf pred, //!< The predicate
+    void* etc, //!< Additional information for the predicate function
+    struct r_set_cfg* const cfg //!< Type information provided by user
+);
+
+/**
  * Helper to calculate the actual bucket count of the hashtable
  *
  * @memberof ht
