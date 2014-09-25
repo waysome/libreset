@@ -33,6 +33,11 @@ if(${HARD_MODE})
 endif()
 
 #
+# Debugging options
+#
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
+
+#
 # Libreset will be a shared object
 #
 add_library(reset SHARED ${SOURCE_FILES})

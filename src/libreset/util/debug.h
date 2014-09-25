@@ -46,18 +46,19 @@
 #endif
 
 #ifdef DEBUG
+#include <stdio.h>
 
 /**
  * debug macro which prints the current file, function and the line as well as
  * any given string
  */
-#define dbg(fmt,...) do {                       \
-        fprintf(stderr,                         \
-                "[libreset][%s][%s][%s]: "fmt,  \
-                __FILE__,                       \
-                __func__,                       \
-                __LINE__,                       \
-                __VA_ARGS__);                   \
+#define dbg(fmt,...) do {                           \
+        fprintf(stderr,                             \
+                "[libreset][%s][%s][%i]: "fmt"\n",  \
+                __FILE__,                           \
+                __func__,                           \
+                __LINE__,                           \
+                __VA_ARGS__);                       \
     } while (0)
 
 #else
