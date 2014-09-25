@@ -54,7 +54,7 @@
  */
 #define dbg(fmt,...) do {                       \
         fprintf(stderr,                         \
-                "[libreset][%s][%s][%s]: "fmt,  \
+                "[libreset][%s][%s][%i]: "fmt,  \
                 __FILE__,                       \
                 __func__,                       \
                 __LINE__,                       \
