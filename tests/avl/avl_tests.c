@@ -62,18 +62,20 @@ START_TEST (test_avl_insert_multiple) {
 }
 END_TEST
 
+#define MANY_INTS_CNT 10000
+
 START_TEST (test_avl_insert_many_distinct) {
     struct avl* avl = calloc(1, sizeof(*avl));
 
-    int data[10000];
+    int data[MANY_INTS_CNT];
 
     int i;
-    for (i = 0; i < 10000; i++) {
+    for (i = 0; i < MANY_INTS_CNT; i++) {
         data[i] = i;
         ck_assert(1 == avl_insert(avl, data[i], &data[i], &cfg_int));
     }
 
-    for (i = 0; i < 10000; i++) {
+    for (i = 0; i < MANY_INTS_CNT; i++) {
         ck_assert(&data[i] == avl_find(avl, data[i], &data[i], &cfg_int));
     }
 
