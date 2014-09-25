@@ -14,7 +14,7 @@ predicate_lower_five(
 
 
 START_TEST (test_ll_insert_data) {
-    struct ll* ll = malloc(sizeof(*ll));
+    struct ll* ll = calloc(1, sizeof(*ll));
     int data = 5;
     ll_insert(ll, &data, &cfg_int);
 
@@ -26,7 +26,7 @@ START_TEST (test_ll_insert_data) {
 END_TEST
 
 START_TEST (test_ll_delete_data) {
-    struct ll* ll = malloc(sizeof(*ll));
+    struct ll* ll = calloc(1, sizeof(*ll));
     int data = 7;
 
     ck_assert(ll_insert(ll, &data, &cfg_int));
@@ -42,7 +42,7 @@ START_TEST (test_ll_delete_data) {
 END_TEST
 
 START_TEST (test_ll_insert_multiple) {
-    struct ll* ll = malloc(sizeof(*ll));
+    struct ll* ll = calloc(1, sizeof(*ll));
     int i;
     int data[] = {
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
@@ -61,7 +61,7 @@ START_TEST (test_ll_insert_multiple) {
 END_TEST
 
 START_TEST (test_ll_insert_multiple_same) {
-    struct ll* ll = malloc(sizeof(*ll));
+    struct ll* ll = calloc(1, sizeof(*ll));
     int i;
     int data[] = {
         0, 0
@@ -77,7 +77,7 @@ START_TEST (test_ll_insert_multiple_same) {
 END_TEST
 
 START_TEST (test_ll_delete_by_predicate) {
-    struct ll* ll = malloc(sizeof(*ll));
+    struct ll* ll = calloc(1, sizeof(*ll));
     int i;
     unsigned int ndel;
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
