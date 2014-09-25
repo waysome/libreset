@@ -148,7 +148,7 @@ ht_ndel(
  */
 static inline size_t
 ht_nbuckets(
-    struct ht* ht //!< The hashtable object to calculate the bucket count for
+    struct ht const* const ht //!< The ht object to calc the bucket count for
 );
 
 /*
@@ -161,7 +161,7 @@ ht_nbuckets(
 
 static inline size_t
 ht_nbuckets(
-    struct ht* ht
+    struct ht const* const ht
 ) {
     if (!ht) {
         return 0;
