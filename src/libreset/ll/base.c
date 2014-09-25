@@ -32,7 +32,7 @@
  * @note No #ifdef DEBUG here, because if dbg() evaluates to nothing, this code
  * gets removed by the compiler anyways.
  */
-#define ll_dbg(fmt,...) do { dbg("[ll]: "fmt, __VA_ARGS); } while (0)
+#define ll_dbg(fmt,...) do { dbg("[ll]: "fmt, __VA_ARGS__); } while (0)
 
 void
 ll_destroy(
