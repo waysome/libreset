@@ -3,6 +3,8 @@
 #include "ht/ht.h"
 #include "util/macros.h"
 
+#include "libreset/hash.h"
+
 /**
  * Calculate the bucket index for a hash and a hashtable
  *
