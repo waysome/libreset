@@ -19,6 +19,7 @@ set(SOURCE_FILES
     libreset/avl/avl_select.c
     libreset/ht/base.c
     libreset/ht/ht_cardinality.c
+    libreset/ht/ht_select.c
     libreset/bloom.c
     libreset/ll/base.c
     libreset/ll/ll_count.c
