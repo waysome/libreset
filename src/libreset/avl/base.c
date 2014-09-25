@@ -11,14 +11,6 @@
 #include "avl/common.h"
 #include "util/macros.h"
 
-/**
- * Debug print helper for avl implementation code
- *
- * @note No #ifdef DEBUG here, because if dbg() evaluates to nothing, this code
- * gets removed by the compiler anyways.
- */
-#define avl_dbg(fmt,...) do { dbg("avl: "fmt, __VA_ARGS__); } while (0)
-
 /*
  *
  *
