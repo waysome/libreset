@@ -30,6 +30,8 @@ struct insert_etc_data {
  *
  * Without this function, the linked list implementation would need to call
  * `ht_insert()` on a hashtable object it gets.
+ *
+ * @return 1 on failure, else zero
  */
 static int
 insert(
