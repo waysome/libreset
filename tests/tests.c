@@ -7,6 +7,7 @@
 #include "ll/ll_test.c"
 #include "avl/avl_tests.c"
 #include "ht/ht_tests.c"
+#include "set/set_tests.c"
 
 typedef Suite* (*suite_creator_f)(void);
 
@@ -26,6 +27,7 @@ main(void) {
         suite_ll_create,
         suite_avl_create,
         suite_ht_create,
+        suite_set_create
     };
 
     unsigned long i = 0;
