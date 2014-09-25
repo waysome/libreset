@@ -157,6 +157,20 @@ __r_nonnull__(1)
 ;
 
 /**
+ * Returns the size of the linked list
+ *
+ * @memberof ll
+ *
+ * @return the size of the linked list
+ */
+size_t
+ll_count(
+    struct ll const* ll //!< Ptr to the linked list object
+)
+__r_nonnull__(1)
+;
+
+/**
  * Loop through an linked list
  *
  * Helper macro for looping through an linked list.

@@ -94,3 +94,10 @@ r_set_contains(
 ) {
     return ht_find(&set->ht, cmp, set->cfg);
 }
+
+size_t
+r_set_cardinality(
+    struct r_set const* set
+) {
+    return ht_cardinality(&set->ht);
+}
