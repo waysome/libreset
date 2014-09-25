@@ -43,7 +43,7 @@ struct avl {
  */
 struct avl_el {
     struct ll ll;           //!< The linked list containing stored elements
-    rs_hash hash;
+    r_hash hash;
     bloom filter;           //!< Bloom filter associated with the subtree
     unsigned int height;    //!< The height of the subtree
     unsigned int node_cnt;  //!< The number of nodes which are in the subtree
@@ -74,7 +74,7 @@ avl_destroy(
 int
 avl_insert(
     struct avl* avl, //!< The avl tree where to insert
-    rs_hash hash, //!< hash value associated with d
+    r_hash hash, //!< hash value associated with d
     void* const d, //!< The data element
     struct r_set_cfg const* cfg //!< type information provided by the user
 );
@@ -92,7 +92,7 @@ avl_insert(
 int
 avl_del(
     struct avl* avl, //!< The avl where to search in
-    rs_hash hash, //!< hash value
+    r_hash hash, //!< hash value
     void const* cmp, //!< element to compare against
     struct r_set_cfg const* cfg //!< type information provided by the user
 );
@@ -125,7 +125,7 @@ avl_ndel(
 void*
 avl_find(
     struct avl const* avl, //!< The avl where to search in
-    rs_hash hash, //!< The hash value associated with d
+    r_hash hash, //!< The hash value associated with d
     void const* const d, //!< The data element to compare to
     struct r_set_cfg const* cfg //!< type information proveded by the user
 );
@@ -137,7 +137,7 @@ avl_find(
  *
  * @return The elements hash value.
  */
-static inline rs_hash
+static inline r_hash
 avl_get_hash(
     struct avl_el* el //!< The element to get the hash for
 );
@@ -176,7 +176,7 @@ avl_node_cnt(
  *
  */
 
-static inline rs_hash
+static inline r_hash
 avl_get_hash(struct avl_el* el) {
     return el->hash;
 }

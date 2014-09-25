@@ -70,7 +70,7 @@ erasure_mask(
 
 bloom
 bloom_from_hash(
-    rs_hash hash
+    r_hash hash
 ) {
     bloom result = 0;
 
