@@ -218,7 +218,7 @@ find_node(
     struct avl const* avl,
     r_hash hash
 ) {
-    avl_dbg("Finding node with hash: 0x%x", hash);
+    avl_dbg("Finding node with hash: 0x%zx", hash);
 
     struct avl_el* iter = avl->root;
     bloom filter = bloom_from_hash(hash);

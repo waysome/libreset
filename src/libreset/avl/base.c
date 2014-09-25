@@ -86,7 +86,7 @@ avl_find(
     void const* const d,
     struct r_set_cfg const* cfg
 ) {
-    avl_dbg("Finding element for hash: 0x%x", hash);
+    avl_dbg("Finding element for hash: 0x%zx", hash);
     struct avl_el* node = find_node(avl, hash);
 
     if (!node) {
@@ -103,7 +103,7 @@ avl_insert(
     void* const d, //!< The data element
     struct r_set_cfg const* cfg
 ) {
-    avl_dbg("Adding element %p with hash: 0x%x", d, hash);
+    avl_dbg("Adding element %p with hash: 0x%zx", d, hash);
 
     int retval = insert_element_into_tree(d, hash, &avl->root, cfg);
     avl->root = rebalance_subtree(avl->root);
@@ -118,7 +118,7 @@ avl_del(
     void const* cmp,
     struct r_set_cfg const* cfg
 ) {
-    avl_dbg("Deleting element with hash: 0x%x", hash);
+    avl_dbg("Deleting element with hash: 0x%zx", hash);
     int retval = remove_element(&avl->root, hash, cmp, cfg);
     avl->root = rebalance_subtree(avl->root);
     return retval;
@@ -151,7 +151,7 @@ insert_element_into_tree(
     struct avl_el** root,
     struct r_set_cfg const* cfg
 ) {
-    avl_dbg("Inserting element %p with hash: 0x%x", d, hash);
+    avl_dbg("Inserting element %p with hash: 0x%zx", d, hash);
     int retval;
 
     // we reached the bottom of the tree
@@ -192,7 +192,7 @@ remove_element(
     void const* cmp,
     struct r_set_cfg const* cfg
 ) {
-    avl_dbg("Remove element with hash: 0x%x", hash);
+    avl_dbg("Remove element with hash: 0x%zx", hash);
 
     // check whether the subtree is empty
     if (!*root) {
