@@ -27,7 +27,7 @@
 static int
 remove_element(
     struct avl_el** root, //!< The avl where to search in
-    rs_hash hash, //!< hash value associated with d
+    r_hash hash, //!< hash value associated with d
     void const* cmp, //!< element to compare against
     struct r_set_cfg const* cfg //!< type information provided by the user
 );
@@ -40,7 +40,7 @@ remove_element(
 static int
 insert_element_into_tree(
     void* el, //!< The element to insert
-    rs_hash hash, //!< hash of the element to insert
+    r_hash hash, //!< hash of the element to insert
     struct avl_el** root, //!< The root element of the tree where to insert
     struct r_set_cfg const* cfg //!< type information proveded by the user
 );
@@ -82,7 +82,7 @@ avl_destroy(
 void*
 avl_find(
     struct avl const* avl,
-    rs_hash hash,
+    r_hash hash,
     void const* const d,
     struct r_set_cfg const* cfg
 ) {
@@ -99,7 +99,7 @@ avl_find(
 int
 avl_insert(
     struct avl* avl, //!< The avl tree where to insert
-    rs_hash hash,
+    r_hash hash,
     void* const d, //!< The data element
     struct r_set_cfg const* cfg
 ) {
@@ -114,7 +114,7 @@ avl_insert(
 int
 avl_del(
     struct avl* avl,
-    rs_hash hash,
+    r_hash hash,
     void const* cmp,
     struct r_set_cfg const* cfg
 ) {
@@ -147,7 +147,7 @@ avl_ndel(
 static int
 insert_element_into_tree(
     void* d,
-    rs_hash hash,
+    r_hash hash,
     struct avl_el** root,
     struct r_set_cfg const* cfg
 ) {
@@ -188,7 +188,7 @@ insert_element_into_tree(
 static int
 remove_element(
     struct avl_el** root,
-    rs_hash hash,
+    r_hash hash,
     void const* cmp,
     struct r_set_cfg const* cfg
 ) {

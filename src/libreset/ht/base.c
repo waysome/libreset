@@ -36,8 +36,8 @@ ht_del(
     void const* cmp,
     struct r_set_cfg const* cfg
 ) {
-    rs_hash hash = cfg->hashf(cmp);
-    size_t i = hash >> (sizeof(rs_hash) - ht->sizeexp);
+    r_hash hash = cfg->hashf(cmp);
+    size_t i = hash >> (sizeof(r_hash) - ht->sizeexp);
     return avl_del(&ht->buckets[i].avl, hash, cmp, cfg);
 }
 
@@ -47,7 +47,7 @@ ht_find(
     void const* cmp,
     struct r_set_cfg const* cfg
 ) {
-    rs_hash hash = cfg->hashf(cmp);
+    r_hash hash = cfg->hashf(cmp);
     size_t i = hash >> (sizeof(hash) - ht->sizeexp);
     return avl_find(&ht->buckets[i].avl, hash, cmp, cfg);
 }
@@ -75,7 +75,7 @@ ht_insert(
     void* data,
     struct r_set_cfg const* cfg
 ) {
-    rs_hash hash = cfg->hashf(data);
+    r_hash hash = cfg->hashf(data);
 
     // this is equivalent to hash / 2^(BITCOUNT(hash) - ht->sizeexp) due to the
     // right shift

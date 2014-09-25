@@ -27,10 +27,10 @@
 /**
  * The hash type
  *
- * The `rs_hash` type is guaranteed to be able to be handled with the normal
+ * The `r_hash` type is guaranteed to be able to be handled with the normal
  * comparators.
  */
-typedef size_t rs_hash;
+typedef size_t r_hash;
 
 #endif //__LIBRESET_HASH_H__
 

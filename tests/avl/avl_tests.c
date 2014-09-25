@@ -19,7 +19,7 @@ START_TEST (test_avl_insert) {
     struct avl* avl = calloc(1, sizeof(*avl));
 
     int data = 1;
-    rs_hash hash = 1;
+    r_hash hash = 1;
 
     avl_insert(avl, hash, &data, &cfg_int);
 
@@ -33,7 +33,7 @@ START_TEST (test_avl_insert_destroy) {
     struct avl* avl = calloc(1, sizeof(*avl));
 
     int data = 1;
-    rs_hash hash = 1;
+    r_hash hash = 1;
 
     avl_insert(avl, hash, &data, &cfg_int);
 
@@ -45,7 +45,7 @@ START_TEST (test_avl_insert_multiple) {
     struct avl* avl = calloc(1, sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    rs_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    r_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
 
     int i;
@@ -87,7 +87,7 @@ START_TEST (test_avl_insert_multiple_destroy) {
     struct avl* avl = calloc(1, sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    rs_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    r_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
     int i;
     for (i = 0; i < 10; i++) {
@@ -102,7 +102,7 @@ START_TEST (test_avl_insert_collisions) {
     struct avl* avl = calloc(1, sizeof(*avl));
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    rs_hash hash = 0;
+    r_hash hash = 0;
 
     int i;
     for (i = 0; i < 10; i++) {
@@ -120,7 +120,7 @@ END_TEST
 START_TEST (test_avl_find_single) {
     struct avl* avl = calloc(1, sizeof(*avl));
     int data        = 1;
-    rs_hash hash    = 1;
+    r_hash hash    = 1;
     int* found;
 
     ck_assert(1 == avl_insert(avl, hash, &data, &cfg_int));
@@ -135,7 +135,7 @@ END_TEST
 START_TEST (test_avl_find_multiple) {
     struct avl* avl = calloc(1, sizeof(*avl));
     int data[]      = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    rs_hash hash[]  = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    r_hash hash[]  = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     int* found[10] = { NULL };
 
     int i;

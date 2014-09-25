@@ -98,7 +98,7 @@ regen_metadata(
  */
 struct avl_el*
 new_avl_el(
-    rs_hash h //!< The hash for the new struct avl_el object
+    r_hash h //!< The hash for the new struct avl_el object
 );
 
 /**
@@ -109,6 +109,6 @@ new_avl_el(
 struct avl_el*
 find_node(
     struct avl const* avl,
-    rs_hash hash
+    r_hash hash
 );
 

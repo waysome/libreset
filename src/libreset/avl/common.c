@@ -13,7 +13,7 @@
 
 struct avl_el*
 new_avl_el(
-    rs_hash h
+    r_hash h
 ) {
     struct avl_el* el = calloc(1, sizeof(*el));
     if (el) {
@@ -216,7 +216,7 @@ regen_metadata(
 struct avl_el*
 find_node(
     struct avl const* avl,
-    rs_hash hash
+    r_hash hash
 ) {
     avl_dbg("Finding node with hash: 0x%x", hash);
 

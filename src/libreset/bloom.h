@@ -53,7 +53,7 @@ typedef size_t bloom;
  */
 __const__ bloom
 bloom_from_hash(
-    rs_hash hash //!< hash value for which to calculate the bloom filter
+    r_hash hash //!< hash value for which to calculate the bloom filter
 );
 
 /**
