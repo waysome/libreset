@@ -2,6 +2,7 @@
 
 #include "ht/ht.h"
 #include "util/macros.h"
+#include "ht/common.h"
 
 #include "libreset/hash.h"
 
@@ -26,6 +27,7 @@ ht_init(
     if (ht) {
         ht->buckets = calloc(CONSTPOW_TWO(n), sizeof(*ht->buckets));
         ht->sizeexp = n;
+        ht_dbg("Allocated %zi buckets for %p", CONSTPOW_TWO(n), (void*) ht);
     }
 
     return ht;
@@ -38,6 +40,7 @@ ht_destroy(
 ) {
     if (ht) {
         size_t i = ht_nbuckets(ht);
+        ht_dbg("Destroying %p with %zi buckets", (void*) ht, i);
         while (i--) {
             avl_destroy(&ht->buckets[i].avl, cfg);
         }
@@ -53,6 +56,7 @@ ht_del(
 ) {
     r_hash hash = cfg->hashf(cmp);
     size_t i = bucket_index(ht, hash);
+    ht_dbg("Deleting element with hash %zi in bucket %zi", hash, i);
     return avl_del(&ht->buckets[i].avl, hash, cmp, cfg);
 }
 
@@ -64,6 +68,7 @@ ht_find(
 ) {
     r_hash hash = cfg->hashf(cmp);
     size_t i = bucket_index(ht, hash);
+    ht_dbg("Finding element with hash %zi in bucket %zi", hash, i);
     return avl_find(&ht->buckets[i].avl, hash, cmp, cfg);
 }
 
@@ -76,6 +81,8 @@ ht_ndel(
 ) {
     size_t i;
     unsigned int sum = 0;
+
+    ht_dbg("Delete elements in %zi buckets matching %p", ht_nbuckets(ht), etc);
 
     for (i = 0; i < ht_nbuckets(ht); i++) {
         sum += avl_ndel(&ht->buckets[i].avl, pred, etc, cfg);
@@ -95,5 +102,6 @@ ht_insert(
     // this is equivalent to hash / 2^(BITCOUNT(hash) - ht->sizeexp) due to the
     // right shift
     size_t i = bucket_index(ht, hash);
+    ht_dbg("Adding element %p with hash %zi in bucket %zi", data, hash, i);
     return avl_insert(&ht->buckets[i].avl, hash, data, cfg);
 }
