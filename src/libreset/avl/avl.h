@@ -180,7 +180,7 @@ avl_height(
  */
 inline static unsigned int
 avl_node_cnt(
-    struct avl_el* root //!< The root element
+    struct avl_el const* root //!< The root element
 );
 
 
@@ -209,7 +209,7 @@ avl_height(
 
 inline static unsigned int
 avl_node_cnt(
-    struct avl_el* root //!< The root element
+    struct avl_el const* root //!< The root element
 ) {
     if (!root) {
         return 0;
