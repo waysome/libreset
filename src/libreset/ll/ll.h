@@ -72,7 +72,7 @@ ll_destroy(
     struct ll* ll, //!< Ptr to the struct ll object
     struct r_set_cfg const* cfg //!< type information proveded by the user
 )
-__nonnull__(1, 2)
+__r_nonnull__(1, 2)
 ;
 
 /**
@@ -89,7 +89,7 @@ ll_insert(
     void* data, /**< Ptr to the data to insert */
     struct r_set_cfg const* cfg //!< type information proveded by the user
 )
-__nonnull__(1, 2, 3)
+__r_nonnull__(1, 2, 3)
 ;
 
 /**
@@ -105,7 +105,7 @@ ll_find(
     void const* const d, //!< Data element to compare to
     struct r_set_cfg const* cfg //!< Type information provided by the user
 )
-__nonnull__(1, 2, 3)
+__r_nonnull__(1, 2, 3)
 ;
 
 /**
@@ -122,7 +122,7 @@ ll_delete(
     void const* del, //!< Comparable to object to be removed
     struct r_set_cfg const* cfg //!< type information proveded by the user
 )
-__nonnull__(1, 2, 3)
+__r_nonnull__(1, 2, 3)
 ;
 
 /**
@@ -139,7 +139,7 @@ ll_ndel(
     void* etc, //!< User data for the predicate function
     struct r_set_cfg const* cfg //!< type information proveded by the user
 )
-__nonnull__(1, 4)
+__r_nonnull__(1, 4)
 ;
 
 /**
@@ -153,7 +153,7 @@ int
 ll_is_empty(
     struct ll const* ll //!< Ptr to the linked list object
 )
-__nonnull__(1)
+__r_nonnull__(1)
 ;
 
 /**
