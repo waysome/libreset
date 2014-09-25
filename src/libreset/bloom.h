@@ -51,7 +51,7 @@ typedef size_t bloom;
  * @memberof bloom
  * @return bloom filter for the given hash
  */
-__const__ bloom
+__r_const__ bloom
 bloom_from_hash(
     r_hash hash //!< hash value for which to calculate the bloom filter
 );
@@ -64,7 +64,7 @@ bloom_from_hash(
  * @memberof bloom
  * @return 0 if the element is not in the set, 1 otherwise
  */
-__const__ int
+__r_const__ int
 bloom_may_contain(
     bloom element, //!< element, represented as a bloom filter
     bloom set //!< bloom filter representing the set to check
@@ -76,7 +76,7 @@ bloom_may_contain(
  * @memberof bloom
  * @return 0 if the sets represented are exclusively disjunctive, 1 otherwise
  */
-__const__ int
+__r_const__ int
 bloom_may_have_common(
     bloom a, //!< first of the bloom filters to check for common elements
     bloom b //!< second of the bloom filters to check for common elements

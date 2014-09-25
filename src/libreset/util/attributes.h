@@ -35,7 +35,7 @@
  * @brief Aliasing of compiler supported macros
  *
  * This file contains aliases for macros which are supported by the compiler.
- * For example, we alias __pure__ to __attribute__((pure)) here if we compile
+ * For example, we alias __r_pure__ to __attribute__((pure)) here if we compile
  * with a gcc compiler.
  *
  * If the compiler does not support such macros, we define them to nothing, to
@@ -45,67 +45,67 @@
  * underscores, to produce a hint to the __attribute__ macro.
  *
  * We also define some aliases for ourselves in here, such as R_FORCE_INLINE,
- * which evaluates to 'inline __always_inline__'. As this is not _just_ an alias
+ * which evaluates to 'inline __r_always_inline__'. As this is not _just_ an alias
  * for an compiler macro, we use the normal naming convention here.
  */
 
 #ifdef __GNUC__
 
-#define __always_inline__       __attribute__((always_inline))
-#define __no_inline__           __attribute__((noinline))
-#define __cold__                __attribute__((cold))
-#define __hot__                 __attribute__((hot))
-#define __pure__                __attribute__((pure))
-#define __const__               __attribute__((const))
-#define __weak__                __attribute__((weak))
-#define __alias__(x)            __attribute__((alias(x)))
-#define __deprecated__          __attribute__((deprecated))
-#define __fastcall__            __attribute__((fastcall))
-#define __format__(x,y,z)       __attribute__((format(x,y,z)))
-#define __format_arg__(n)       __attribute__((format_arg(n)))
-#define __malloc__              __attribute__((malloc))
-#define __nonnull__(...)        __attribute__((nonnull (__VA_ARGS__)))
-#define __returns_nonnull__     __attribute__((returns_nonnull))
-#define __noreturn__            __attribute__((noreturn))
-#define __unused__              __attribute__((unused))
-#define __visibility__(x)       __attribute__((visibility(x)))
+#define __r_always_inline__       __attribute__((always_inline))
+#define __r_no_inline__           __attribute__((noinline))
+#define __r_cold__                __attribute__((cold))
+#define __r_hot__                 __attribute__((hot))
+#define __r_pure__                __attribute__((pure))
+#define __r_const__               __attribute__((const))
+#define __r_weak__                __attribute__((weak))
+#define __r_alias__(x)            __attribute__((alias(x)))
+#define __r_deprecated__          __attribute__((deprecated))
+#define __r_fastcall__            __attribute__((fastcall))
+#define __r_format__(x,y,z)       __attribute__((format(x,y,z)))
+#define __r_format_arg__(n)       __attribute__((format_arg(n)))
+#define __r_malloc__              __attribute__((malloc))
+#define __r_nonnull__(...)        __attribute__((nonnull (__VA_ARGS__)))
+#define __r_returns_nonnull__     __attribute__((returns_nonnull))
+#define __r_noreturn__            __attribute__((noreturn))
+#define __r_unused__              __attribute__((unused))
+#define __r_visibility__(x)       __attribute__((visibility(x)))
 
-#define __vis_default__     __visibility__(default)
-#define __vis_hidden__      __visibility__(hidden)
-#define __vis_internal__    __visibility__(internal)
-#define __vis_protected__   __visibility__(protected)
+#define __r_vis_default__     __r_visibility__(default)
+#define __r_vis_hidden__      __r_visibility__(hidden)
+#define __r_vis_internal__    __r_visibility__(internal)
+#define __r_vis_protected__   __r_visibility__(protected)
 
-#define __warn_unused_result__  __attribute__((warn_unused_result))
+#define __r_warn_unused_result__  __attribute__((warn_unused_result))
 
-#define R_FORCE_INLINE         inline __always_inline__
+#define R_FORCE_INLINE         inline __r_always_inline__
 
 #else // __GNUC__
 
-#define __always_inline__
-#define __no_inline__
-#define __cold__
-#define __hot__
-#define __pure__
-#define __const__
-#define __weak__
-#define __alias__(x)
-#define __deprecated__
-#define __fastcall__
-#define __format__(x,y,z)
-#define __format_arg__(n)
-#define __malloc__
-#define __nonnull__(...)
-#define __returns_nonnull__
-#define __noreturn__
-#define __unused__
-#define __visibility__(x)
+#define __r_always_inline__
+#define __r_no_inline__
+#define __r_cold__
+#define __r_hot__
+#define __r_pure__
+#define __r_const__
+#define __r_weak__
+#define __r_alias__(x)
+#define __r_deprecated__
+#define __r_fastcall__
+#define __r_format__(x,y,z)
+#define __r_format_arg__(n)
+#define __r_malloc__
+#define __r_nonnull__(...)
+#define __r_returns_nonnull__
+#define __r_noreturn__
+#define __r_unused__
+#define __r_visibility__(x)
 
-#define __default__
-#define __hidden__
-#define __internal__
-#define __protected__
+#define __r_default__
+#define __r_hidden__
+#define __r_internal__
+#define __r_protected__
 
-#define __warn_unused_result__
+#define __r_warn_unused_result__
 
 #define R_FORCE_INLINE
 

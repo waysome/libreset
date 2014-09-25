@@ -54,7 +54,7 @@
  * @memberof bloom
  * @return mask to be used to mask ints
  */
-__const__ static bloom
+__r_const__ static bloom
 erasure_mask(
     unsigned int width //!< width of ints to mask
 );
