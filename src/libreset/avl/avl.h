@@ -158,6 +158,22 @@ __r_warn_unused_result__
 ;
 
 /**
+ * Select entries from an avl into a new one
+ *
+ * @memberof avl
+ *
+ * @return zero on success, else error code
+ */
+int
+avl_select(
+    struct avl const* src, //!< The source from where to select
+    r_predf pred, //!< The predicate
+    void* etc, //!< Additional information for the predicate function
+    int (*insf)(void* elem, void* insetc), //!< Function to insert somewhere
+    void* insetc //!< additional parameter for `insertf`
+);
+
+/**
  * Get the hash value of an element
  *
  * @memberof avl_el
