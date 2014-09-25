@@ -167,7 +167,7 @@ avl_get_hash(
  */
 inline static unsigned int
 avl_height(
-    struct avl_el* root //!< The root element
+    struct avl_el const* root //!< The root element
 );
 
 
@@ -199,7 +199,7 @@ avl_get_hash(struct avl_el const* el) {
 
 inline static unsigned int
 avl_height(
-    struct avl_el* root //!< The root element
+    struct avl_el const* root //!< The root element
 ) {
     if (root == NULL) {
         return 0;
