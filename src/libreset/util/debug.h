@@ -46,6 +46,7 @@
 #endif
 
 #ifdef DEBUG
+#include <stdio.h>
 
 /**
  * debug macro which prints the current file, function and the line as well as
