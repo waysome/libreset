@@ -35,7 +35,9 @@ endif()
 #
 # Debugging options
 #
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
+if(${DEBUG_OUTPUT})
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
+endif()
 
 #
 # Libreset will be a shared object

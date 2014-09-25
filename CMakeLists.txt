@@ -17,6 +17,7 @@ find_program(DOXYGEN doxygen)
 # Project options
 #
 option(HARD_MODE "Enables extra checks for use during development" OFF)
+option(DEBUG_OUTPUT "Enables debug output, if the built type is \"Debug\"" OFF)
 
 
 #
