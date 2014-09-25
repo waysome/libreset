@@ -135,7 +135,7 @@ int
 ht_cardinality(
     struct ht const* ht //!< The hashtable object to delete from
 )
-__nonnull__(1)
+__r_nonnull__(1)
 ;
 
 /**

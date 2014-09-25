@@ -167,7 +167,7 @@ unsigned int
 ll_count(
     struct ll const* ll //!< Ptr to the linked list object
 )
-__nonnull__(1)
+__r_nonnull__(1)
 ;
 
 /**

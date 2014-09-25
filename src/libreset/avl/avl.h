@@ -143,7 +143,7 @@ unsigned int
 avl_cardinality(
     struct avl const* avl //!< The avl where to count
 )
-__nonnull__(1)
+__r_nonnull__(1)
 ;
 
 /**
