@@ -155,7 +155,7 @@ __r_nonnull__(1)
  */
 static inline r_hash
 avl_get_hash(
-    struct avl_el* el //!< The element to get the hash for
+    struct avl_el const* el //!< The element to get the hash for
 );
 
 /**
@@ -193,7 +193,7 @@ avl_node_cnt(
  */
 
 static inline r_hash
-avl_get_hash(struct avl_el* el) {
+avl_get_hash(struct avl_el const* el) {
     return el->hash;
 }
 
