@@ -155,7 +155,7 @@ __r_nonnull__(1)
  */
 static inline r_hash
 avl_get_hash(
-    struct avl_el* el //!< The element to get the hash for
+    struct avl_el const* el //!< The element to get the hash for
 );
 
 /**
@@ -167,7 +167,7 @@ avl_get_hash(
  */
 inline static unsigned int
 avl_height(
-    struct avl_el* root //!< The root element
+    struct avl_el const* root //!< The root element
 );
 
 
@@ -180,7 +180,7 @@ avl_height(
  */
 inline static unsigned int
 avl_node_cnt(
-    struct avl_el* root //!< The root element
+    struct avl_el const* root //!< The root element
 );
 
 
@@ -193,13 +193,13 @@ avl_node_cnt(
  */
 
 static inline r_hash
-avl_get_hash(struct avl_el* el) {
+avl_get_hash(struct avl_el const* el) {
     return el->hash;
 }
 
 inline static unsigned int
 avl_height(
-    struct avl_el* root //!< The root element
+    struct avl_el const* root //!< The root element
 ) {
     if (root == NULL) {
         return 0;
@@ -209,7 +209,7 @@ avl_height(
 
 inline static unsigned int
 avl_node_cnt(
-    struct avl_el* root //!< The root element
+    struct avl_el const* root //!< The root element
 ) {
     if (!root) {
         return 0;
