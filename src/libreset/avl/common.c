@@ -27,7 +27,7 @@ destroy_subtree(
     struct avl_el* node, //!< A node to destroy
     struct r_set_cfg const* cfg
 ) {
-    avl_dbg("Destroying subtree from node %p", node);
+    avl_dbg("Destroying subtree from node %p", (void*) node);
 
     if (!node) {
         return;
@@ -48,7 +48,7 @@ struct avl_el*
 rebalance_subtree(
     struct avl_el* root
 ) {
-    avl_dbg("Rebalance subtree for %p", root);
+    avl_dbg("Rebalance subtree for %p", (void*) root);
     // check whether the root node is NULL
     if (!root) {
         return NULL;
@@ -57,7 +57,7 @@ rebalance_subtree(
     // check whether the subtrees is already balanced (see paper)
     if (avl_node_cnt(root) >
             (unsigned int) (1 << (avl_height(root) - 1) ) - 1) {
-        avl_dbg("Subtree already balanced for %p", root);
+        avl_dbg("Subtree already balanced for %p", (void*) root);
         return root;
     }
 
@@ -92,7 +92,7 @@ struct avl_el*
 rotate_left(
     struct avl_el* node
 ) {
-    avl_dbg("Rotate left around %p", node);
+    avl_dbg("Rotate left around %p", (void*) node);
     if (!node || !node->r) {
         return node;
     }
@@ -117,7 +117,7 @@ struct avl_el*
 rotate_right(
     struct avl_el* node
 ) {
-    avl_dbg("Rotate right around %p", node);
+    avl_dbg("Rotate right around %p", (void*) node);
     if (!node || !node->l) {
         return node;
     }
@@ -142,7 +142,7 @@ struct avl_el*
 isolate_root_node(
     struct avl_el* node
 ) {
-    avl_dbg("Isolate node from tree: %p", node);
+    avl_dbg("Isolate node from tree: %p", (void*) node);
 
     // if the node has no left child, we may use the right one as new root node
     if (!node->l) {
@@ -172,7 +172,7 @@ isolate_leftmost(
     if (!root || !*root) {
         return NULL;
     }
-    avl_dbg("Isolate leftmost node for tree %p", *root);
+    avl_dbg("Isolate leftmost node for tree %p", (void*) *root);
 
     // recurse
     struct avl_el* retval = isolate_leftmost(&(*root)->l);
@@ -195,7 +195,7 @@ void
 regen_metadata(
     struct avl_el* node //!< The node to regenerate
 ) {
-    avl_dbg("Regenerate metadata for node %p", node);
+    avl_dbg("Regenerate metadata for node %p", (void*) node);
 
     // regenerate the height
     node->height = 1 + MAX(avl_height(node->l), avl_height(node->r));

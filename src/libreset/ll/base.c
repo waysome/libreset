@@ -41,14 +41,14 @@ ll_destroy(
 ) {
     struct ll_element* iter = ll->head;
     struct ll_element* next;
-    ll_dbg("Destroying: %p", ll);
+    ll_dbg("Destroying: %p", (void*) ll);
 
     while (iter) {
         next = iter->next;
         if (cfg->freef) {
             cfg->freef(iter->data);
         }
-        ll_dbg("Removing: %p", iter);
+        ll_dbg("Removing: %p", (void*) iter);
         free(iter);
         iter = next;
     }
@@ -63,11 +63,11 @@ ll_insert(
     // check whether the lement is present or not
     struct ll_element** it = &ll->head;
 
-    ll_dbg("Inserting: %p", data);
+    ll_dbg("Inserting: %p", (void*) data);
 
     while (*it) {
         if (cfg->cmpf((*it)->data, data)) {
-            ll_dbg("already in ll: %p", data);
+            ll_dbg("already in ll: %p", (void*) data);
             return 0;
         }
 
@@ -77,7 +77,7 @@ ll_insert(
     // insert the new element
     struct ll_element* el = calloc(1, sizeof(struct ll_element));
     if (!el) {
-        ll_dbg("Inserting into %p aborted (allocation failed)", ll);
+        ll_dbg("Inserting into %p aborted (allocation failed)", (void*) ll);
         return 0;
     }
 
@@ -112,13 +112,13 @@ ll_delete(
     struct r_set_cfg const* cfg
 ) {
     struct ll_element** iter = &ll->head;
-    ll_dbg("Deleting from %p", ll);
+    ll_dbg("Deleting from %p", (void*) ll);
 
     // iterate over all the elements
     while (*iter) {
         // check whther we have found the element to remove
         if (cfg->cmpf((*iter)->data, del)) {
-            ll_dbg("Deleting element found: %p", *iter);
+            ll_dbg("Deleting element found: %p", (void*) *iter);
             struct ll_element* to_del = (*iter);
 
             // free, relink and return

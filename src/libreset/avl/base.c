@@ -219,7 +219,7 @@ remove_element(
 
     // remove the node if neccessary
     if (ll_is_empty(&(*root)->ll)) {
-        avl_dbg("Remove node from tree: %p", *root);
+        avl_dbg("Remove node from tree: %p", (void*) *root);
         // isolate the node
         struct avl_el* to_del = *root;
         *root = isolate_root_node(to_del);
@@ -254,7 +254,7 @@ delete_elements_by_predicate(
 
     // remove the node if neccessary
     if (ll_is_empty(&(*root)->ll)) {
-        avl_dbg("Remove node from tree: %p", *root);
+        avl_dbg("Remove node from tree: %p", (void*) *root);
         // isolate the node
         struct avl_el* to_del = *root;
         *root = isolate_root_node(to_del);
