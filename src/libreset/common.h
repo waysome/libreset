@@ -23,6 +23,9 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
+#include <string.h>
+
+#include "libreset/set.h"
 #include "util/debug.h"
 
 /**
@@ -32,5 +35,19 @@
  * gets removed by the compiler anyways.
  */
 #define set_dbg(fmt,...) do { dbg("set: "fmt, __VA_ARGS__); } while (0)
+
+/**
+ * Helper for comparing two `struct r_set_cfg` objects
+ *
+ * @return 1 if the passed config objects are equal, else zero
+ */
+static inline int
+config_cmp(
+    struct r_set_cfg const* a,
+    struct r_set_cfg const* b
+) {
+    return ((a == b) || (a && b && memcmp(a, b, sizeof(*a))));
+}
+
 
 #endif // __COMMON_H__
