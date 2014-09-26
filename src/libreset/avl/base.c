@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <errno.h>
 
 #include "libreset/hash.h"
 
@@ -35,7 +36,7 @@ remove_element(
 /**
  * Insert an element into the subtree denoted by it's root
  *
- * @return 1 if the insertion was successful, 0 otherwise
+ * @return 0 if the insertion was successful, error number (errno.h) otherwise
  */
 static int
 insert_element_into_tree(
@@ -75,8 +76,10 @@ avl_destroy(
     if (avl && avl->root) {
         destroy_subtree(avl->root, cfg);
         avl->root = NULL;
+    } else {
+        return -EEXIST;
     }
-    return 1;
+    return 0;
 }
 
 void*
@@ -160,7 +163,7 @@ insert_element_into_tree(
         struct avl_el* node = new_avl_el(hash);
         if (!node) {
             // out of memory
-            return 0;
+            return -ENOMEM;
         }
         retval = ll_insert(&node->ll, d, cfg);
 
@@ -196,7 +199,7 @@ remove_element(
 
     // check whether the subtree is empty
     if (!*root) {
-        return 0;
+        return EEXIST;
     }
 
     int retval;

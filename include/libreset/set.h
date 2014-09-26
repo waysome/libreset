@@ -71,8 +71,11 @@ r_set_new(
  * Remove a set object from memory
  *
  * @memberof r_set
+ *
+ * @return 0 on success, else errno const:
+ *         -EEXIST - if the set doesn't exist (NULL passed)
  */
-void
+int
 r_set_destroy(
     struct r_set* set //!< Set to remove
 );
@@ -81,7 +84,9 @@ r_set_destroy(
 /**
  * Insert an object into a set
  *
- * @return zero on success, else error code
+ * @return zero on success, else error code (errno.h):
+ *         -ENOMEM - on allocation failed
+ *         -EEXIST - if the element is already in the set
  */
 int
 r_set_insert(
@@ -94,9 +99,10 @@ r_set_insert(
  *
  * @memberof r_set
  *
- * @return The removed object or NULL on failure/not found
+ * @return 0 (zero) on success and errno const:
+ *         -EEXIST - if the element was not found in the set
  */
-void*
+int
 r_set_remove(
     struct r_set* set, //!< the set
     void const* cmp //!< object equal to the one you want to delete
@@ -122,7 +128,8 @@ r_set_contains(
  *
  * @memberof r_set
  *
- * @return zero on success, else error code
+ * @return zero on success, else error code:
+ *         -ENOMEM - if allocation failed
  */
 int
 r_set_union(
@@ -137,7 +144,8 @@ r_set_union(
  *
  * @memberof r_set
  *
- * @return zero on success, else error code
+ * @return zero on success, else error code:
+ *         -ENOMEM - if allocation failed
  */
 int
 r_set_intersection(
@@ -152,7 +160,8 @@ r_set_intersection(
  *
  * @memberof r_set
  *
- * @return zero on success, else error code
+ * @return zero on success, else error code:
+ *         -ENOMEM - if allocation failed
  */
 int
 r_set_xor(
@@ -167,7 +176,8 @@ r_set_xor(
  *
  * @memberof r_set
  *
- * @return zero on success, else error code
+ * @return zero on success, else error code:
+ *         -ENOMEM - if allocation failed
  */
 int
 r_set_exclude(
@@ -232,7 +242,8 @@ r_set_cardinality(
  * value for the predicate function to check, the second one is the parameter
  * one can pass through the r_set_select() function.
  *
- * @return zero on success, else error code
+ * @return zero on success, else error code:
+ *         -ENOMEM - if allocation failed
  */
 int
 r_set_select(

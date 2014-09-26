@@ -20,6 +20,8 @@
  * along with libreset. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <errno.h>
+
 #include <stdlib.h>
 
 #include "ll/ll.h"
@@ -68,7 +70,7 @@ ll_insert(
     while (*it) {
         if (cfg->cmpf((*it)->data, data)) {
             ll_dbg("already in ll: %p", (void*) data);
-            return 0;
+            return -EEXIST;
         }
 
         it = &(*it)->next;
@@ -78,13 +80,13 @@ ll_insert(
     struct ll_element* el = calloc(1, sizeof(struct ll_element));
     if (!el) {
         ll_dbg("Inserting into %p aborted (allocation failed)", (void*) ll);
-        return 0;
+        return -ENOMEM;
     }
 
     el->data = data;
     *it = el;
 
-    return 1;
+    return 0;
 }
 
 void*
@@ -127,14 +129,14 @@ ll_delete(
             }
             *iter = to_del->next;
             free(to_del);
-            return 1;
+            return 0;
         }
 
         // iterate further
         iter = &(*iter)->next;
     }
 
-    return 0;
+    return -EEXIST;
 }
 
 unsigned int

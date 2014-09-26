@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <errno.h>
 
 #include "ht/ht.h"
 #include "util/macros.h"
@@ -33,7 +34,7 @@ ht_init(
     return ht;
 }
 
-void
+int
 ht_destroy(
     struct ht* ht,
     struct r_set_cfg const* cfg
@@ -42,10 +43,13 @@ ht_destroy(
         size_t i = ht_nbuckets(ht);
         ht_dbg("Destroying %p with %zi buckets", (void*) ht, i);
         while (i--) {
-            avl_destroy(&ht->buckets[i].avl, cfg);
+            avl_destroy(&ht->buckets[i].avl, cfg); // ignore EEXIST here
         }
         free(ht->buckets);
+    } else {
+        return -EEXIST;
     }
+    return 0;
 }
 
 int

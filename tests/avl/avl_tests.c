@@ -1,6 +1,7 @@
 #include <check.h>
 
 #include <stdlib.h>
+#include <errno.h>
 
 #include "avl/avl.h"
 #include "set_cfg.h"
@@ -11,7 +12,7 @@ START_TEST (test_avl_alloc_destroy) {
     ck_assert(avl != NULL);
     ck_assert(avl->root == NULL);
 
-    ck_assert(1 == avl_destroy(avl, &cfg_int));
+    ck_assert(-EEXIST == avl_destroy(avl, &cfg_int)); // root node is NULL
 }
 END_TEST
 
@@ -37,7 +38,7 @@ START_TEST (test_avl_insert_destroy) {
 
     avl_insert(avl, hash, &data, &cfg_int);
 
-    ck_assert(1 == avl_destroy(avl, &cfg_int));
+    ck_assert(0 == avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
@@ -50,7 +51,7 @@ START_TEST (test_avl_insert_multiple) {
 
     int i;
     for (i = 0; i < 10; i++) {
-        ck_assert(1 == avl_insert(avl, hash[i], &data[i], &cfg_int));
+        ck_assert(0 == avl_insert(avl, hash[i], &data[i], &cfg_int));
     }
     ck_assert(avl_node_cnt(avl->root) == 10);
 
@@ -72,14 +73,14 @@ START_TEST (test_avl_insert_many_distinct) {
     int i;
     for (i = 0; i < MANY_INTS_CNT; i++) {
         data[i] = i;
-        ck_assert(1 == avl_insert(avl, data[i], &data[i], &cfg_int));
+        ck_assert(0 == avl_insert(avl, data[i], &data[i], &cfg_int));
     }
 
     for (i = 0; i < MANY_INTS_CNT; i++) {
         ck_assert(&data[i] == avl_find(avl, data[i], &data[i], &cfg_int));
     }
 
-    ck_assert(1 == avl_destroy(avl, &cfg_int));
+    ck_assert(0 == avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
@@ -94,7 +95,7 @@ START_TEST (test_avl_insert_multiple_destroy) {
         avl_insert(avl, hash[i], &data[i], &cfg_int);
     }
 
-    ck_assert(1 == avl_destroy(avl, &cfg_int));
+    ck_assert(0 == avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
@@ -106,14 +107,14 @@ START_TEST (test_avl_insert_collisions) {
 
     int i;
     for (i = 0; i < 10; i++) {
-        ck_assert(1 == avl_insert(avl, hash, &data[i], &cfg_int));
+        ck_assert(0 == avl_insert(avl, hash, &data[i], &cfg_int));
     }
 
     for (i = 0; i < 10; i++) {
         ck_assert(&data[i] == avl_find(avl, hash, &data[i], &cfg_int));
     }
 
-    ck_assert(1 == avl_destroy(avl, &cfg_int));
+    ck_assert(0 == avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
@@ -123,11 +124,11 @@ START_TEST (test_avl_find_single) {
     r_hash hash    = 1;
     int* found;
 
-    ck_assert(1 == avl_insert(avl, hash, &data, &cfg_int));
+    ck_assert(0 == avl_insert(avl, hash, &data, &cfg_int));
     found = avl_find(avl, hash, &data, &cfg_int);
 
     ck_assert(*found == data);
-    ck_assert(1 == avl_destroy(avl, &cfg_int));
+    ck_assert(0 == avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
@@ -142,7 +143,7 @@ START_TEST (test_avl_find_multiple) {
     int j;
 
     for (i = 0; i < 10; i++) {
-        ck_assert(1 == avl_insert(avl, hash[i], &data[i], &cfg_int));
+        ck_assert(0 == avl_insert(avl, hash[i], &data[i], &cfg_int));
     }
 
     for (i = 0; i < 10; i++) {

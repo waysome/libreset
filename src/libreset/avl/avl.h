@@ -56,7 +56,8 @@ struct avl_el {
  *
  * @memberof avl
  *
- * @return 1 on success, else a negative error number
+ * @return 0 on success, else a negative error number:
+ *         -EEXIST - if the avl doesn't exist (NULL passed, no root node)
  */
 int
 avl_destroy(
@@ -70,7 +71,9 @@ avl_destroy(
  *
  * @memberof avl
  *
- * @return 1 if the insertion was successful, 0 otherwise
+ * @return 0 on success, else negative error number (errno.h)
+ *         -ENOMEM - on allocation failed
+ *         -EEXIST - if the element is already in the set
  */
 int
 avl_insert(
@@ -89,7 +92,8 @@ avl_insert(
  *
  * @memberof avl
  *
- * @return 1 if the element was removed, 0 otherwise
+ * @return 0 if the element was removed, errno const otherwise:
+ *         -EEXIST - if the element was not found in the avl
  */
 int
 avl_del(

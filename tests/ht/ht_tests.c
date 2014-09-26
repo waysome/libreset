@@ -14,7 +14,7 @@ START_TEST (test_ht_init) {
     ck_assert(ht.buckets != NULL);
     ck_assert(ht.sizeexp == 1);
 
-    ht_destroy(&ht, &cfg_int);
+    ck_assert(0 == ht_destroy(&ht, &cfg_int));
 }
 END_TEST
 
@@ -28,7 +28,7 @@ START_TEST (test_ht_init_big) {
         ck_assert(ht.buckets != NULL);
         ck_assert(ht_nbuckets(&ht) == (1 << exp)); /* (1 << exp) == 2^exp */
 
-        ht_destroy(&ht, &cfg_int);
+        ck_assert(0 == ht_destroy(&ht, &cfg_int));
     }
 }
 END_TEST
@@ -81,10 +81,10 @@ START_TEST (test_ht_insert_distinct_values) {
     unsigned int i;
     for (i = nvals; i; --i) {
         vals[i - 1] = i;
-        ck_assert(1 == ht_insert(&ht, vals + i - 1, &cfg_int));
+        ck_assert(0 == ht_insert(&ht, vals + i - 1, &cfg_int));
     }
 
-    ht_destroy(&ht, &cfg_int);
+    ck_assert(0 == ht_destroy(&ht, &cfg_int));
 }
 END_TEST
 
@@ -102,7 +102,7 @@ START_TEST (test_ht_find_multiple) {
         ck_assert(&data[i] == ht_find(&ht, &data[i], &cfg_int));
     }
 
-    ht_destroy(&ht, &cfg_int);
+    ck_assert(0 == ht_destroy(&ht, &cfg_int));
 }
 END_TEST
 
@@ -116,11 +116,11 @@ START_TEST (test_ht_del) {
         ht_insert(&ht, &data[i], &cfg_int);
     }
 
-    ht_del(&ht, &data[5], &cfg_int);
+    ck_assert(0 == ht_del(&ht, &data[5], &cfg_int));
 
     ck_assert(NULL == ht_find(&ht, &data[5], &cfg_int));
 
-    ht_destroy(&ht, &cfg_int);
+    ck_assert(0 == ht_destroy(&ht, &cfg_int));
 }
 END_TEST
 
@@ -135,9 +135,9 @@ START_TEST (test_ht_cardinality) {
         ck_assert((i + 1) == ht_cardinality(&ht));
     }
 
-    ht_del(&ht, &data[5], &cfg_int);
+    ck_assert(0 == ht_del(&ht, &data[5], &cfg_int));
 
-    ht_destroy(&ht, &cfg_int);
+    ck_assert(0 == ht_destroy(&ht, &cfg_int));
 }
 END_TEST
 

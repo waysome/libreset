@@ -75,8 +75,11 @@ __r_warn_unused_result__
  * Destroy a struct ht object but don't free it
  *
  * @memberof ht
+ *
+ * @return 0 on success, else errno const:
+ *         -EEXIST - if the ht doesn't exist (NULL passed, no buckets)
  */
-void
+int
 ht_destroy(
     struct ht* ht, //!< The hashtable object to destory
     struct r_set_cfg const* cfg //!< type information provided by user
@@ -104,7 +107,9 @@ __r_warn_unused_result__
  *
  * @memberof ht
  *
- * @return 1 on success or 0 (zero) on failure
+ * @return 0 on success or negative error number on failure (errno.h)
+ *         -ENOMEM - on allocation failed
+ *         -EEXIST - if the element is already in the set
  */
 int
 ht_insert(
@@ -119,7 +124,8 @@ ht_insert(
  *
  * @memberof ht
  *
- * @return 1 if the insertion was successfull, else 0 (zero)
+ * @return 0 if the insertion was successfull, else errno const:
+ *         -EEXIST - if the element was not found in the ht
  */
 int
 ht_del(
