@@ -311,6 +311,39 @@ START_TEST (test_avl_union) {
 }
 END_TEST
 
+START_TEST (test_avl_union_overlap) {
+    struct avl* a = calloc(1, sizeof(*a));
+    struct avl* b = calloc(1, sizeof(*b));
+    struct avl* c = calloc(1, sizeof(*b));
+
+    int data_a[]    = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    r_hash hash_a[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    int data_b[]    = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    r_hash hash_b[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    int i;
+    for (i = 0; i < 5; i++) {
+        avl_insert(a, hash_a[i], &data_a[i], &cfg_int);
+        ck_assert(&data_a[i] == avl_find(a, hash_a[i], &data_a[i], &cfg_int));
+
+        avl_insert(b, hash_b[i], &data_b[i], &cfg_int);
+        ck_assert(&data_b[i] == avl_find(b, hash_b[i], &data_b[i], &cfg_int));
+    }
+
+    ck_assert(0 == avl_union(c, a, &cfg_int));
+    ck_assert(0 == avl_union(c, b, &cfg_int));
+
+    for (i = 0; i < 5; i++) {
+        ck_assert(&data_a[i] == avl_find(c, hash_a[i], &data_a[i], &cfg_int));
+    }
+
+    avl_destroy(a, &cfg_int);
+    avl_destroy(b, &cfg_int);
+    avl_destroy(c, &cfg_int);
+}
+END_TEST
+
 Suite*
 suite_avl_create(void) {
     Suite* s;
@@ -354,6 +387,7 @@ suite_avl_create(void) {
     tcase_add_test(case_subset, test_avl_subset_distinct);
 
     tcase_add_test(case_union, test_avl_union);
+    tcase_add_test(case_union, test_avl_union_overlap);
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
