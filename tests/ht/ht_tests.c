@@ -94,11 +94,11 @@ START_TEST (test_ht_find_multiple) {
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     int i;
-    for(i = 0; i < 10; ++i) {
+    for (i = 0; i < 10; ++i) {
         ht_insert(&ht, &data[i], &cfg_int);
     }
 
-    for(i = 0; i < 10; ++i) {
+    for (i = 0; i < 10; ++i) {
         ck_assert(&data[i] == ht_find(&ht, &data[i], &cfg_int));
     }
 
@@ -112,7 +112,7 @@ START_TEST (test_ht_del) {
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     int i;
-    for(i = 0; i < 10; ++i) {
+    for (i = 0; i < 10; ++i) {
         ht_insert(&ht, &data[i], &cfg_int);
     }
 
@@ -130,7 +130,7 @@ START_TEST (test_ht_cardinality) {
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     int i;
-    for(i = 0; i < 10; ++i) {
+    for (i = 0; i < 10; ++i) {
         ht_insert(&ht, &data[i], &cfg_int);
         ck_assert((i + 1) == ht_cardinality(&ht));
     }

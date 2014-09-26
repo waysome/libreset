@@ -7,7 +7,7 @@ ht_cardinality(
     size_t i = ht_nbuckets(ht);
     int card = 0;
 
-    while(i--) {
+    while (i--) {
         card += avl_cardinality(&ht->buckets[i].avl);
     }
 
