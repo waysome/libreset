@@ -62,7 +62,8 @@ int
 avl_destroy(
     struct avl* avl, //!< The avl tree
     struct r_set_cfg const* cfg //!< type information proveded by the user
-);
+)
+;
 
 /**
  * Add an element to an avl tree
@@ -77,7 +78,8 @@ avl_insert(
     r_hash hash, //!< hash value associated with d
     void* const d, //!< The data element
     struct r_set_cfg const* cfg //!< type information provided by the user
-);
+)
+;
 
 /**
  * Deletes one element from the avl tree which has an equivalent hash
@@ -95,7 +97,8 @@ avl_del(
     r_hash hash, //!< hash value
     void const* cmp, //!< element to compare against
     struct r_set_cfg const* cfg //!< type information provided by the user
-);
+)
+;
 
 /**
  * Delete elements from the avl tree by predicate
@@ -113,7 +116,8 @@ avl_ndel(
     r_predf pred, //!< A predicate selecting what to remove
     void* etc, //!< User-data to pass to the predicate
     struct r_set_cfg const* cfg //!< type information provided by the user
-);
+)
+;
 
 /**
  * Find an element by hash `hash` satisfying the compare function in `cfg`
@@ -128,7 +132,9 @@ avl_find(
     r_hash hash, //!< The hash value associated with d
     void const* const d, //!< The data element to compare to
     struct r_set_cfg const* cfg //!< type information proveded by the user
-);
+)
+__r_warn_unused_result__
+;
 
 /**
  * Get the cardinality of this avl tree (number of elements, not nodes)
@@ -144,6 +150,7 @@ avl_cardinality(
     struct avl const* avl //!< The avl where to count
 )
 __r_nonnull__(1)
+__r_warn_unused_result__
 ;
 
 /**
@@ -156,7 +163,9 @@ __r_nonnull__(1)
 static inline r_hash
 avl_get_hash(
     struct avl_el const* el //!< The element to get the hash for
-);
+)
+__r_warn_unused_result__
+;
 
 /**
  * Get the height of the avl sub tree
@@ -168,7 +177,9 @@ avl_get_hash(
 inline static unsigned int
 avl_height(
     struct avl_el const* root //!< The root element
-);
+)
+__r_warn_unused_result__
+;
 
 
 /**
@@ -181,7 +192,9 @@ avl_height(
 inline static unsigned int
 avl_node_cnt(
     struct avl_el const* root //!< The root element
-);
+)
+__r_warn_unused_result__
+;
 
 
 /*

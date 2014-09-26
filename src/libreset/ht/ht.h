@@ -67,7 +67,9 @@ struct ht*
 ht_init(
     struct ht* ht, //!< The hashtable object to initialize
     size_t n //!< Power, 2 must be raised to, to calc the number of buckets.
-);
+)
+__r_warn_unused_result__
+;
 
 /**
  * Destroy a struct ht object but don't free it
@@ -93,7 +95,9 @@ ht_find(
     struct ht const* ht, //!< The hashtable object to search in
     void const* cmp, //!< Element to compare against
     struct r_set_cfg const* cfg //!< type information provided by user
-);
+)
+__r_warn_unused_result__
+;
 
 /**
  * Insert data into the hashtable
@@ -136,6 +140,7 @@ ht_cardinality(
     struct ht const* ht //!< The hashtable object to delete from
 )
 __r_nonnull__(1)
+__r_warn_unused_result__
 ;
 
 /**
@@ -163,7 +168,9 @@ ht_ndel(
 static inline size_t
 ht_nbuckets(
     struct ht const* const ht //!< The ht object to calc the bucket count for
-);
+)
+__r_warn_unused_result__
+;
 
 /*
  *
