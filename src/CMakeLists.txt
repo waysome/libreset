@@ -16,6 +16,7 @@ set(SOURCE_FILES
     libreset/avl/avl_cardinality.c
     libreset/avl/avl_is_subset.c
     libreset/avl/avl_select.c
+    libreset/avl/avl_union.c
     libreset/avl/base.c
     libreset/avl/common.c
     libreset/bloom.c
