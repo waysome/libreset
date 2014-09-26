@@ -23,6 +23,10 @@
 
 #include "params.h"
 
+#include "util/debug.h"
+
+#define bloom_dbg(fmt,...) do { dbg("bloom: "fmt, __VA_ARGS__); } while (0)
+
 /*
  *
  *
