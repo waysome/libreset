@@ -128,6 +128,9 @@ r_set_contains(
  *
  * @memberof r_set
  *
+ * @warning If the operation fails, the `dest` set is not cleaned. Therefor, the
+ * union operation may be only _partially_ done.
+ *
  * @return zero on success, else error code:
  *         -ENOMEM - if allocation failed
  *         -EINVAL - if the sets have different configurations
