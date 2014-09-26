@@ -40,6 +40,7 @@ struct r_set*
 r_set_new(
     struct r_set_cfg const* cfg
 ) {
+    set_dbg("Allocate set with config %p", (void*) cfg);
     /*
      * magic constant: We initialize the hashtable with 8 buckets, 2^3 == 8, so
      * we must set `ht_init_power` to 3
@@ -50,6 +51,7 @@ r_set_new(
 
     if (likely(set)) {
         if (!ht_init(&set->ht, ht_init_power)) {
+            set_dbg("Allocation failed: %p", (void*)set);
             free(set);
             set = NULL;
         } else {
