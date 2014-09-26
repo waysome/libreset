@@ -24,6 +24,7 @@ set(SOURCE_FILES
     libreset/ht/ht_cardinality.c
     libreset/ht/ht_equal.c
     libreset/ht/ht_select.c
+    libreset/ht/ht_union.c
     libreset/ll/base.c
     libreset/ll/ll_count.c
     libreset/ll/ll_equal.c
