@@ -9,7 +9,7 @@
 
 START_TEST (test_ht_init) {
     struct ht ht;
-    ht_init(&ht, 1); /* allocate 2^1 */
+    ck_assert(&ht == ht_init(&ht, 1)); /* allocate 2^1 */
 
     ck_assert(ht.buckets != NULL);
     ck_assert(ht.sizeexp == 1);
@@ -23,7 +23,7 @@ START_TEST (test_ht_init_big) {
 
     for (exp = 2; exp < 10; exp++) {
         struct ht ht;
-        ht_init(&ht, exp); /* allocate 2^exp */
+        ck_assert(&ht == ht_init(&ht, exp)); /* allocate 2^exp */
 
         ck_assert(ht.buckets != NULL);
         ck_assert(ht_nbuckets(&ht) == (1 << exp)); /* (1 << exp) == 2^exp */
@@ -73,7 +73,7 @@ START_TEST (test_ht_insert_distinct_values) {
     unsigned int nvals  = map_exp_nvals[_i].nvals;
 
     struct ht ht;
-    ht_init(&ht, exp);
+    ck_assert(&ht == ht_init(&ht, exp));
 
     /* allocating on not-cleared stack, assuming to be random inside */
     int vals[nvals];
@@ -90,15 +90,15 @@ END_TEST
 
 START_TEST (test_ht_find_multiple) {
     struct ht ht;
-    ht_init(&ht, 1); /* allocate 2^1 */
+    ck_assert(&ht == ht_init(&ht, 1)); /* allocate 2^1 */
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     int i;
-    for(i = 0; i < 10; ++i) {
+    for (i = 0; i < 10; ++i) {
         ht_insert(&ht, &data[i], &cfg_int);
     }
 
-    for(i = 0; i < 10; ++i) {
+    for (i = 0; i < 10; ++i) {
         ck_assert(&data[i] == ht_find(&ht, &data[i], &cfg_int));
     }
 
@@ -108,11 +108,11 @@ END_TEST
 
 START_TEST (test_ht_del) {
     struct ht ht;
-    ht_init(&ht, 1); /* allocate 2^1 */
+    ck_assert(&ht == ht_init(&ht, 1)); /* allocate 2^1 */
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     int i;
-    for(i = 0; i < 10; ++i) {
+    for (i = 0; i < 10; ++i) {
         ht_insert(&ht, &data[i], &cfg_int);
     }
 
@@ -126,11 +126,11 @@ END_TEST
 
 START_TEST (test_ht_cardinality) {
     struct ht ht;
-    ht_init(&ht, 1); /* allocate 2^1 */
+    ck_assert(&ht == ht_init(&ht, 1)); /* allocate 2^1 */
 
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     int i;
-    for(i = 0; i < 10; ++i) {
+    for (i = 0; i < 10; ++i) {
         ht_insert(&ht, &data[i], &cfg_int);
         ck_assert((i + 1) == ht_cardinality(&ht));
     }
