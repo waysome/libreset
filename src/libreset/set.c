@@ -91,6 +91,8 @@ r_set_remove(
     struct r_set* set,
     void const* cmp
 ) {
+    set_dbg("Remove with compare element %p from set %p",
+            (void*) cmp, (void*) set);
     return ht_del(&set->ht, cmp, set->cfg);
 }
 
