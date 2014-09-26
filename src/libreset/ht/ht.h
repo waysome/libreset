@@ -83,7 +83,9 @@ int
 ht_destroy(
     struct ht* ht, //!< The hashtable object to destory
     struct r_set_cfg const* cfg //!< type information provided by user
-);
+)
+__r_nonnull__(1, 2)
+;
 
 /**
  * Find an element inside the hashtable by its hash and the predicate provided
@@ -99,6 +101,7 @@ ht_find(
     void const* cmp, //!< Element to compare against
     struct r_set_cfg const* cfg //!< type information provided by user
 )
+__r_nonnull__(1, 2, 3)
 __r_warn_unused_result__
 ;
 
@@ -116,7 +119,9 @@ ht_insert(
     struct ht* ht, //!< The hashtable object to insert into
     void* data, //!< The data
     struct r_set_cfg const* cfg //!< type information provided by user
-);
+)
+__r_nonnull__(1, 2, 3)
+;
 
 /**
  * Delete one element from the hashtable by hash and the predicate provided by
@@ -132,7 +137,9 @@ ht_del(
     struct ht* ht, //!< The hashtable object to delete from
     void const* cmp, //!< Element to compare against
     struct r_set_cfg const* cfg //!< type information provided by user
-);
+)
+__r_nonnull__(1, 2, 3)
+;
 
 /**
  * Get the cardinality of the hashtable (amount of elements)
@@ -162,7 +169,9 @@ ht_ndel(
     r_predf pred, //!< predicate function
     void* etc, //!< element to compare against
     struct r_set_cfg const* cfg //!< type information provided by the user
-);
+)
+__r_nonnull__(1, 3, 4)
+;
 
 /**
  * Helper to calculate the actual bucket count of the hashtable
