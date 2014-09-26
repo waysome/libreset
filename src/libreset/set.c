@@ -68,6 +68,7 @@ r_set_destroy(
 ) {
     int ret;
     if (set) {
+        set_dbg("Destroy set: %p", (void*) set);
         ret = ht_destroy(&set->ht, set->cfg);
         free(set);
     } else {
