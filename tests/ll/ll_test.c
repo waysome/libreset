@@ -123,10 +123,10 @@ START_TEST (test_ll_is_empty_after_insertion_and_deletion) {
     ck_assert(1 == ll_insert(ll, &(data[1]), &cfg_int));
 
     struct ll_element* old_head = ll->head;
-    ll_delete(ll, &(data[0]), &cfg_int);
+    ck_assert(1 == ll_delete(ll, &(data[0]), &cfg_int));
     ck_assert(old_head != ll->head);
 
-    ll_delete(ll, &(data[1]), &cfg_int);
+    ck_assert(1 == ll_delete(ll, &(data[1]), &cfg_int));
 
     ck_assert(ll_is_empty(ll));
     ll_destroy(ll, &cfg_int);
