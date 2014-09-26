@@ -239,6 +239,40 @@ START_TEST (test_avl_cardinality_continuous) {
 }
 END_TEST
 
+START_TEST (test_avl_union) {
+    struct avl* a = calloc(1, sizeof(*a));
+    struct avl* b = calloc(1, sizeof(*b));
+    struct avl* c = calloc(1, sizeof(*b));
+
+    int data_a[] = { 0, 1, 2, 3, 4 };
+    r_hash hash_a[] = { 0, 1, 2, 3, 4 };
+
+    int data_b[] = { 5, 6, 7, 8, 9 };
+    r_hash hash_b[] = { 5, 6, 7, 8, 9 };
+
+    int i;
+    for (i = 0; i < 5; i++) {
+        avl_insert(a, hash_a[i], &data_a[i], &cfg_int);
+        ck_assert(&data_a[i] == avl_find(a, hash_a[i], &data_a[i], &cfg_int));
+
+        avl_insert(b, hash_b[i], &data_b[i], &cfg_int);
+        ck_assert(&data_b[i] == avl_find(b, hash_b[i], &data_b[i], &cfg_int));
+    }
+
+    ck_assert(0 == avl_union(c, a, &cfg_int));
+    ck_assert(0 == avl_union(c, b, &cfg_int));
+
+    for (i = 0; i < 5; i++) {
+        ck_assert(&data_a[i] == avl_find(c, hash_a[i], &data_a[i], &cfg_int));
+        ck_assert(&data_b[i] == avl_find(c, hash_b[i], &data_b[i], &cfg_int));
+    }
+
+    avl_destroy(a, &cfg_int);
+    avl_destroy(b, &cfg_int);
+    avl_destroy(c, &cfg_int);
+}
+END_TEST
+
 Suite*
 suite_avl_create(void) {
     Suite* s;
@@ -246,6 +280,7 @@ suite_avl_create(void) {
     TCase* case_adding;
     TCase* case_deleting;
     TCase* case_finding;
+    TCase* case_union;
 
     s = suite_create("AVL");
 
@@ -254,6 +289,7 @@ suite_avl_create(void) {
     case_adding     = tcase_create("Adding");
     case_deleting   = tcase_create("Deleting");
     case_finding    = tcase_create("Finding");
+    case_union      = tcase_create("Union");
 
     /* test adding to test cases */
     tcase_add_test(case_allocfree, test_avl_alloc_destroy);
@@ -273,6 +309,8 @@ suite_avl_create(void) {
 
     tcase_add_test(case_finding, test_avl_cardinality);
     tcase_add_test(case_finding, test_avl_cardinality_continuous);
+
+    tcase_add_test(case_union, test_avl_union);
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
