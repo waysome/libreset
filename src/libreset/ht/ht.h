@@ -73,8 +73,11 @@ ht_init(
  * Destroy a struct ht object but don't free it
  *
  * @memberof ht
+ *
+ * @return 0 on success, else errno const:
+ *         -EEXIST - if the ht doesn't exist (NULL passed, no buckets)
  */
-void
+int
 ht_destroy(
     struct ht* ht, //!< The hashtable object to destory
     struct r_set_cfg const* cfg //!< type information provided by user

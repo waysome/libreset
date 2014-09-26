@@ -71,8 +71,11 @@ r_set_new(
  * Remove a set object from memory
  *
  * @memberof r_set
+ *
+ * @return 0 on success, else errno const:
+ *         -EEXIST - if the set doesn't exist (NULL passed)
  */
-void
+int
 r_set_destroy(
     struct r_set* set //!< Set to remove
 );

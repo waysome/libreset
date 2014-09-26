@@ -76,8 +76,10 @@ avl_destroy(
     if (avl && avl->root) {
         destroy_subtree(avl->root, cfg);
         avl->root = NULL;
+    } else {
+        return -EEXIST;
     }
-    return 1;
+    return 0;
 }
 
 void*

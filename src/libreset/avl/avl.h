@@ -56,7 +56,8 @@ struct avl_el {
  *
  * @memberof avl
  *
- * @return 1 on success, else a negative error number
+ * @return 0 on success, else a negative error number:
+ *         -EEXIST - if the avl doesn't exist (NULL passed, no root node)
  */
 int
 avl_destroy(

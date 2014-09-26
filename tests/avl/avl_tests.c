@@ -1,6 +1,7 @@
 #include <check.h>
 
 #include <stdlib.h>
+#include <errno.h>
 
 #include "avl/avl.h"
 #include "set_cfg.h"
@@ -11,7 +12,7 @@ START_TEST (test_avl_alloc_destroy) {
     ck_assert(avl != NULL);
     ck_assert(avl->root == NULL);
 
-    ck_assert(1 == avl_destroy(avl, &cfg_int));
+    ck_assert(-EEXIST == avl_destroy(avl, &cfg_int)); // root node is NULL
 }
 END_TEST
 
@@ -37,7 +38,7 @@ START_TEST (test_avl_insert_destroy) {
 
     avl_insert(avl, hash, &data, &cfg_int);
 
-    ck_assert(1 == avl_destroy(avl, &cfg_int));
+    ck_assert(0 == avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
@@ -79,7 +80,7 @@ START_TEST (test_avl_insert_many_distinct) {
         ck_assert(&data[i] == avl_find(avl, data[i], &data[i], &cfg_int));
     }
 
-    ck_assert(1 == avl_destroy(avl, &cfg_int));
+    ck_assert(0 == avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
@@ -94,7 +95,7 @@ START_TEST (test_avl_insert_multiple_destroy) {
         avl_insert(avl, hash[i], &data[i], &cfg_int);
     }
 
-    ck_assert(1 == avl_destroy(avl, &cfg_int));
+    ck_assert(0 == avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
@@ -113,7 +114,7 @@ START_TEST (test_avl_insert_collisions) {
         ck_assert(&data[i] == avl_find(avl, hash, &data[i], &cfg_int));
     }
 
-    ck_assert(1 == avl_destroy(avl, &cfg_int));
+    ck_assert(0 == avl_destroy(avl, &cfg_int));
 }
 END_TEST
 
@@ -127,7 +128,7 @@ START_TEST (test_avl_find_single) {
     found = avl_find(avl, hash, &data, &cfg_int);
 
     ck_assert(*found == data);
-    ck_assert(1 == avl_destroy(avl, &cfg_int));
+    ck_assert(0 == avl_destroy(avl, &cfg_int));
 }
 END_TEST
 

@@ -21,6 +21,7 @@
  */
 
 #include <stdlib.h>
+#include <errno.h>
 
 #include "libreset/set.h"
 #include "libreset/hash.h"
@@ -57,12 +58,18 @@ r_set_new(
     return set;
 }
 
-void
+int
 r_set_destroy(
     struct r_set* set
 ) {
-    ht_destroy(&set->ht, set->cfg);
-    free(set);
+    int ret;
+    if (set) {
+        ret = ht_destroy(&set->ht, set->cfg);
+        free(set);
+    } else {
+        return -EEXIST;
+    }
+    return ret;
 }
 
 int
