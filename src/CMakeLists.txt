@@ -20,6 +20,7 @@ set(SOURCE_FILES
     libreset/bloom.c
     libreset/ht/base.c
     libreset/ht/ht_cardinality.c
+    libreset/ht/ht_union.c
     libreset/ll/base.c
     libreset/ll/ll_count.c
     libreset/ll/ll_union.c
