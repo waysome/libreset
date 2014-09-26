@@ -29,7 +29,9 @@ destroy_subtree(
 struct avl_el*
 rebalance_subtree(
     struct avl_el* root //!< The root of the subtree to rebalance
-);
+)
+__r_warn_unused_result__
+;
 
 /**
  * Rotate a node counter-clockwise
@@ -39,7 +41,9 @@ rebalance_subtree(
 struct avl_el*
 rotate_left(
     struct avl_el* node //!< The node to rotate
-);
+)
+__r_warn_unused_result__
+;
 
 /**
  * Rotate a node clockwise
@@ -49,7 +53,9 @@ rotate_left(
 struct avl_el*
 rotate_right(
     struct avl_el* node //!< The node to rotate
-);
+)
+__r_warn_unused_result__
+;
 
 /**
  * Isolate the root node of a given subtree
@@ -60,7 +66,9 @@ rotate_right(
 struct avl_el*
 isolate_root_node(
     struct avl_el* node //!< node to isolate
-);
+)
+__r_warn_unused_result__
+;
 
 /**
  * Isolate node with lowest key from subtree
@@ -74,7 +82,9 @@ isolate_root_node(
 struct avl_el*
 isolate_leftmost(
     struct avl_el** root //!< Pointer to the root of the affected subtree
-);
+)
+__r_warn_unused_result__
+;
 
 /**
  * Regenerate a node's height and node_cnt
@@ -99,7 +109,9 @@ regen_metadata(
 struct avl_el*
 new_avl_el(
     r_hash h //!< The hash for the new struct avl_el object
-);
+)
+__r_warn_unused_result__
+;
 
 /**
  * Find a node by it's key/hash
@@ -110,5 +122,7 @@ struct avl_el*
 find_node(
     struct avl const* avl,
     r_hash hash
-);
+)
+__r_warn_unused_result__
+;
 
