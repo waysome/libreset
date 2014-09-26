@@ -147,12 +147,38 @@ START_TEST (test_ll_count) {
 }
 END_TEST
 
+START_TEST (test_ll_union) {
+    struct ll* a = calloc(1, sizeof(*a));
+    struct ll* b = calloc(1, sizeof(*b));
+    struct ll* c = calloc(1, sizeof(*c));
+
+    int i;
+    int data_a[] = { 0, 1, 2, 3, 4 };
+    int data_b[] = { 5, 6, 7, 8, 9 };
+
+    for (i = 0; i < 5; i++) {
+        ck_assert(0 == ll_insert(a, &(data_a[i]), &cfg_int));
+        ck_assert(0 == ll_insert(b, &(data_b[i]), &cfg_int));
+    }
+
+    ck_assert(0 == ll_union(c, a, &cfg_int));
+    ck_assert(0 == ll_union(c, b, &cfg_int));
+
+    for (i = 0; i < 5; i++) {
+        ck_assert(&data_a[i] == ll_find(c, &(data_a[i]), &cfg_int));
+        ck_assert(&data_b[i] == ll_find(c, &(data_b[i]), &cfg_int));
+    }
+
+}
+END_TEST
+
 Suite*
 suite_ll_create(void) {
     Suite* s;
     TCase* case_insert;
     TCase* case_delete;
     TCase* case_empty;
+    TCase* case_union;
 
     s = suite_create("Linkedlist");
 
@@ -160,6 +186,7 @@ suite_ll_create(void) {
     case_insert         = tcase_create("Inserting");
     case_delete         = tcase_create("Deleting");
     case_empty          = tcase_create("Emptyness");
+    case_union          = tcase_create("Union");
 
     /* test adding */
     tcase_add_test(case_insert, test_ll_insert_data);
@@ -172,10 +199,13 @@ suite_ll_create(void) {
     tcase_add_test(case_empty, test_ll_is_empty_after_insertion_and_deletion);
     tcase_add_test(case_delete, test_ll_count);
 
+    tcase_add_test(case_union, test_ll_union);
+
     /* Adding test cases to suite */
     suite_add_tcase(s, case_insert);
     suite_add_tcase(s, case_delete);
     suite_add_tcase(s, case_empty);
+    suite_add_tcase(s, case_union);
 
     return s;
 }
