@@ -129,14 +129,14 @@ ll_delete(
             }
             *iter = to_del->next;
             free(to_del);
-            return 1;
+            return 0;
         }
 
         // iterate further
         iter = &(*iter)->next;
     }
 
-    return 0;
+    return -EEXIST;
 }
 
 unsigned int

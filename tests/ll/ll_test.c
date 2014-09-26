@@ -18,8 +18,8 @@ START_TEST (test_ll_insert_data) {
     int data = 5;
     ll_insert(ll, &data, &cfg_int);
 
-    ck_assert(1 == ll_delete(ll, &data, &cfg_int));
     ck_assert(0 == ll_delete(ll, &data, &cfg_int));
+    ck_assert(0 != ll_delete(ll, &data, &cfg_int));
 
     free(ll);
 }
@@ -32,10 +32,10 @@ START_TEST (test_ll_delete_data) {
     ck_assert(0 == ll_insert(ll, &data, &cfg_int));
     ck_assert(&data == ll_find(ll, &data, &cfg_int));
 
-    ck_assert(ll_delete(ll, &data, &cfg_int));
+    ck_assert(0 == ll_delete(ll, &data, &cfg_int));
     ck_assert(&data != ll_find(ll, &data, &cfg_int));
 
-    ck_assert(!ll_delete(ll, ll->head, &cfg_int));
+    ck_assert(0 != ll_delete(ll, ll->head, &cfg_int));
 
     free(ll);
 }
@@ -54,7 +54,7 @@ START_TEST (test_ll_insert_multiple) {
     }
 
     for (i = 0; i < 10; i++) {
-        ck_assert(ll_delete(ll, &(data[i]), &cfg_int));
+        ck_assert(0 == ll_delete(ll, &(data[i]), &cfg_int));
 
         /*
          * check that none of the elements in the LL holds the data we just
@@ -80,7 +80,7 @@ START_TEST (test_ll_insert_multiple_same) {
     ck_assert(0 == ll_insert(ll, &(data[0]), &cfg_int));
     ck_assert(0 != ll_insert(ll, &(data[1]), &cfg_int));
 
-    ck_assert(ll_delete(ll, &(data[0]), &cfg_int));
+    ck_assert(0 == ll_delete(ll, &(data[0]), &cfg_int));
 
     ll_destroy(ll, &cfg_int);
     free(ll);

@@ -89,7 +89,8 @@ avl_insert(
  *
  * @memberof avl
  *
- * @return 1 if the element was removed, 0 otherwise
+ * @return 0 if the element was removed, errno const otherwise:
+ *         -EEXIST - if the element was not found in the avl
  */
 int
 avl_del(

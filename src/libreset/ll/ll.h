@@ -116,8 +116,10 @@ __r_nonnull__(1, 2, 3)
  *
  * @memberof ll
  *
- * @return 1 if the deletion was successful, 0 on failure
  * @warning the function may crash if either of the arguments is NULL
+ *
+ * @return 0 if the deletion was successful, errno constant on failure:
+ *         -EEXIST - if the element was not found in the ll
  */
 int
 ll_delete(

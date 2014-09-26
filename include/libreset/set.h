@@ -97,7 +97,7 @@ r_set_insert(
  * @memberof r_set
  *
  * @return 0 (zero) on success and errno const:
- *         EEXIST - if the element was not found in the set
+ *         -EEXIST - if the element was not found in the set
  */
 int
 r_set_remove(

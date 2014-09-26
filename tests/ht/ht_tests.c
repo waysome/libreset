@@ -116,7 +116,7 @@ START_TEST (test_ht_del) {
         ht_insert(&ht, &data[i], &cfg_int);
     }
 
-    ht_del(&ht, &data[5], &cfg_int);
+    ck_assert(0 == ht_del(&ht, &data[5], &cfg_int));
 
     ck_assert(NULL == ht_find(&ht, &data[5], &cfg_int));
 
@@ -135,7 +135,7 @@ START_TEST (test_ht_cardinality) {
         ck_assert((i + 1) == ht_cardinality(&ht));
     }
 
-    ht_del(&ht, &data[5], &cfg_int);
+    ck_assert(0 == ht_del(&ht, &data[5], &cfg_int));
 
     ht_destroy(&ht, &cfg_int);
 }

@@ -117,7 +117,8 @@ ht_insert(
  *
  * @memberof ht
  *
- * @return 1 if the insertion was successfull, else 0 (zero)
+ * @return 0 if the insertion was successfull, else errno const:
+ *         -EEXIST - if the element was not found in the ht
  */
 int
 ht_del(
