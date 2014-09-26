@@ -134,6 +134,32 @@ START_TEST (test_avl_delete) {
 }
 END_TEST
 
+START_TEST (test_avl_delete_multiple) {
+    struct avl* avl = calloc(1, sizeof(*avl));
+
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    r_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+
+    int i;
+    for (i = 0; i < 10; i++) {
+        ck_assert(0 == avl_insert(avl, hash[i], &data[i], &cfg_int));
+    }
+    ck_assert(avl_node_cnt(avl->root) == 10);
+
+    for (i = 0; i < 10; i++) {
+        ck_assert(0 == avl_del(avl, hash[i], &data[i], &cfg_int));
+    }
+    ck_assert(avl_node_cnt(avl->root) == 0);
+
+    for (i = 0; i < 10; i++) {
+        ck_assert(NULL == avl_find(avl, hash[i], &data[i], &cfg_int));
+    }
+
+    avl_destroy(avl, &cfg_int);
+}
+END_TEST
+
 START_TEST (test_avl_find_single) {
     struct avl* avl = calloc(1, sizeof(*avl));
     int data        = 1;
@@ -240,6 +266,7 @@ suite_avl_create(void) {
     tcase_add_test(case_adding, test_avl_insert_collisions);
 
     tcase_add_test(case_deleting, test_avl_delete);
+    tcase_add_test(case_deleting, test_avl_delete_multiple);
 
     tcase_add_test(case_finding, test_avl_find_single);
     tcase_add_test(case_finding, test_avl_find_multiple);
