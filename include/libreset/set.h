@@ -130,6 +130,7 @@ r_set_contains(
  *
  * @return zero on success, else error code:
  *         -ENOMEM - if allocation failed
+ *         -EINVAL - if the sets have different configurations
  */
 int
 r_set_union(
