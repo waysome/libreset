@@ -14,8 +14,8 @@ include_directories(${PROJECT_SOURCE_DIR}/src/libreset)
 #
 set(SOURCE_FILES
     libreset/avl/avl_cardinality.c
-    libreset/avl/avl_select.c
     libreset/avl/avl_is_subset.c
+    libreset/avl/avl_select.c
     libreset/avl/base.c
     libreset/avl/common.c
     libreset/bloom.c
@@ -26,8 +26,9 @@ set(SOURCE_FILES
     libreset/ll/base.c
     libreset/ll/ll_count.c
     libreset/ll/ll_equal.c
-    libreset/ll/ll_select.c
     libreset/ll/ll_is_subset.c
+    libreset/ll/ll_select.c
+    libreset/ll/ll_union.c
     libreset/set.c
 )
 
