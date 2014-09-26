@@ -46,7 +46,7 @@ config_cmp(
     struct r_set_cfg const* a,
     struct r_set_cfg const* b
 ) {
-    return ((a == b) || (a && b && memcmp(a, b, sizeof(*a))));
+    return ((a == b) || (a && b && (0 == memcmp(a, b, sizeof(*a)))));
 }
 
 
