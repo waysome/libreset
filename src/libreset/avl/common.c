@@ -213,26 +213,30 @@ regen_metadata(
     }
 }
 
-struct avl_el*
+struct avl_el**
 find_node(
     struct avl const* avl,
     r_hash hash
 ) {
     avl_dbg("Finding node with hash: 0x%zx", hash);
 
-    struct avl_el* iter = avl->root;
+    struct avl_el** iter = (struct avl_el**) &avl->root;
     bloom filter = bloom_from_hash(hash);
 
-    while (iter && iter->hash != hash) {
+    while (*iter && (*iter)->hash != hash) {
         //check whether the element _can_ be in the subtree
-        if (!bloom_may_contain(filter, iter->filter)) {
-            return NULL;
+        if (!bloom_may_contain(filter, (*iter)->filter)) {
+            // get a NULL-pointer
+            while (*iter) {
+                iter = &(*iter)->l;
+            }
+            return iter;
         }
 
-        if (iter->hash > hash) {
-            iter = iter->l;
+        if ((*iter)->hash > hash) {
+            iter = &(*iter)->l;
         } else {
-            iter = iter->r;
+            iter = &(*iter)->r;
         }
     }
 

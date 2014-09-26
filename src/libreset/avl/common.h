@@ -116,9 +116,10 @@ __r_warn_unused_result__
 /**
  * Find a node by it's key/hash
  *
- * @return found node or NULL, if the node does not exist
+ * @return pointer to: a pointer to found node or a pointer to NULL, if the node
+ *         does not exist
  */
-struct avl_el*
+struct avl_el**
 find_node(
     struct avl const* avl,
     r_hash hash
