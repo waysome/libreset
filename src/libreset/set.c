@@ -82,6 +82,7 @@ r_set_insert(
     struct r_set* set,
     void* value
 ) {
+    set_dbg("Insert %p into set %p", (void*) value, (void*) set);
     return ht_insert(&set->ht, value, set->cfg);
 }
 
