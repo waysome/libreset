@@ -13,17 +13,18 @@ include_directories(${PROJECT_SOURCE_DIR}/src/libreset)
 # files.
 #
 set(SOURCE_FILES
-    libreset/avl/base.c
-    libreset/avl/common.c
     libreset/avl/avl_cardinality.c
     libreset/avl/avl_union.c
+    libreset/avl/base.c
+    libreset/avl/common.c
+    libreset/bloom.c
     libreset/ht/base.c
     libreset/ht/ht_cardinality.c
-    libreset/bloom.c
     libreset/ll/base.c
     libreset/ll/ll_count.c
     libreset/ll/ll_union.c
     libreset/set.c
+    libreset/union.c
 )
 
 #
