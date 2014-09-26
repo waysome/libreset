@@ -100,7 +100,9 @@ ht_find(
  *
  * @memberof ht
  *
- * @return 1 on success or 0 (zero) on failure
+ * @return 0 on success or negative error number on failure (errno.h)
+ *         -ENOMEM - on allocation failed
+ *         -EEXIST - if the element is already in the set
  */
 int
 ht_insert(

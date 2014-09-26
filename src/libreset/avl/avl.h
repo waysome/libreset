@@ -69,7 +69,9 @@ avl_destroy(
  *
  * @memberof avl
  *
- * @return 1 if the insertion was successful, 0 otherwise
+ * @return 0 on success, else negative error number (errno.h)
+ *         -ENOMEM - on allocation failed
+ *         -EEXIST - if the element is already in the set
  */
 int
 avl_insert(

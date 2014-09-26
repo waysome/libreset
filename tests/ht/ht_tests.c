@@ -81,7 +81,7 @@ START_TEST (test_ht_insert_distinct_values) {
     unsigned int i;
     for (i = nvals; i; --i) {
         vals[i - 1] = i;
-        ck_assert(1 == ht_insert(&ht, vals + i - 1, &cfg_int));
+        ck_assert(0 == ht_insert(&ht, vals + i - 1, &cfg_int));
     }
 
     ht_destroy(&ht, &cfg_int);

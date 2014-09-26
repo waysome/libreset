@@ -81,7 +81,9 @@ r_set_destroy(
 /**
  * Insert an object into a set
  *
- * @return zero on success, else error code
+ * @return zero on success, else error code (errno.h):
+ *         -ENOMEM - on allocation failed
+ *         -EEXIST - if the element is already in the set
  */
 int
 r_set_insert(

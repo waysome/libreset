@@ -81,7 +81,10 @@ __r_nonnull__(1, 2)
  * @memberof ll
  *
  * @warning the function may crash when being passed NULL for either argument
- * @return 1 if the insertion was successful, 0 on failure
+ *
+ * @return 0 if the insertion was successful, error number (errno.h) otherwise
+ *         -ENOMEM - on allocation failed
+ *         -EEXIST - if the element is already in the ll
  */
 int
 ll_insert(
