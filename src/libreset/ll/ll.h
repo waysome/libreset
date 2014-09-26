@@ -90,6 +90,7 @@ ll_insert(
     struct r_set_cfg const* cfg //!< type information proveded by the user
 )
 __r_nonnull__(1, 2, 3)
+__r_warn_unused_result__
 ;
 
 /**
@@ -106,6 +107,7 @@ ll_find(
     struct r_set_cfg const* cfg //!< Type information provided by the user
 )
 __r_nonnull__(1, 2, 3)
+__r_warn_unused_result__
 ;
 
 /**
@@ -123,6 +125,7 @@ ll_delete(
     struct r_set_cfg const* cfg //!< type information proveded by the user
 )
 __r_nonnull__(1, 2, 3)
+__r_warn_unused_result__
 ;
 
 /**
@@ -154,6 +157,7 @@ ll_is_empty(
     struct ll const* ll //!< Ptr to the linked list object
 )
 __r_nonnull__(1)
+__r_warn_unused_result__
 ;
 
 /**
@@ -168,6 +172,7 @@ ll_count(
     struct ll const* ll //!< Ptr to the linked list object
 )
 __r_nonnull__(1)
+__r_warn_unused_result__
 ;
 
 /**
