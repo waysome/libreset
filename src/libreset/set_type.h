@@ -23,6 +23,8 @@
 #ifndef __SET_TYPE_H__
 #define __SET_TYPE_H__
 
+#include "ht/ht.h"
+
 struct r_set {
     struct ht ht;
     const struct r_set_cfg* cfg;
