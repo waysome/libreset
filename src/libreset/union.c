@@ -26,6 +26,7 @@
 #include "libreset/set.h"
 
 #include "set_type.h"
+#include "ht/ht.h"
 
 static inline int
 config_cmp(
