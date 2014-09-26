@@ -15,7 +15,9 @@ void
 destroy_subtree(
     struct avl_el* node, //!< A node to destroy
     struct r_set_cfg const* cfg //!< type information proveded by the user
-);
+)
+__r_nonnull__(2)
+;
 
 /**
  * Rebalance a subtree
@@ -42,6 +44,7 @@ struct avl_el*
 rotate_left(
     struct avl_el* node //!< The node to rotate
 )
+__r_nonnull__(1)
 __r_warn_unused_result__
 ;
 
@@ -54,6 +57,7 @@ struct avl_el*
 rotate_right(
     struct avl_el* node //!< The node to rotate
 )
+__r_nonnull__(1)
 __r_warn_unused_result__
 ;
 
@@ -67,6 +71,7 @@ struct avl_el*
 isolate_root_node(
     struct avl_el* node //!< node to isolate
 )
+__r_nonnull__(1)
 __r_warn_unused_result__
 ;
 
@@ -83,6 +88,7 @@ struct avl_el*
 isolate_leftmost(
     struct avl_el** root //!< Pointer to the root of the affected subtree
 )
+__r_nonnull__(1)
 __r_warn_unused_result__
 ;
 
@@ -99,7 +105,9 @@ __r_warn_unused_result__
 void
 regen_metadata(
     struct avl_el* node //!< The node to regenerate
-);
+)
+__r_nonnull__(1)
+;
 
 /**
  * Create a new struct avl_el object
@@ -123,6 +131,7 @@ find_node(
     struct avl const* avl,
     r_hash hash
 )
+__r_nonnull__(1)
 __r_warn_unused_result__
 ;
 
