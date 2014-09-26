@@ -147,6 +147,32 @@ __r_nonnull__(1)
 ;
 
 /**
+ * Determine the union of two sets (represented by AVLs) by merging
+ *
+ * This method merges all the elements stored in one AVL into another by
+ * copying them over, if they did not yet exist.
+ * Elements which are already in the destination AVL will not be copied.
+ * This is equivalent to determining the union of both AVLs and storing the
+ * result in the destination.
+ * The function will not modify the source AVL.
+ *
+ * @note This function may also be used to copy an AVL into another
+ *
+ * @memberof avl
+ *
+ * @returns 0 on success, a negative error value (errno.h) on error:
+ *          -ENOMEM - an allocation failed
+ */
+int
+avl_union(
+    struct avl* dest, //!< destination of the union merge
+    struct avl const* src, //!< AVL to merge into the destination
+    struct r_set_cfg const* cfg //!< type information proveded by the user
+)
+__r_nonnull__(1, 2)
+;
+
+/**
  * Get the hash value of an element
  *
  * @memberof avl_el
