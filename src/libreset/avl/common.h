@@ -119,6 +119,7 @@ new_avl_el(
     r_hash h //!< The hash for the new struct avl_el object
 )
 __r_warn_unused_result__
+__r_malloc__
 ;
 
 /**
