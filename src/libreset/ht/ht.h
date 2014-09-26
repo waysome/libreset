@@ -154,6 +154,23 @@ ht_ndel(
 );
 
 /**
+ * Create union of the ht objects by inserting everything from the `src` into
+ * the `dest`
+ *
+ * @memberof ht
+ *
+ * @return zero on success, else error code
+ */
+int
+ht_union(
+    struct ht* dest, //!< Destination hashtable object
+    struct ht const* src, //!< src hashtable object
+    struct r_set_cfg const* cfg //!< type information provided by the user
+)
+__r_nonnull__(1, 2, 3)
+;
+
+/**
  * Helper to calculate the actual bucket count of the hashtable
  *
  * @memberof ht
