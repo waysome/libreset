@@ -42,7 +42,9 @@ avl_union(
     struct avl const* src,
     struct r_set_cfg const* cfg
 ) {
-    return -1;
+    int retval = merge_trees(&dest->root, src->root, cfg);
+    dest->root = rebalance_subtree(dest->root);
+    return retval;
 }
 
 /*
