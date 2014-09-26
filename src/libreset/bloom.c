@@ -105,6 +105,7 @@ bloom_may_have_common(
     bloom a,
     bloom b
 ) {
+    bloom_dbg("Check whether 0x%zx has common with 0x%zx", a, b);
     // calculate the number of bits common to both filters
     bloom section = a & b;
 
