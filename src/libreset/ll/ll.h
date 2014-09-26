@@ -191,6 +191,22 @@ __r_warn_unused_result__
     for (struct ll_element* it = (ll)->head; it; it = it->next)
 
 /**
+ * Create a union bewtween two linked lists in the first of both
+ *
+ * @memberof ll
+ *
+ * @return zero on success, else error code
+ */
+int
+ll_union(
+    struct ll* dest, //!< Destination of the union, first ll of the union
+    struct ll const* src, //!< Second ll of the union
+    struct r_set_cfg const* cfg //!< type information provided by user
+)
+__r_nonnull__(1, 2)
+;
+
+/**
  * @}
  */
 
