@@ -16,7 +16,7 @@ predicate_lower_five(
 START_TEST (test_ll_insert_data) {
     struct ll* ll = calloc(1, sizeof(*ll));
     int data = 5;
-    ll_insert(ll, &data, &cfg_int);
+    ck_assert(1 == ll_insert(ll, &data, &cfg_int));
 
     ck_assert(1 == ll_delete(ll, &data, &cfg_int));
     ck_assert(0 == ll_delete(ll, &data, &cfg_int));
@@ -119,8 +119,8 @@ START_TEST (test_ll_is_empty_after_insertion_and_deletion) {
     struct ll* ll = malloc(sizeof(*ll));
     int data[] = { 0, 1 };
 
-    ll_insert(ll, &(data[0]), &cfg_int);
-    ll_insert(ll, &(data[1]), &cfg_int);
+    ck_assert(1 == ll_insert(ll, &(data[0]), &cfg_int));
+    ck_assert(1 == ll_insert(ll, &(data[1]), &cfg_int));
 
     struct ll_element* old_head = ll->head;
     ll_delete(ll, &(data[0]), &cfg_int);
