@@ -128,7 +128,8 @@ r_set_contains(
  *
  * @memberof r_set
  *
- * @return zero on success, else error code
+ * @return zero on success, else error code:
+ *         -ENOMEM - if allocation failed
  */
 int
 r_set_union(
@@ -143,7 +144,8 @@ r_set_union(
  *
  * @memberof r_set
  *
- * @return zero on success, else error code
+ * @return zero on success, else error code:
+ *         -ENOMEM - if allocation failed
  */
 int
 r_set_intersection(
@@ -158,7 +160,8 @@ r_set_intersection(
  *
  * @memberof r_set
  *
- * @return zero on success, else error code
+ * @return zero on success, else error code:
+ *         -ENOMEM - if allocation failed
  */
 int
 r_set_xor(
@@ -173,7 +176,8 @@ r_set_xor(
  *
  * @memberof r_set
  *
- * @return zero on success, else error code
+ * @return zero on success, else error code:
+ *         -ENOMEM - if allocation failed
  */
 int
 r_set_exclude(
@@ -238,7 +242,8 @@ r_set_cardinality(
  * value for the predicate function to check, the second one is the parameter
  * one can pass through the r_set_select() function.
  *
- * @return zero on success, else error code
+ * @return zero on success, else error code:
+ *         -ENOMEM - if allocation failed
  */
 int
 r_set_select(
