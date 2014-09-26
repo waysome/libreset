@@ -96,9 +96,10 @@ r_set_insert(
  *
  * @memberof r_set
  *
- * @return The removed object or NULL on failure/not found
+ * @return 0 (zero) on success and errno const:
+ *         EEXIST - if the element was not found in the set
  */
-void*
+int
 r_set_remove(
     struct r_set* set, //!< the set
     void const* cmp //!< object equal to the one you want to delete

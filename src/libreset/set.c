@@ -73,18 +73,12 @@ r_set_insert(
     return ht_insert(&set->ht, value, set->cfg);
 }
 
-void*
+int
 r_set_remove(
     struct r_set* set,
     void const* cmp
 ) {
-    void* data = ht_find(&set->ht, cmp, set->cfg);
-
-    if (data && ht_del(&set->ht, cmp, set->cfg)) {
-        return data;
-    }
-
-    return NULL;
+    return ht_del(&set->ht, cmp, set->cfg);
 }
 
 void*
