@@ -199,7 +199,7 @@ remove_element(
 
     // check whether the subtree is empty
     if (!*root) {
-        return EEXIST;
+        return -EEXIST;
     }
 
     int retval;
