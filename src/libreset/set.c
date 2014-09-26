@@ -26,6 +26,8 @@
 #include "libreset/set.h"
 #include "libreset/hash.h"
 
+#include "common.h"
+
 #include "ht/ht.h"
 #include "util/likely.h"
 
