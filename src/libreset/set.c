@@ -26,6 +26,8 @@
 #include "libreset/set.h"
 #include "libreset/hash.h"
 
+#include "common.h"
+
 #include "ht/ht.h"
 #include "util/likely.h"
 
@@ -38,6 +40,7 @@ struct r_set*
 r_set_new(
     struct r_set_cfg const* cfg
 ) {
+    set_dbg("Allocate set with config %p", (void*) cfg);
     /*
      * magic constant: We initialize the hashtable with 8 buckets, 2^3 == 8, so
      * we must set `ht_init_power` to 3
@@ -48,6 +51,7 @@ r_set_new(
 
     if (likely(set)) {
         if (!ht_init(&set->ht, ht_init_power)) {
+            set_dbg("Allocation failed: %p", (void*)set);
             free(set);
             set = NULL;
         } else {
@@ -64,6 +68,7 @@ r_set_destroy(
 ) {
     int ret;
     if (set) {
+        set_dbg("Destroy set: %p", (void*) set);
         ret = ht_destroy(&set->ht, set->cfg);
         free(set);
     } else {
@@ -77,6 +82,7 @@ r_set_insert(
     struct r_set* set,
     void* value
 ) {
+    set_dbg("Insert %p into set %p", (void*) value, (void*) set);
     return ht_insert(&set->ht, value, set->cfg);
 }
 
@@ -85,6 +91,8 @@ r_set_remove(
     struct r_set* set,
     void const* cmp
 ) {
+    set_dbg("Remove with compare element %p from set %p",
+            (void*) cmp, (void*) set);
     return ht_del(&set->ht, cmp, set->cfg);
 }
 
@@ -93,6 +101,9 @@ r_set_contains(
     struct r_set const* set,
     void const* cmp
 ) {
+    set_dbg("Check whether set %p contains element which compares to %p",
+            (void*) set,
+            (void*) cmp);
     return ht_find(&set->ht, cmp, set->cfg);
 }
 
@@ -100,5 +111,6 @@ size_t
 r_set_cardinality(
     struct r_set const* set
 ) {
+    set_dbg("Get cardinality for set %p", (void*) set);
     return ht_cardinality(&set->ht);
 }
