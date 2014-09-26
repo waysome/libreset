@@ -118,6 +118,48 @@ START_TEST (test_avl_insert_collisions) {
 }
 END_TEST
 
+START_TEST (test_avl_delete) {
+    struct avl* avl = calloc(1, sizeof(*avl));
+
+    int data = 1;
+    r_hash hash = 1;
+
+    avl_insert(avl, hash, &data, &cfg_int);
+
+    ck_assert(&data == avl_find(avl, hash, &data, &cfg_int));
+    ck_assert(0 == avl_del(avl, hash, &data, &cfg_int));
+    ck_assert(-EEXIST == avl_del(avl, hash, &data, &cfg_int));
+
+    avl_destroy(avl, &cfg_int);
+}
+END_TEST
+
+START_TEST (test_avl_delete_multiple) {
+    struct avl* avl = calloc(1, sizeof(*avl));
+
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    r_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+
+    int i;
+    for (i = 0; i < 10; i++) {
+        ck_assert(0 == avl_insert(avl, hash[i], &data[i], &cfg_int));
+    }
+    ck_assert(avl_node_cnt(avl->root) == 10);
+
+    for (i = 0; i < 10; i++) {
+        ck_assert(0 == avl_del(avl, hash[i], &data[i], &cfg_int));
+    }
+    ck_assert(avl_node_cnt(avl->root) == 0);
+
+    for (i = 0; i < 10; i++) {
+        ck_assert(NULL == avl_find(avl, hash[i], &data[i], &cfg_int));
+    }
+
+    avl_destroy(avl, &cfg_int);
+}
+END_TEST
+
 START_TEST (test_avl_find_single) {
     struct avl* avl = calloc(1, sizeof(*avl));
     int data        = 1;
@@ -202,6 +244,7 @@ suite_avl_create(void) {
     Suite* s;
     TCase* case_allocfree;
     TCase* case_adding;
+    TCase* case_deleting;
     TCase* case_finding;
 
     s = suite_create("AVL");
@@ -209,6 +252,7 @@ suite_avl_create(void) {
     /* Test case creation */
     case_allocfree  = tcase_create("Allocating and deleting");
     case_adding     = tcase_create("Adding");
+    case_deleting   = tcase_create("Deleting");
     case_finding    = tcase_create("Finding");
 
     /* test adding to test cases */
@@ -221,6 +265,9 @@ suite_avl_create(void) {
     tcase_add_test(case_adding, test_avl_insert_multiple_destroy);
     tcase_add_test(case_adding, test_avl_insert_collisions);
 
+    tcase_add_test(case_deleting, test_avl_delete);
+    tcase_add_test(case_deleting, test_avl_delete_multiple);
+
     tcase_add_test(case_finding, test_avl_find_single);
     tcase_add_test(case_finding, test_avl_find_multiple);
 
@@ -230,6 +277,7 @@ suite_avl_create(void) {
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
     suite_add_tcase(s, case_adding);
+    suite_add_tcase(s, case_deleting);
     suite_add_tcase(s, case_finding);
 
     return s;

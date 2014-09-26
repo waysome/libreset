@@ -199,7 +199,7 @@ remove_element(
 
     // check whether the subtree is empty
     if (!*root) {
-        return EEXIST;
+        return -EEXIST;
     }
 
     int retval;
@@ -226,7 +226,9 @@ remove_element(
         // isolate the node
         struct avl_el* to_del = *root;
         *root = isolate_root_node(to_del);
-        regen_metadata(*root);
+        if (*root) {
+            regen_metadata(*root);
+        }
 
         // delete the node
         free(to_del);
