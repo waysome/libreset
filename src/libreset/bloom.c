@@ -76,6 +76,7 @@ bloom
 bloom_from_hash(
     r_hash hash
 ) {
+    bloom_dbg("Generate bloom from hash 0x%zx", hash);
     bloom result = 0;
 
     unsigned int vars = HASH_VARIANTS;
@@ -86,6 +87,7 @@ bloom_from_hash(
         hash /= BLOOM_BITS;
     }
 
+    bloom_dbg("Generated bloom 0x%zx from hash 0x%zx", bloom, hash);
     return result;
 }
 
