@@ -31,10 +31,7 @@
 #include "ht/ht.h"
 #include "util/likely.h"
 
-struct r_set {
-    struct ht ht;
-    const struct r_set_cfg* cfg;
-};
+#include "set_type.h"
 
 struct r_set*
 r_set_new(
