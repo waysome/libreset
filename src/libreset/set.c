@@ -111,5 +111,6 @@ size_t
 r_set_cardinality(
     struct r_set const* set
 ) {
+    set_dbg("Get cardinality for set %p", (void*) set);
     return ht_cardinality(&set->ht);
 }
