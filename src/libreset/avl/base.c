@@ -90,13 +90,13 @@ avl_find(
     struct r_set_cfg const* cfg
 ) {
     avl_dbg("Finding element for hash: 0x%zx", hash);
-    struct avl_el* node = find_node(avl, hash);
+    struct avl_el** node = find_node(avl, hash);
 
-    if (!node) {
+    if (!*node) {
         return NULL;
     }
 
-    return ll_find(&node->ll, d, cfg);
+    return ll_find(&(*node)->ll, d, cfg);
 }
 
 int
