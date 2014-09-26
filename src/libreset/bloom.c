@@ -96,6 +96,7 @@ bloom_may_contain(
     bloom element,
     bloom set
 ) {
+    bloom_dbg("Check whether 0x%zx contains 0x%zx", set, element);
     return (element & (~set)) == 0;
 }
 
