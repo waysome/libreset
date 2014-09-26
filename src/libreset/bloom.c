@@ -23,6 +23,10 @@
 
 #include "params.h"
 
+#include "util/debug.h"
+
+#define bloom_dbg(fmt,...) do { dbg("bloom: "fmt, __VA_ARGS__); } while (0)
+
 /*
  *
  *
@@ -72,6 +76,7 @@ bloom
 bloom_from_hash(
     r_hash hash
 ) {
+    bloom_dbg("Generate bloom from hash 0x%zx", hash);
     bloom result = 0;
 
     unsigned int vars = HASH_VARIANTS;
@@ -82,6 +87,7 @@ bloom_from_hash(
         hash /= BLOOM_BITS;
     }
 
+    bloom_dbg("Generated bloom 0x%zx from hash 0x%zx", bloom, hash);
     return result;
 }
 
@@ -90,6 +96,7 @@ bloom_may_contain(
     bloom element,
     bloom set
 ) {
+    bloom_dbg("Check whether 0x%zx contains 0x%zx", set, element);
     return (element & (~set)) == 0;
 }
 
@@ -98,6 +105,7 @@ bloom_may_have_common(
     bloom a,
     bloom b
 ) {
+    bloom_dbg("Check whether 0x%zx has common with 0x%zx", a, b);
     // calculate the number of bits common to both filters
     bloom section = a & b;
 
