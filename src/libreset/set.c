@@ -101,6 +101,9 @@ r_set_contains(
     struct r_set const* set,
     void const* cmp
 ) {
+    set_dbg("Check whether set %p contains element which compares to %p",
+            (void*) set,
+            (void*) cmp);
     return ht_find(&set->ht, cmp, set->cfg);
 }
 
