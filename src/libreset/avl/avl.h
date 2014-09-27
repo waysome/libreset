@@ -64,6 +64,7 @@ avl_destroy(
     struct avl* avl, //!< The avl tree
     struct r_set_cfg const* cfg //!< type information proveded by the user
 )
+__r_nonnull__(1, 2)
 ;
 
 /**
@@ -82,6 +83,7 @@ avl_insert(
     void* const d, //!< The data element
     struct r_set_cfg const* cfg //!< type information provided by the user
 )
+__r_nonnull__(1, 3, 4)
 ;
 
 /**
@@ -102,6 +104,7 @@ avl_del(
     void const* cmp, //!< element to compare against
     struct r_set_cfg const* cfg //!< type information provided by the user
 )
+__r_nonnull__(1, 3, 4)
 ;
 
 /**
@@ -121,6 +124,7 @@ avl_ndel(
     void* etc, //!< User-data to pass to the predicate
     struct r_set_cfg const* cfg //!< type information provided by the user
 )
+__r_nonnull__(1, 3, 4)
 ;
 
 /**
@@ -137,6 +141,7 @@ avl_find(
     void const* const d, //!< The data element to compare to
     struct r_set_cfg const* cfg //!< type information proveded by the user
 )
+__r_nonnull__(1, 3, 4)
 __r_warn_unused_result__
 ;
 
@@ -168,6 +173,7 @@ static inline r_hash
 avl_get_hash(
     struct avl_el const* el //!< The element to get the hash for
 )
+__r_nonnull__(1)
 __r_warn_unused_result__
 ;
 
