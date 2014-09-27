@@ -47,6 +47,10 @@
  * We also define some aliases for ourselves in here, such as R_FORCE_INLINE,
  * which evaluates to 'inline __r_always_inline__'. As this is not _just_ an alias
  * for an compiler macro, we use the normal naming convention here.
+ *
+ * @note This header is in the public interface so we can use our own macros in
+ * the set.h header of the public interface. It is provided for the users
+ * convenience.
  */
 
 #ifdef __GNUC__
