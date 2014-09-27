@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 p="$(pwd)"
 cd "$(git rev-parse --show-toplevel)"
 
@@ -35,7 +34,22 @@ die() {
     exit 1
 }
 
-for i in astyle cmake ctest diff make
+astyle=0 # default: astyle OFF
+if [[ $PRE_COMMIT_ASTYLE =~ ^(y|Y)$ ]];
+then
+    astyle=1
+fi
+
+if ! type astyle 2> /dev/null
+then
+    if [[ $PRE_COMMIT_ASTYLE =~ ^(y|Y)$ ]] && [[ $astyle == 1 ]]; then
+        echo "Astyle enabled but not found."
+        echo "You cannot commit"
+        exit 1;
+    fi
+fi
+
+for i in cmake ctest diff make
 do
     if ! type $i 2> /dev/null
     then
@@ -60,45 +74,45 @@ ctest -VV . || die "the checks for the library failed"
 
 echo_cyan "Successfully passed library checks"
 
-tmpdir=/tmp/git-pre-commit-hook-$$
+if [[ $astyle == 1 ]]; then
+    tmpdir=/tmp/git-pre-commit-hook-$$
+    mkdir -p $tmpdir
+    bad=0
 
-mkdir -p $tmpdir
+    echo_cyan "Starting astyle check in '$tmpdir'"
 
-bad=0
+    oldifs="$IFS"
+    IFS=$'\n'
+    for file in $(git diff --name-only HEAD | grep "\.[ch]$")
+    do
+        echo_cyan "Checking: $file"
+        fpath="$tmpdir/$(basename "$file")"
+        fpath_formatted="$tmpdir/$(basename "$file")-formatted"
 
-echo_cyan "Starting astyle check in '$tmpdir'"
+        cp "$file" "$fpath"
 
-oldifs="$IFS"
-IFS=$'\n'
-for file in $(git diff --name-only HEAD | grep "\.[ch]$")
-do
-    echo_cyan "Checking: $file"
-    fpath="$tmpdir/$(basename "$file")"
-    fpath_formatted="$tmpdir/$(basename "$file")-formatted"
+        astyle --options=./etc/astylerc < "$fpath" > "$fpath_formatted"
+        # delete last line of $fpath_formatted
+        sed -i '$ d' "$fpath_formatted"
 
-    cp "$file" "$fpath"
+        if ! diff "$fpath" "$fpath_formatted" > /dev/null
+        then
+            echo_red "Format bad: $file"
+            bad=1
+        else
+            echo_green "Format ok: $file"
+        fi
 
-    astyle --options=./etc/astylerc < "$fpath" > "$fpath_formatted"
-    # delete last line of $fpath_formatted
-    sed -i '$ d' "$fpath_formatted"
+        echo_cyan "Check on $file done, rm '$fpath', '$fpath_formatted'"
+        rm "$fpath" "$fpath_formatted"
+    done
+    IFS="$oldifs"
 
-    if ! diff "$fpath" "$fpath_formatted" > /dev/null
-    then
-        echo_red "Format bad: $file"
-        bad=1
-    else
-        echo_green "Format ok: $file"
-    fi
+    echo_cyan "Check done, rm -rf '$tmpdir'"
+    rm -rf $tmpdir
 
-    echo_cyan "Check on $file done, rm '$fpath', '$fpath_formatted'"
-    rm "$fpath" "$fpath_formatted"
-done
-IFS="$oldifs"
-
-echo_cyan "Check done, rm -rf '$tmpdir'"
-rm -rf $tmpdir
-
-cd "$p"
-[ $bad -eq 1 ] && die "Bad formatted file found. You cannot commit"
+    cd "$p"
+    [ $bad -eq 1 ] && die "Bad formatted file found. You cannot commit"
+fi
 
 exit 0
