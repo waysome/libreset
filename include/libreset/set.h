@@ -153,8 +153,12 @@ __r_nonnull__(1, 2)
  *
  * @memberof r_set
  *
+ * @warning If the operation fails, the `dest` set is not cleaned. Therefor, the
+ * union operation may be only _partially_ done.
+ *
  * @return zero on success, else error code:
  *         -ENOMEM - if allocation failed
+ *         -EINVAL - if the sets have different configurations
  */
 int
 r_set_union(
