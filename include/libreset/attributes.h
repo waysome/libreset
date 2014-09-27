@@ -26,8 +26,8 @@
  * @{
  */
 
-#ifndef __UTIL_ATTRIBUTES_H__
-#define __UTIL_ATTRIBUTES_H__
+#ifndef __LIBRESET_ATTRIBUTES_H__
+#define __LIBRESET_ATTRIBUTES_H__
 
 /*
  * @file attributes.h
@@ -111,7 +111,7 @@
 
 #endif // __GNUC__
 
-#endif //__UTIL_ATTRIBUTES_H__
+#endif //__LIBRESET_ATTRIBUTES_H__
 
 /**
  * @}
