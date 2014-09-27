@@ -266,25 +266,37 @@ __r_nonnull__(1)
 ;
 
 /**
- * Select entries from a set for a new set
+ * Process selected entries from a set
+ *
+ * This function iterates over all the elements in the set.
+ * First, a predicate (given by pred) is applied.
+ * The first parameter of pred will be the element, while pred_etc will be
+ * passed as the second parameter.
+ * If the predicate function returns 1, the element is selected.
+ * procf will be called, with the value given by dest as the first parameter
+ * and the element to process as the second one.
+ * If the function returns a negative result, no other elements will be
+ * processed.
+ * Instead, the negative (return) value will be passed to the user as the
+ * return value of r_set_select itself.
+ *
+ * If NULL is passed for the predicate, all the elements in the set will be
+ * selected.
  *
  * @memberof r_set
  *
- * The predicate function gets two values passed, the first one is the actual
- * value for the predicate function to check, the second one is the parameter
- * one can pass through the r_set_select() function.
+ * @warning the function will crash if procf is NULL
  *
- * @return zero on success, else error code:
- *         -ENOMEM - if allocation failed
+ * @return 0 or the return value of the last call to procf, if it returned a
+ *         negative value
  */
 int
 r_set_select(
-    struct r_set* dest, //!< destination set
-    struct r_set const* src, //!< source set
-    r_predf pred, //!< predicate for selection
-    void* //!< parameter for the predicate function
-)
-__r_nonnull__(1, 2, 3)
-;
+    struct r_set* src, //!< set with elements to process
+    r_predf pred, //!< The predicate
+    void* pred_etc, //!< Additional information for the predicate function
+    r_procf procf, //!< function processing the selected values
+    void* dest //!< some pointer to pass to the procf
+);
 
 #endif //__LIBRESET_H__
