@@ -24,7 +24,7 @@
 
 #include "bloom.h"
 #include "ll/ll.h"
-#include "util/attributes.h"
+#include "libreset/attributes.h"
 #include "libreset/hash.h"
 #include "libreset/set.h"
 

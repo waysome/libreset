@@ -32,7 +32,7 @@
 #ifndef __LL_H__
 #define __LL_H__
 
-#include "util/attributes.h"
+#include "libreset/attributes.h"
 #include "libreset/set.h"
 
 /**

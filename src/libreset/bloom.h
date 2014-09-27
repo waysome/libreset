@@ -34,9 +34,8 @@
 
 #include <stddef.h>
 
+#include "libreset/attributes.h"
 #include "libreset/hash.h"
-
-#include "util/attributes.h"
 
 /**
  * Bloom filter type
