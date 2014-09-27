@@ -4,14 +4,15 @@ int
 ll_select(
     struct ll const* src,
     r_predf pred,
-    void* etc,
-    int (*insf)(void* elem, void* ins_etc),
-    void* ins_etc
+    void* pred_etc,
+    r_procf procf,
+    void* dest
 ) {
     ll_foreach(it, src) {
-        if (pred(it->data, etc)) {
-            if (!insf(it->data, ins_etc)) {
-                return 1;
+        if (pred || pred(it->data, pred_etc)) {
+            int retval = procf(dest, it->data);
+            if (retval < 0) {
+                return retval;
             }
         }
     }

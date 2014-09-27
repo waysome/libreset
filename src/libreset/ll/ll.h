@@ -201,10 +201,12 @@ int
 ll_select(
     struct ll const* src, //!< The source from where to select
     r_predf pred, //!< The predicate
-    void* etc, //!< Additional information for the predicate function
-    int (*insf)(void* elem, void* ins_etc), //!< insert function
-    void* ins_etc //!< additional parameter for `insertf`
-);
+    void* pred_etc, //!< Additional information for the predicate function
+    r_procf procf, //!< function processing the selected values
+    void* dest //!< some pointer to pass to the procf
+)
+__r_nonnull__(1, 4)
+;
 
 /**
  * @}
