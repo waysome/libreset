@@ -33,6 +33,7 @@ set(SOURCE_FILES
     libreset/ll/ll_select.c
     libreset/ll/ll_union.c
     libreset/set.c
+    libreset/union.c
 )
 
 #
