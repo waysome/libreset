@@ -173,12 +173,14 @@ ht_ndel(
  */
 int
 ht_select(
-    struct ht* dest, //!< Destination hashtable object
-    struct ht const* src, //!< Source hashtable object
+    struct ht* src, //!< Destination hashtable object
     r_predf pred, //!< The predicate
-    void* etc, //!< Additional information for the predicate function
-    struct r_set_cfg* const cfg //!< Type information provided by user
-);
+    void* pred_etc, //!< Additional information for the predicate function
+    r_procf procf, //!< function processing the selected values
+    void* dest //!< some pointer to pass to the procf
+)
+__r_nonnull__(1, 4)
+;
 
 /**
  * Helper to calculate the actual bucket count of the hashtable
