@@ -73,6 +73,7 @@ isolate_root_node(
 )
 __r_nonnull__(1)
 __r_warn_unused_result__
+__r_nonnull__(1)
 ;
 
 /**
