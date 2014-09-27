@@ -168,10 +168,12 @@ int
 avl_select(
     struct avl const* src, //!< The source from where to select
     r_predf pred, //!< The predicate
-    void* etc, //!< Additional information for the predicate function
-    int (*insf)(void* elem, void* insetc), //!< Function to insert somewhere
-    void* insetc //!< additional parameter for `insertf`
-);
+    void* pred_etc, //!< Additional information for the predicate function
+    r_procf procf, //!< function processing the selected values
+    void* dest //!< some pointer to pass to the procf
+)
+__r_nonnull__(1, 4)
+;
 
 /**
  * Get the hash value of an element

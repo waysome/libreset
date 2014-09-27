@@ -4,43 +4,37 @@ static int
 select_from_subtree(
     struct avl_el* root,
     r_predf pred,
-    void* etc,
-    int (*insf)(void* elem, void* insetc),
-    void* insetc
+    void* pred_etc,
+    r_procf procf,
+    void* dest
 ) {
     if (!root) {
         return 0;
     }
 
-    int l = 0;
-    int r = 0;
-    int base = 0;
+    int retval;
 
-    if (root->l) {
-        l = select_from_subtree(root->l, pred, etc, insf, insetc);
+    retval = select_from_subtree(root->l, pred, pred_etc, procf, dest);
+    if (retval < 0) {
+        return retval;
     }
 
-    if (root->r) {
-        r = select_from_subtree(root->r, pred, etc, insf, insetc);
+    retval = select_from_subtree(root->r, pred, pred_etc, procf, dest);
+    if (retval < 0) {
+        return retval;
     }
 
-    base = ll_select(&root->ll, pred, etc, insf, insetc);
-
-    return (base | l | r);
+    return ll_select(&root->ll, pred, pred_etc, procf, dest);
 }
 
 int
 avl_select(
     struct avl const* src,
     r_predf pred,
-    void* etc,
-    int (*insf)(void* elem, void* insetc),
-    void* insetc
+    void* pred_etc,
+    r_procf procf,
+    void* dest
 ) {
-    if (src) {
-        return select_from_subtree(src->root, pred, etc, insf, insetc);
-    }
-
-    return 1;
+    return select_from_subtree(src->root, pred, pred_etc, procf, dest);
 }
 
