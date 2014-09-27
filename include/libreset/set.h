@@ -56,6 +56,20 @@ typedef int (*r_predf)(void const*, void*);
 
 
 /**
+ * Insertion/processing function
+ *
+ * Use functions of this type if you want to select or process elements of a
+ * set.
+ * The function is expected to return 0 on success and negative values on error.
+ * The first parameter is considered a user defined value (e.g. another set to
+ * insert those values), while the elements will be fed to the function as the
+ * second parameter.
+ */
+typedef int (*r_procf)(void*, void const*);
+
+
+
+/**
  * Allocate and initialize set object
  *
  * @memberof r_set
