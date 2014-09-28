@@ -134,7 +134,7 @@ START_TEST (test_ll_is_empty_after_insertion_and_deletion) {
 END_TEST
 
 START_TEST (test_ll_count) {
-    struct ll* ll = malloc(sizeof(*ll));
+    struct ll* ll = calloc(1, sizeof(*ll));
     int i;
     int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
@@ -147,12 +147,68 @@ START_TEST (test_ll_count) {
 }
 END_TEST
 
+START_TEST (test_ll_subset) {
+    struct ll* ll = calloc(1, sizeof(*ll));
+    int i;
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    for (i = 0; i < 10; i++) {
+        ck_assert(ll_insert(ll, &(data[i]), &cfg_int) == 0);
+    }
+
+    ck_assert(ll_is_subset(ll, ll, &cfg_int) == 1);
+
+    ll_destroy(ll, &cfg_int);
+}
+END_TEST
+
+START_TEST (test_ll_subset_distinct_wrong) {
+    struct ll* ll = calloc(1, sizeof(*ll));
+    struct ll* ll2 = calloc(1, sizeof(*ll2));
+    int i;
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int data2[] = { 0, 1, 2, 3, 4, 5, 6,    8, 9, 10 };
+
+    for (i = 0; i < 10; i++) {
+        ck_assert(ll_insert(ll, &(data[i]), &cfg_int) == 0);
+        ck_assert(ll_insert(ll2, &(data2[i]), &cfg_int) == 0);
+    }
+
+    ck_assert(ll_is_subset(ll2, ll, &cfg_int) != 1);
+    ck_assert(ll_is_subset(ll, ll2, &cfg_int) != 1);
+
+    ll_destroy(ll, &cfg_int);
+}
+END_TEST
+
+START_TEST (test_ll_subset_distinct) {
+    struct ll* ll = calloc(1, sizeof(*ll));
+    struct ll* ll2 = calloc(1, sizeof(*ll2));
+    int i;
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int data2[] = { 0, 1, 2, 3 };
+
+    for (i = 0; i < 10; i++) {
+        ck_assert(ll_insert(ll, &(data[i]), &cfg_int) == 0);
+    }
+    for (i = 0; i < 4; i++) {
+        ck_assert(ll_insert(ll2, &(data2[i]), &cfg_int) == 0);
+    }
+
+    ck_assert(ll_is_subset(ll2, ll, &cfg_int) == 1);
+    ck_assert(ll_is_subset(ll, ll2, &cfg_int) != 1);
+
+    ll_destroy(ll, &cfg_int);
+}
+END_TEST
+
 Suite*
 suite_ll_create(void) {
     Suite* s;
     TCase* case_insert;
     TCase* case_delete;
     TCase* case_empty;
+    TCase* case_subset;
 
     s = suite_create("Linkedlist");
 
@@ -160,6 +216,7 @@ suite_ll_create(void) {
     case_insert         = tcase_create("Inserting");
     case_delete         = tcase_create("Deleting");
     case_empty          = tcase_create("Emptyness");
+    case_subset          = tcase_create("Subset");
 
     /* test adding */
     tcase_add_test(case_insert, test_ll_insert_data);
@@ -172,10 +229,15 @@ suite_ll_create(void) {
     tcase_add_test(case_empty, test_ll_is_empty_after_insertion_and_deletion);
     tcase_add_test(case_delete, test_ll_count);
 
+    tcase_add_test(case_subset, test_ll_subset);
+    tcase_add_test(case_subset, test_ll_subset_distinct);
+    tcase_add_test(case_subset, test_ll_subset_distinct_wrong);
+
     /* Adding test cases to suite */
     suite_add_tcase(s, case_insert);
     suite_add_tcase(s, case_delete);
     suite_add_tcase(s, case_empty);
+    suite_add_tcase(s, case_subset);
 
     return s;
 }
