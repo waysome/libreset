@@ -23,6 +23,7 @@ set(SOURCE_FILES
     libreset/ht/base.c
     libreset/ht/ht_cardinality.c
     libreset/ht/ht_equal.c
+    libreset/ht/ht_is_subset.c
     libreset/ht/ht_select.c
     libreset/ll/base.c
     libreset/ll/ll_count.c
