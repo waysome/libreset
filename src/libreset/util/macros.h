@@ -95,7 +95,7 @@
 /**
  * Compute the power of 2 to a constant value
  */
-#define CONSTPOW_TWO(m) (((size_t)1) << (m))
+#define CONSTPOW_TWO(m) (((__typeof__(m))1) << (m))
 
 /** @} */
 
