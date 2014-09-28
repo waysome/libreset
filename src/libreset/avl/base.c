@@ -23,7 +23,7 @@
 /**
  * Remove an element
  *
- * @return 1 if an element was removed, 0 otherwise
+ * @return 0 if an element was removed, negative error code otherwise
  */
 static int
 remove_element(
