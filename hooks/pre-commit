@@ -37,16 +37,15 @@ die() {
 astyle=0 # default: astyle OFF
 if [[ $PRE_COMMIT_ASTYLE =~ ^(y|Y)$ ]];
 then
-    astyle=1
-fi
-
-if ! type astyle 2> /dev/null
-then
-    if [[ $PRE_COMMIT_ASTYLE =~ ^(y|Y)$ ]] && [[ $astyle == 1 ]]; then
+    # check if astyle is available
+    if ! type astyle 2> /dev/null
+    then
         echo "Astyle enabled but not found."
         echo "You cannot commit"
         exit 1;
     fi
+
+    astyle=1
 fi
 
 for i in cmake ctest diff make
