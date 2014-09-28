@@ -45,6 +45,12 @@ struct avl_node_cache {
     struct avl_el* node; //!< node in the cache
 };
 
+/**
+ * Set the next and node pointer of an avl_node_cache
+ *
+ * @warning only for use in direct initialisation
+ */
+#define AVL_NODE_CACHE_NEW_ENTRY(next_, node_) { .next = next_; .node = node_ }
 
 #endif
 
