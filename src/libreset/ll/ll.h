@@ -225,6 +225,22 @@ __r_nonnull__(1, 4)
 ;
 
 /**
+ * Check whether two linked list objects are equal
+ *
+ * @memberof ll
+ *
+ * @return 1 if the lists are equal, else 0 (zero)
+ */
+int
+ll_equal(
+    struct ll const* lla, //!< The first linked list to compare
+    struct ll const* llb, //!< The second linked list to compare
+    struct r_set_cfg const* cfg //!< Type information provided by the user
+)
+__r_nonnull__(1, 2)
+;
+
+/**
  * @}
  */
 
