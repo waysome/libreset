@@ -6,7 +6,7 @@
 #  CHECK_DEFINITIONS - Compiler switches required for using check
 
 find_package(PkgConfig)
-pkg_check_modules(PC_CHECK QUIET libxml-2.0)
+pkg_check_modules(PC_CHECK QUIET check)
 
 set(CHECK_DEFINITIONS ${PC_CHECK_CFLAGS_OTHER})
 
