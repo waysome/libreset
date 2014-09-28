@@ -158,3 +158,24 @@ find_closest_lower(
 __r_warn_unused_result__
 ;
 
+/**
+ * Find the node with a hash closest but not lower than a given hash
+ *
+ * This function will search for a node with the given key/hash.
+ * If such a node is found, the function will return this node.
+ * If the node does not exist, the function will return the lowest node with a
+ * key greater than the hash given.
+ * If the subtree is empty or if all nodes in the subtree have lower
+ * keys/hashes, NULL will be returned.
+ *
+ * @return the node with the lowest key/hash greater or equal than the hash given
+ *         or NULL, if there is no such node
+ */
+struct avl_el*
+find_closest_greater(
+    struct avl_el* root, //!< subtree to search in
+    r_hash hash //!< hash to search for
+)
+__r_warn_unused_result__
+;
+
