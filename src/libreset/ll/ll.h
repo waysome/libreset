@@ -105,7 +105,7 @@ __r_warn_unused_result__
  */
 void*
 ll_find(
-    struct ll* ll, //!< The linked list to search in
+    struct ll const* ll, //!< The linked list to search in
     void const* const d, //!< Data element to compare to
     struct r_set_cfg const* cfg //!< Type information provided by the user
 )
