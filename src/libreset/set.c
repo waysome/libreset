@@ -114,3 +114,15 @@ r_set_cardinality(
     set_dbg("Get cardinality for set %p", (void*) set);
     return ht_cardinality(&set->ht);
 }
+
+int
+r_set_select(
+    struct r_set* src,
+    r_predf pred,
+    void* pred_etc,
+    r_procf procf,
+    void* dest
+) {
+    return ht_select(&src->ht, pred, pred_etc, procf, dest);
+}
+
