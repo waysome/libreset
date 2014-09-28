@@ -105,12 +105,28 @@ __r_warn_unused_result__
  */
 void*
 ll_find(
-    struct ll* ll, //!< The linked list to search in
+    struct ll const* ll, //!< The linked list to search in
     void const* const d, //!< Data element to compare to
     struct r_set_cfg const* cfg //!< Type information provided by the user
 )
 __r_nonnull__(1, 2, 3)
 __r_warn_unused_result__
+;
+
+/**
+ * Check if ll_a is a subset of ll_b
+ *
+ * @memberof ll
+ *
+ * @return 0 if ll_a is a subset of ll_b else a 1
+ */
+int
+ll_is_subset(
+    struct ll const* ll_a, //!< The linked list to search in
+    struct ll const* ll_b, //!< The linked list to search in
+    struct r_set_cfg const* cfg //!< Type information provided by the user
+)
+__r_nonnull__(1, 2, 3)
 ;
 
 /**
@@ -206,6 +222,22 @@ ll_select(
     void* dest //!< some pointer to pass to the procf
 )
 __r_nonnull__(1, 4)
+;
+
+/**
+ * Check whether two linked list objects are equal
+ *
+ * @memberof ll
+ *
+ * @return 1 if the lists are equal, else 0 (zero)
+ */
+int
+ll_equal(
+    struct ll const* lla, //!< The first linked list to compare
+    struct ll const* llb, //!< The second linked list to compare
+    struct r_set_cfg const* cfg //!< Type information provided by the user
+)
+__r_nonnull__(1, 2)
 ;
 
 /**

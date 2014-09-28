@@ -196,6 +196,22 @@ __r_warn_unused_result__
 ;
 
 /**
+ * Check if avl_a is a subtree of avl_b
+ *
+ * @memberof avl
+ *
+ * @return 0 if avl_a is a subtree of avl_b or else 1
+ */
+int
+avl_is_subset(
+    struct avl const* avl_a, //!< The first avl object for the comparison
+    struct avl const* avl_b,//!< The second avl object for the comparison
+    struct r_set_cfg const* cfg //!< The set configuration
+)
+__r_nonnull__(1, 2, 3)
+;
+
+/**
  * Get the height of the avl sub tree
  *
  * @memberof avl_el

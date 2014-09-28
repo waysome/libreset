@@ -91,7 +91,7 @@ ll_insert(
 
 void*
 ll_find(
-    struct ll* ll,
+    struct ll const* ll,
     void const* const d,
     struct r_set_cfg const* cfg
 ) {

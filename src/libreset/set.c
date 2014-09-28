@@ -126,3 +126,23 @@ r_set_select(
     return ht_select(&src->ht, pred, pred_etc, procf, dest);
 }
 
+int
+r_set_equal(
+    struct r_set const* set_a,
+    struct r_set const* set_b
+) {
+    if (set_a == set_b) {
+        return 1;
+    }
+
+    if (!(set_a && set_b)) {
+        return 0;
+    }
+
+    if (!config_cmp(set_a->cfg, set_b->cfg)) {
+        return 0;
+    }
+
+    return ht_equal(&set_a->ht, &set_b->ht, set_a->cfg);
+}
+

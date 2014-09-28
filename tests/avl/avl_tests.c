@@ -239,6 +239,44 @@ START_TEST (test_avl_cardinality_continuous) {
 }
 END_TEST
 
+START_TEST (test_avl_subset) {
+    struct avl* avl = calloc(1, sizeof(*avl));
+
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    r_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    int i;
+    for (i = 0; i < 10; i++) {
+        avl_insert(avl, hash[i], &data[i], &cfg_int);
+    }
+
+    ck_assert(avl_is_subset(avl, avl, &cfg_int) == 1);
+    avl_destroy(avl, &cfg_int);
+}
+END_TEST
+
+START_TEST (test_avl_subset_distinct) {
+    struct avl* avl = calloc(1, sizeof(*avl));
+    struct avl* avl2 = calloc(1, sizeof(*avl2));
+
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int data2[] = { 0, 1, 2, 3 };
+    r_hash hash[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    int i;
+    for (i = 0; i < 10; i++) {
+        avl_insert(avl, hash[i], &data[i], &cfg_int);
+    }
+    for (i = 0; i < 4; i++) {
+        avl_insert(avl2, hash[i], &data2[i], &cfg_int);
+    }
+
+    ck_assert(avl_is_subset(avl2, avl, &cfg_int) == 1);
+    ck_assert(avl_is_subset(avl, avl2, &cfg_int) != 1);
+    avl_destroy(avl, &cfg_int);
+}
+END_TEST
+
 Suite*
 suite_avl_create(void) {
     Suite* s;
@@ -246,6 +284,7 @@ suite_avl_create(void) {
     TCase* case_adding;
     TCase* case_deleting;
     TCase* case_finding;
+    TCase* case_subset;
 
     s = suite_create("AVL");
 
@@ -254,6 +293,7 @@ suite_avl_create(void) {
     case_adding     = tcase_create("Adding");
     case_deleting   = tcase_create("Deleting");
     case_finding    = tcase_create("Finding");
+    case_subset     = tcase_create("Finding");
 
     /* test adding to test cases */
     tcase_add_test(case_allocfree, test_avl_alloc_destroy);
@@ -274,11 +314,15 @@ suite_avl_create(void) {
     tcase_add_test(case_finding, test_avl_cardinality);
     tcase_add_test(case_finding, test_avl_cardinality_continuous);
 
+    tcase_add_test(case_subset, test_avl_subset);
+    tcase_add_test(case_subset, test_avl_subset_distinct);
+
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
     suite_add_tcase(s, case_adding);
     suite_add_tcase(s, case_deleting);
     suite_add_tcase(s, case_finding);
+    suite_add_tcase(s, case_subset);
 
     return s;
 }
