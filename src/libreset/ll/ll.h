@@ -191,6 +191,24 @@ __r_warn_unused_result__
     for (struct ll_element* it = (ll)->head; it; it = it->next)
 
 /**
+ * Select entries from a linked list into a new one
+ *
+ * @memberof ll
+ *
+ * @return zero on success, else error code
+ */
+int
+ll_select(
+    struct ll const* src, //!< The source from where to select
+    r_predf pred, //!< The predicate
+    void* pred_etc, //!< Additional information for the predicate function
+    r_procf procf, //!< function processing the selected values
+    void* dest //!< some pointer to pass to the procf
+)
+__r_nonnull__(1, 4)
+;
+
+/**
  * @}
  */
 
