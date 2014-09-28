@@ -136,6 +136,107 @@ START_TEST (test_ht_cardinality) {
     }
 
     ck_assert(0 == ht_del(&ht, &data[5], &cfg_int));
+    ck_assert(9 == ht_cardinality(&ht));
+
+    ck_assert(0 == ht_destroy(&ht, &cfg_int));
+}
+END_TEST
+
+START_TEST (test_ht_equal) {
+    struct ht ht;
+    ck_assert(&ht == ht_init(&ht, 1)); /* allocate 2^1 */
+
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int i;
+    for (i = 0; i < 10; ++i) {
+        ht_insert(&ht, &data[i], &cfg_int);
+    }
+
+    ck_assert(ht_equal(&ht, &ht, &cfg_int) == 1);
+
+    ck_assert(0 == ht_destroy(&ht, &cfg_int));
+}
+END_TEST
+
+START_TEST (test_ht_equal_wrong) {
+    struct ht ht;
+    ck_assert(&ht == ht_init(&ht, 1)); /* allocate 2^1 */
+    struct ht ht2;
+    ck_assert(&ht2 == ht_init(&ht2, 2)); /* allocate 2^2 */
+
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int data2[] = { 1, 1, 2, 3, 4, 6, 6, 7, 8, 9 };
+    int i;
+    for (i = 0; i < 10; ++i) {
+        ht_insert(&ht, &data[i], &cfg_int);
+        ht_insert(&ht2, &data2[i], &cfg_int);
+    }
+
+    ck_assert(ht_equal(&ht, &ht2, &cfg_int) == 0);
+
+    ck_assert(0 == ht_destroy(&ht, &cfg_int));
+}
+END_TEST
+
+START_TEST (test_ht_equal_almost) {
+    struct ht ht;
+    ck_assert(&ht == ht_init(&ht, 1)); /* allocate 2^1 */
+    struct ht ht2;
+    ck_assert(&ht2 == ht_init(&ht2, 2)); /* allocate 2^2 */
+
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int data2[] = { 0, 1, 2, 3, 4, 6, 6, 7, 8, 9 };
+    int i;
+    for (i = 0; i < 10; ++i) {
+        ht_insert(&ht, &data[i], &cfg_int);
+        ht_insert(&ht2, &data2[i], &cfg_int);
+    }
+
+    ck_assert(ht_equal(&ht, &ht2, &cfg_int) == 0);
+
+    ck_assert(0 == ht_destroy(&ht, &cfg_int));
+}
+END_TEST
+
+START_TEST (test_ht_equal_different_buckets) {
+    struct ht ht;
+    ck_assert(&ht == ht_init(&ht, 1)); /* allocate 2^1 */
+    struct ht ht2;
+    ck_assert(&ht2 == ht_init(&ht2, 3)); /* allocate 2^2 */
+
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int data2[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int i;
+    for (i = 0; i < 10; ++i) {
+        ht_insert(&ht, &data[i], &cfg_int);
+        ht_insert(&ht2, &data2[i], &cfg_int);
+    }
+
+
+    ck_assert(ht_equal(&ht, &ht2, &cfg_int) == 1);
+
+    ck_assert(0 == ht_destroy(&ht, &cfg_int));
+}
+END_TEST
+
+START_TEST (test_ht_equal_different_buckets_wrong) {
+    struct ht ht;
+    ck_assert(&ht == ht_init(&ht, 1)); /* allocate 2^1 */
+    struct ht ht2;
+    ck_assert(&ht2 == ht_init(&ht2, 3)); /* allocate 2^3 */
+
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int data2[] = { 0, 1, 2, 3, 4, 5, 6,    8, 9, 10 };
+    int i;
+    for (i = 0; i < 10; ++i) {
+        ht_insert(&ht, &data[i], &cfg_int);
+        ht_insert(&ht2, &data2[i], &cfg_int);
+    }
+
+    ck_assert(10 == ht_cardinality(&ht));
+    ck_assert(10 == ht_cardinality(&ht2));
+
+    ck_assert(ht_equal(&ht, &ht2, &cfg_int) != 1);
 
     ck_assert(0 == ht_destroy(&ht, &cfg_int));
 }
@@ -149,6 +250,7 @@ suite_ht_create(void) {
     TCase* case_finding;
     TCase* case_deleting;
     TCase* case_cardinality;
+    TCase* case_equality;
 
     s = suite_create("HT");
 
@@ -158,6 +260,7 @@ suite_ht_create(void) {
     case_finding    = tcase_create("Finding");
     case_deleting    = tcase_create("Deleting");
     case_cardinality = tcase_create("Cardinality");
+    case_equality = tcase_create("Equality");
 
     /* test adding to test cases */
     tcase_add_test(case_allocfree, test_ht_init);
@@ -173,12 +276,19 @@ suite_ht_create(void) {
 
     tcase_add_test(case_cardinality, test_ht_cardinality);
 
+    tcase_add_test(case_equality, test_ht_equal);
+    tcase_add_test(case_equality, test_ht_equal_wrong);
+    tcase_add_test(case_equality, test_ht_equal_almost);
+    tcase_add_test(case_equality, test_ht_equal_different_buckets);
+    tcase_add_test(case_equality, test_ht_equal_different_buckets_wrong);
+
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
     suite_add_tcase(s, case_adding);
     suite_add_tcase(s, case_finding);
     suite_add_tcase(s, case_deleting);
     suite_add_tcase(s, case_cardinality);
+    suite_add_tcase(s, case_equality);
 
     return s;
 }
