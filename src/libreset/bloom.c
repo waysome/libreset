@@ -61,7 +61,8 @@
 __r_const__ static bloom
 erasure_mask(
     unsigned int width //!< width of ints to mask
-);
+)
+;
 
 
 /*

@@ -24,6 +24,7 @@
 
 #include <stddef.h>
 
+#include "libreset/attributes.h"
 #include "libreset/hash.h"
 
 /**
@@ -64,7 +65,9 @@ typedef int (*r_predf)(void const*, void*);
 struct r_set*
 r_set_new(
     struct r_set_cfg const* cfg //!< configuration for the set object
-);
+)
+__r_nonnull__(1)
+;
 
 
 /**
@@ -78,7 +81,9 @@ r_set_new(
 int
 r_set_destroy(
     struct r_set* set //!< Set to remove
-);
+)
+__r_nonnull__(1)
+;
 
 
 /**
@@ -92,7 +97,9 @@ int
 r_set_insert(
     struct r_set* set, //!< the set
     void* value //!< pointer to the value to insert
-);
+)
+__r_nonnull__(1)
+;
 
 /**
  * Remove an object from the set
@@ -106,7 +113,9 @@ int
 r_set_remove(
     struct r_set* set, //!< the set
     void const* cmp //!< object equal to the one you want to delete
-);
+)
+__r_nonnull__(1, 2)
+;
 
 
 /**
@@ -120,7 +129,9 @@ void*
 r_set_contains(
     struct r_set const* set, //!< the set
     void const* cmp //!< element to check for
-);
+)
+__r_nonnull__(1, 2)
+;
 
 
 /**
@@ -136,8 +147,9 @@ r_set_union(
     struct r_set* dest, //!< destination of the result
     struct r_set const* set_a, //!< first argument of the binary operation
     struct r_set const* set_b //!< second argument of the binary operation
-);
-
+)
+__r_nonnull__(1, 2, 3)
+;
 
 /**
  * Compute intersection of two sets
@@ -152,8 +164,9 @@ r_set_intersection(
     struct r_set* dest, //!< destination of the result
     struct r_set const* set_a, //!< first argument of the binary operation
     struct r_set const* set_b //!< second argument of the binary operation
-);
-
+)
+__r_nonnull__(1, 2, 3)
+;
 
 /**
  * Compute set with elements which are in only one of the two arguments
@@ -168,8 +181,9 @@ r_set_xor(
     struct r_set* dest, //!< destination of the result
     struct r_set const* set_a, //!< first argument of the binary operation
     struct r_set const* set_b //!< second argument of the binary operation
-);
-
+)
+__r_nonnull__(1, 2, 3)
+;
 
 /**
  * Exclude elements from set_a which are in set_b
@@ -184,8 +198,9 @@ r_set_exclude(
     struct r_set* dest, //!< destination of the result
     struct r_set const* set_a, //!< first argument of the binary operation
     struct r_set const* set_b //!< second argument of the binary operation
-);
-
+)
+__r_nonnull__(1, 2, 3)
+;
 
 /**
  * Check if one set is a subset of another
@@ -198,8 +213,9 @@ int
 r_set_is_subset(
     struct r_set const* set_a, //!< first argument of the binary operation
     struct r_set const* set_b //!< second argument of the binary operation
-);
-
+)
+__r_nonnull__(1, 2)
+;
 
 /**
  * Check if two sets are equal
@@ -217,8 +233,9 @@ int
 r_set_equal(
     struct r_set const* set_a, //!< first argument of the binary operation
     struct r_set const* set_b //!< second argument of the binary operation
-);
-
+)
+__r_nonnull__(1, 2)
+;
 
 /**
  * Get the cardinality of a set
@@ -230,8 +247,9 @@ r_set_equal(
 size_t
 r_set_cardinality(
     struct r_set const* set //!< the set to get the cardinality for
-);
-
+)
+__r_nonnull__(1)
+;
 
 /**
  * Select entries from a set for a new set
@@ -251,6 +269,8 @@ r_set_select(
     struct r_set const* src, //!< source set
     r_predf pred, //!< predicate for selection
     void* //!< parameter for the predicate function
-);
+)
+__r_nonnull__(1, 2, 3)
+;
 
 #endif //__LIBRESET_H__

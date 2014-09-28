@@ -31,7 +31,9 @@ remove_element(
     r_hash hash, //!< hash value associated with d
     void const* cmp, //!< element to compare against
     struct r_set_cfg const* cfg //!< type information provided by the user
-);
+)
+__r_nonnull__(1, 3, 4)
+;
 
 /**
  * Insert an element into the subtree denoted by it's root
@@ -44,7 +46,9 @@ insert_element_into_tree(
     r_hash hash, //!< hash of the element to insert
     struct avl_el** root, //!< The root element of the tree where to insert
     struct r_set_cfg const* cfg //!< type information proveded by the user
-);
+)
+__r_nonnull__(1, 3, 4)
+;
 
 /**
  * Delete all elements in the tree under `root` for which the predicate `pred`
@@ -58,7 +62,9 @@ delete_elements_by_predicate(
     r_predf pred,
     void* etc,
     struct r_set_cfg const* cfg
-);
+)
+__r_nonnull__(1, 2, 3, 4)
+;
 
 /*
  *

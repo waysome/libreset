@@ -34,9 +34,8 @@
 
 #include <stddef.h>
 
+#include "libreset/attributes.h"
 #include "libreset/hash.h"
-
-#include "util/attributes.h"
 
 /**
  * Bloom filter type
@@ -54,7 +53,8 @@ typedef size_t bloom;
 __r_const__ bloom
 bloom_from_hash(
     r_hash hash //!< hash value for which to calculate the bloom filter
-);
+)
+;
 
 /**
  * Check whether an element may be in a bloom filter
@@ -68,7 +68,8 @@ __r_const__ int
 bloom_may_contain(
     bloom element, //!< element, represented as a bloom filter
     bloom set //!< bloom filter representing the set to check
-);
+)
+;
 
 /**
  * Check whether two bloom filters may contain common elements
@@ -80,7 +81,8 @@ __r_const__ int
 bloom_may_have_common(
     bloom a, //!< first of the bloom filters to check for common elements
     bloom b //!< second of the bloom filters to check for common elements
-);
+)
+;
 
 /**
  * @}

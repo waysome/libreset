@@ -73,6 +73,7 @@ isolate_root_node(
 )
 __r_nonnull__(1)
 __r_warn_unused_result__
+__r_nonnull__(1)
 ;
 
 /**
@@ -119,6 +120,7 @@ new_avl_el(
     r_hash h //!< The hash for the new struct avl_el object
 )
 __r_warn_unused_result__
+__r_malloc__
 ;
 
 /**
