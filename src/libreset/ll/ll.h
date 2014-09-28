@@ -118,7 +118,7 @@ __r_warn_unused_result__
  *
  * @memberof ll
  *
- * @return 0 if ll_a is a subset of ll_b else a 1
+ * @return 1 if ll_a is a subset of ll_b else a 0
  */
 int
 ll_is_subset(
