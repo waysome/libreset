@@ -23,6 +23,29 @@ cmake .
 make
 ```
 
+Alternatively, if you are helping with development, you can create a
+debug build.
+
+```sh
+cmake -DCMAKE_BUILD_TYPE=Debug .
+make
+```
+
+There is also a Hard Mode option, which sets the Werror flag and thus
+warnings are treated as errors. (Except a few, like unused functions.)
+
+```sh
+cmake -DHARD_MODE=On .
+make
+```
+
+If you only want to have a look at the paper, you can build it like this:
+
+```sh
+cmake .
+make paper
+```
+
 ## How it works
 
 If you want to know how it works, please have a look at the paper (in
