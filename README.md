@@ -46,6 +46,17 @@ cmake .
 make paper
 ```
 
+The same thing is true for the documentation, which you can build using the
+following commands:
+
+```sh
+cmake .
+make doc
+```
+
+If this does not generate output, you are missing doxygen from your machine.
+Make sure to re-run `cmake .` again after installation.
+
 ## How it works
 
 If you want to know how it works, please have a look at the paper (in
