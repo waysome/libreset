@@ -52,5 +52,17 @@ struct avl_node_cache {
  */
 #define AVL_NODE_CACHE_NEW_ENTRY(next_, node_) { .next = next_; .node = node_ }
 
+/**
+ * Check whether a node is in the cache
+ *
+ * @return 1 if the node is in the cache, 0 otherwise
+ */
+int
+avl_node_is_in_cache(
+    struct avl_node_cache const* cache, //!< head pointer of linked list
+    struct avl_el const* node //!< node to check
+)
+;
+
 #endif
 
