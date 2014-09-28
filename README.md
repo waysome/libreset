@@ -23,6 +23,40 @@ cmake .
 make
 ```
 
+Alternatively, if you are helping with development, you can create a
+debug build.
+
+```sh
+cmake -DCMAKE_BUILD_TYPE=Debug .
+make
+```
+
+There is also a Hard Mode option, which sets the Werror flag and thus
+warnings are treated as errors. (Except a few, like unused functions.)
+
+```sh
+cmake -DHARD_MODE=On .
+make
+```
+
+If you only want to have a look at the paper, you can build it like this:
+
+```sh
+cmake .
+make paper
+```
+
+The same thing is true for the documentation, which you can build using the
+following commands:
+
+```sh
+cmake .
+make doc
+```
+
+If this does not generate output, you are missing doxygen from your machine.
+Make sure to re-run `cmake .` again after installation.
+
 ## How it works
 
 If you want to know how it works, please have a look at the paper (in
