@@ -29,6 +29,7 @@ enable_testing()
 # Libreset's sources reside in ./src/.
 #
 add_subdirectory(src)
+add_subdirectory(include)
 add_subdirectory(paper)
 add_subdirectory(doc)
 add_subdirectory(tests)
