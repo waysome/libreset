@@ -1,0 +1,6 @@
+#
+# Libreset configuration
+#
+set(libreset_INCLUDE_DIRS @CMAKE_INSTALL_PREFIX@/include)
+set(libreset_LIBRARIES @CMAKE_INSTALL_PREFIX@/lib/libreset.so)
+
