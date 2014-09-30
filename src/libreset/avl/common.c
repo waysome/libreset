@@ -239,3 +239,65 @@ find_node(
     return iter;
 }
 
+struct avl_el*
+find_closest_lower(
+    struct avl_el* root,
+    r_hash hash
+) {
+    avl_dbg("Finding node closest to but lower or equal: 0x%zx", hash);
+
+    // clear the domain of greater keys
+    while (root) {
+        if (root->hash < hash) {
+            break;
+        }
+        root = root->l;
+    }
+
+    // if we are on a node, we are on a node with a lower key/hash
+    struct avl_el* retval = root;
+
+    // walk to the right until we hit an element with a greater hash
+    while (root) {
+        if (root->hash > hash) {
+            return retval;
+        }
+        retval = root;
+        root = root->r;
+    }
+
+    // we hit the bottom of the tree
+    return retval;
+}
+
+struct avl_el*
+find_closest_greater(
+    struct avl_el* root,
+    r_hash hash
+) {
+    avl_dbg("Finding node closest to but greater or equal: 0x%zx", hash);
+
+    // clear the domain of lower keys
+    while (root) {
+        if (root->hash > hash) {
+            break;
+        }
+        root = root->r;
+    }
+
+    // if we are on a node, we are on a node with a greater key/hash
+    struct avl_el* retval = root;
+
+    // walk to the right until we hit an element with a lower hash
+    while (root) {
+        if (root->hash < hash) {
+            return retval;
+        }
+        retval = root;
+        root = root->l;
+    }
+
+    // we hit the bottom of the tree
+    return retval;
+}
+
