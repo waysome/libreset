@@ -54,4 +54,6 @@ endif()
 #
 add_library(reset SHARED ${SOURCE_FILES})
 
+install(TARGETS reset LIBRARY DESTINATION lib)
+
 

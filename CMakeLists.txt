@@ -29,8 +29,15 @@ enable_testing()
 # Libreset's sources reside in ./src/.
 #
 add_subdirectory(src)
+add_subdirectory(include)
 add_subdirectory(paper)
 add_subdirectory(doc)
 add_subdirectory(tests)
+
+#
+# Install configuration file (used by other projects to find libreset)
+#
+configure_file(libreset-config.cmake.in libreset-config.cmake @ONLY)
+install(FILES libreset-config.cmake DESTINATION lib/libreset)
 
 

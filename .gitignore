@@ -32,7 +32,9 @@ CMakeFiles
 Makefile
 CTestTestfile.cmake
 cmake_install.cmake
+install_manifest.txt
 *.stamp
+libreset-config.cmake
 
 # Test related stuff
 Testing
