@@ -83,7 +83,12 @@ ll_insert(
         return -ENOMEM;
     }
 
-    el->data = data;
+    if (cfg->copyf) {
+        el->data = cfg->copyf(data);
+    } else {
+        el->data = data;
+    }
+
     *it = el;
 
     return 0;
