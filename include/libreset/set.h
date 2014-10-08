@@ -39,7 +39,7 @@ struct r_set;
 struct r_set_cfg {
     r_hash         (*hashf)(void const* data); //!< hash function
     int             (*cmpf)(void const*, void const*); //!< compare function
-    void const*     (*copyf)(void const*); //!< copy function
+    void*           (*copyf)(void*); //!< copy function
     void            (*freef)(void*); //!< function for removal/freeing of an item
 };
 
