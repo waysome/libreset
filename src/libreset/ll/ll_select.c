@@ -9,7 +9,7 @@ ll_select(
     void* dest
 ) {
     ll_foreach(it, src) {
-        if (pred || pred(it->data, pred_etc)) {
+        if (pred && pred(it->data, pred_etc)) {
             int retval = procf(dest, it->data);
             if (retval < 0) {
                 return retval;
