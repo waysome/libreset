@@ -208,6 +208,22 @@ __r_nonnull__(1, 2)
 ;
 
 /**
+ * Check if ht_a is a subset of ht_b
+ *
+ * @memberof ht
+ *
+ * @return 1 if the hashtable a is a subset of hashtable b
+ */
+int
+ht_is_subset(
+    struct ht const* a, //!< The first hashtable for the comparison
+    struct ht const* b, //!< The second hashtable for the comparison
+    struct r_set_cfg const* cfg
+)
+__r_nonnull__(1, 2)
+;
+
+/**
  * Helper to calculate the actual bucket count of the hashtable
  *
  * @memberof ht
