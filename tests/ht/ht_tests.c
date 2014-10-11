@@ -242,6 +242,34 @@ START_TEST (test_ht_equal_different_buckets_wrong) {
 }
 END_TEST
 
+START_TEST (test_ht_union) {
+    struct ht ht;
+    ck_assert(&ht == ht_init(&ht, 1)); /* allocate 2^1 */
+
+    struct ht ht2;
+    ck_assert(&ht2 == ht_init(&ht2, 2)); /* allocate 2^2 */
+
+    int data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int data2[] = { 1, 1, 2, 3, 4, 6, 6, 7, 8, 9 };
+    int i;
+    for (i = 0; i < 10; ++i) {
+        ht_insert(&ht, &data[i], &cfg_int);
+        ht_insert(&ht2, &data2[i], &cfg_int);
+    }
+
+    struct ht u;
+    ck_assert(&u == ht_init(&u , 2));
+
+    ck_assert(0 == ht_union(&u, &ht, &cfg_int));
+    ck_assert(0 == ht_union(&u, &ht2, &cfg_int));
+    ck_assert(ht_equal(&u, &ht, &cfg_int) == 0);
+
+    ck_assert(0 == ht_destroy(&ht, &cfg_int));
+    ck_assert(0 == ht_destroy(&ht2, &cfg_int));
+    ck_assert(0 == ht_destroy(&u, &cfg_int));
+}
+END_TEST
+
 Suite*
 suite_ht_create(void) {
     Suite* s;
@@ -251,6 +279,7 @@ suite_ht_create(void) {
     TCase* case_deleting;
     TCase* case_cardinality;
     TCase* case_equality;
+    TCase* case_union;
 
     s = suite_create("HT");
 
@@ -261,6 +290,7 @@ suite_ht_create(void) {
     case_deleting    = tcase_create("Deleting");
     case_cardinality = tcase_create("Cardinality");
     case_equality = tcase_create("Equality");
+    case_union      = tcase_create("Union");
 
     /* test adding to test cases */
     tcase_add_test(case_allocfree, test_ht_init);
@@ -282,6 +312,8 @@ suite_ht_create(void) {
     tcase_add_test(case_equality, test_ht_equal_different_buckets);
     tcase_add_test(case_equality, test_ht_equal_different_buckets_wrong);
 
+    tcase_add_test(case_union, test_ht_union);
+
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
     suite_add_tcase(s, case_adding);
@@ -289,6 +321,7 @@ suite_ht_create(void) {
     suite_add_tcase(s, case_deleting);
     suite_add_tcase(s, case_cardinality);
     suite_add_tcase(s, case_equality);
+    suite_add_tcase(s, case_union);
 
     return s;
 }
