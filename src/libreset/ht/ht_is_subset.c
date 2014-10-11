@@ -18,7 +18,7 @@ ht_is_subset(
         while (i--) {
             int j = denom_buckets;
             while(j--) {
-                if (!avl_is_subset(&ht_a->buckets[denom_buckets * j+i].avl,
+                if (!avl_is_subset(&ht_a->buckets[(denom_buckets * i) + j].avl,
                         &ht_b->buckets[i].avl, cfg)) {
                     return 0;
                 }
