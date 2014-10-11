@@ -242,6 +242,15 @@ START_TEST (test_ht_equal_different_buckets_wrong) {
 }
 END_TEST
 
+START_TEST (test_ht_union_emptyset) {
+    struct ht u;
+    ck_assert(&u == ht_init(&u, 2));
+    ck_assert(0 == ht_union(&u, &u, &cfg_int));
+
+    ck_assert(0 == ht_destroy(&u, &cfg_int));
+}
+END_TEST
+
 START_TEST (test_ht_union) {
     struct ht ht;
     ck_assert(&ht == ht_init(&ht, 1)); /* allocate 2^1 */
@@ -313,6 +322,7 @@ suite_ht_create(void) {
     tcase_add_test(case_equality, test_ht_equal_different_buckets_wrong);
 
     tcase_add_test(case_union, test_ht_union);
+    tcase_add_test(case_union, test_ht_union_emptyset);
 
     /* Adding test cases to suite */
     suite_add_tcase(s, case_allocfree);
