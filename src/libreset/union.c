@@ -46,6 +46,6 @@ r_set_union(
         return -EINVAL;
     }
 
-    return ht_union(&dest->ht, &a->ht, dest->cfg) &&
-        ht_union(&dest->ht, &b->ht, dest->cfg);
+    return ht_union(&dest->ht, &a->ht, dest->cfg) == 0 &&
+           ht_union(&dest->ht, &b->ht, dest->cfg) == 0;
 }
