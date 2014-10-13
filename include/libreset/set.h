@@ -65,7 +65,10 @@ typedef int (*r_predf)(void const*, void*);
  * insert those values), while the elements will be fed to the function as the
  * second parameter.
  */
-typedef int (*r_procf)(void*, void const*);
+typedef int (*r_procf)(
+    void*, //!< `etc` parameter - user defined data
+    void* //!< current element from iteration
+);
 
 
 
